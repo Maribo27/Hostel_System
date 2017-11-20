@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.Const.*;
+import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.command.PageUrl.*;
 
 public class LogIn implements Command {
+    private static final String USER_NOT_FOUND_MESSAGE = "User not found";
+    private static final String INVALID_PASSWORD_MESSAGE = "Invalid password";
+
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
@@ -28,18 +32,18 @@ public class LogIn implements Command {
 
         boolean userInDB = service.userInDB(username);
         if (!userInDB){
-            request.setAttribute(ERROR_ATTRIBUTE, USER_NOT_FOUND);
+            request.setAttribute(ERROR_ATTRIBUTE, USER_NOT_FOUND_MESSAGE);
             requestDispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
         } else {
             User user = service.getUserInformation(username, password);
 
             if (user != null) {
-                request.setAttribute(ATTRIBUTE_NAME, user);
-                requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE);
+                request.setAttribute(USER_ATTRIBUTE, user);
+                requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
             } else {
-                request.setAttribute(ERROR_ATTRIBUTE, INVALID_PASSWORD);
+                request.setAttribute(ERROR_ATTRIBUTE, INVALID_PASSWORD_MESSAGE);
                 request.setAttribute(USERNAME, username);
-                requestDispatcher = request.getRequestDispatcher(INVALID_PASSWORD_PAGE);
+                requestDispatcher = request.getRequestDispatcher(INVALID_PASSWORD_PAGE_URL);
             }
         }
         requestDispatcher.forward(request, response);

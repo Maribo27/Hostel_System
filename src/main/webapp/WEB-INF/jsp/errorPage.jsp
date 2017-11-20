@@ -8,7 +8,7 @@
 <link href="../../css/button.css" rel="stylesheet">
 <body>
 <div class="container">
-    <h1>Error occurred!</h1>
+    <h1>Error!</h1>
     <h3><c:out value="${requestScope.error}"/></h3>
     <form action="../../index.jsp">
         <input type="submit" value="Return"/>

@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static by.tc.task31.controller.command.ControlConst.ERROR_ATTRIBUTE;
+import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
+
 public class Controller extends HttpServlet {
-    private static final String ERROR_PAGE_URL = "/WEB-INF/jsp/errorPage.jsp";
-    private static final String ERROR_ATTRIBUTE = "error";
     private static final String CONTENT_TYPE = "text/html";
     private static final String COMMAND = "command";
 

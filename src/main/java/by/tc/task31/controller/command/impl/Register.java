@@ -12,17 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class Register implements Command {
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
-    private static final String NAME = "name";
-    private static final String EMAIL = "email";
-    private static final String ATTRIBUTE_NAME = "user";
-    private static final String USER_INFO_PAGE = "WEB-INF/jsp/successLogination.jsp";
-    private static final String REGISTER_PAGE = "WEB-INF/jsp/reRegister.jsp";
-    private static final String USER_EXCEPTION_MESSAGE = "This user exist";
-    private static final String ERROR_ATTRIBUTE = "error";
+import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.command.PageUrl.*;
 
+public class Register implements Command {
+
+    private static final String USER_EXCEPTION_MESSAGE = "This user exist";
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
@@ -43,11 +38,11 @@ public class Register implements Command {
             request.setAttribute(PASSWORD, password);
             request.setAttribute(NAME, name);
             request.setAttribute(EMAIL, email);
-            requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE);
+            requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE_URL);
         } else {
             User user = service.addUserInformation(username, password, name, email);
-            request.setAttribute(ATTRIBUTE_NAME, user);
-            requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE);
+            request.setAttribute(USER_ATTRIBUTE, user);
+            requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
         }
         requestDispatcher.forward(request, response);
     }

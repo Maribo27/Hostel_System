@@ -5,7 +5,7 @@
 <link href="css/button.css" rel="stylesheet">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Get Info Page</title>
+    <title>Register</title>
 </head>
 
 <body>

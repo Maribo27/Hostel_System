@@ -2,8 +2,6 @@ package by.tc.task31.dao;
 
 import by.tc.task31.entity.User;
 
-import java.util.List;
-
 public interface DAO {
     User getUserInformation(String username, String password) throws DAOException;
     boolean userInDB(String username) throws DAOException;

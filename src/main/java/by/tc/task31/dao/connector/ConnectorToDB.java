@@ -1,4 +1,4 @@
-package by.tc.task31.dao.impl;
+package by.tc.task31.dao.connector;
 
 import by.tc.task31.dao.DAOException;
 
@@ -8,18 +8,11 @@ import java.sql.SQLException;
 
 import java.util.ResourceBundle;
 
-class ConnectorToDB {
-    private static final String RESOURCE_NAME = "database";
-    private static final String PASSWORD = "db.password";
-    private static final String USER = "db.user";
-    private static final String URL = "db.url";
-    private static final String DRIVER = "db.driver";
+import static by.tc.task31.dao.connector.ConnectorConst.*;
 
-    private static final String CONNECTION_FAILED_MESSAGE = "Can't get connection to database";
-    private static final String CONNECTION_CLOSING_FAILED_MESSAGE = "Failed to close database connection";
-    private static final String JDBC_DRIVER_NOT_FOUND_MESSAGE = "JDBC driver not found";
+public class ConnectorToDB {
 
-    static Connection getConnection() throws DAOException {
+    public static Connection getConnection() throws DAOException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_NAME);
         String url = resourceBundle.getString(URL);
         String user = resourceBundle.getString(USER);
@@ -35,7 +28,7 @@ class ConnectorToDB {
         }
     }
 
-    static void closeConnection(Connection connection) throws DAOException {
+    public static void closeConnection(Connection connection) throws DAOException {
         try {
             connection.close();
         } catch (SQLException e) {

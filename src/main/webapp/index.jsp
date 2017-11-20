@@ -5,7 +5,7 @@
 <link href="css/button.css" rel="stylesheet">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Get Info Page</title>
+    <title>Log In</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <input type="submit" value="Log In"/>
     </form>
     <form action="register.jsp">
-        <input type="submit" value="Sign In"/>
+        <input type="submit" value="Register"/>
     </form>
 </div>
 </body>
