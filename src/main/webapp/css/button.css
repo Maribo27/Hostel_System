@@ -1,0 +1,19 @@
+input[type="submit"]{
+  box-sizing: border-box;
+  color: #fff;
+  background-color: #aabcfe;
+  font-weight: 700;
+  text-decoration: none;
+  user-select: none;
+  padding: .5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+}
+input[type=submit]:hover{
+  background: #e8edff;
+}
+input[type=submit]:active {
+  background: white;
+}

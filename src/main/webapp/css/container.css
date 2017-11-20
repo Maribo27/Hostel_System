@@ -1,0 +1,41 @@
+.container{
+  font: 95% Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  padding: 16px;
+  margin: 10px auto;
+  background: #F7F7F7;
+  text-align: center;
+}
+
+.container h1{
+  background: #aabcfe;
+  padding: 20px 0;
+  font-size: 140%;
+  font-weight: 300;
+  text-align: center;
+  color: #fff;
+  margin: -16px -16px 16px -16px;
+}
+.container input[type="text"], input[type="password"]
+{
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 4%;
+  border: 1px solid #ccc;
+  padding: 3%;
+  color: #555;
+  font: 95% Arial, Helvetica, sans-serif;
+}
+.container input[type="text"]:focus, input[type="password"]:focus
+{
+  box-shadow: 0 0 5px #aabcfe;
+  padding: 3%;
+  border: 1px solid #aabcfe;
+}

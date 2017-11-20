@@ -1,0 +1,47 @@
+.table-container {
+    font: 95% Arial, Helvetica, sans-serif;
+    padding: 16px;
+    text-align: center;
+    margin: auto 10px;
+}
+
+table {
+    margin: 0 auto;
+}
+
+th {
+    font-size: 13px;
+    font-weight: normal;
+    background: #b9c9fe;
+    border-top: 4px solid #aabcfe;
+    border-bottom: 1px solid #fff;
+    color: #039;
+    padding: 8px;
+}
+td {
+    background: #e8edff;
+    border-bottom: 1px solid #fff;
+    color: #669;
+    border-top: 1px solid transparent;
+    padding: 8px;
+}
+tr:hover td {background: #ccddff;}
+
+input[type=submit]{
+    background-color: #aabcfe;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    user-select: none;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
+}
+input[type=submit]:hover{
+    background: #e8edff;
+}
+input[type=submit]:active {
+    background: white;
+}
