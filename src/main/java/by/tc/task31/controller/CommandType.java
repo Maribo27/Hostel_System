@@ -2,5 +2,27 @@ package by.tc.task31.controller;
 
 public enum CommandType {
     LOGIN,
-    REGISTER
+    LOGOUT,
+    REGISTER,
+
+    SHOW_USERS,
+    SHOW_REQUESTS,
+    SHOW_USER_REQUESTS,
+    SHOW_PREFERENCES,
+    SHOW_HOSTELS,
+
+    DELETE_HOSTEL,
+    DELETE_USER,
+
+    ADD_REQUEST,
+    CREATE_REQUEST,
+
+    SHOW_CREATING_FORM,
+
+    CHANGE_REQUEST_STATUS,
+    CHANGE_USER_DATA,
+    CHANGE_LOCALE,
+    UNLOCK,
+    BLOCK,
+    OPEN_BLOCK_PAGE
 }

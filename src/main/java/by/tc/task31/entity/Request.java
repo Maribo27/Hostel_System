@@ -1,34 +1,30 @@
 package by.tc.task31.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Objects;
 
 public class Request implements Serializable {
-    private int number;
-    private String username;
+    private String hostelInfo;
     private String type;
-    private int cost;
-    private int placesNumber;
     private String status;
-    private String hostelName;
+    private Date date;
+    private int id;
+    private int userId;
+    private int hostelId;
+    private int room;
+    private int days;
+    private int cost;
 
     public Request(){
     }
 
-    public int getNumber() {
-
-        return number;
+    public String getHostelInfo() {
+        return hostelInfo;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setHostelInfo(String hostelInfo) {
+        this.hostelInfo = hostelInfo;
     }
 
     public String getType() {
@@ -39,22 +35,6 @@ public class Request implements Serializable {
         this.type = type;
     }
 
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getPlacesNumber() {
-        return placesNumber;
-    }
-
-    public void setPlacesNumber(int placesNumber) {
-        this.placesNumber = placesNumber;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -63,52 +43,59 @@ public class Request implements Serializable {
         this.status = status;
     }
 
-    public String getHostelName() {
-        return hostelName;
+    public Date getDate() {
+        return date;
     }
 
-    public void setHostelName(String hostelName) {
-        this.hostelName = hostelName;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Request request = (Request) o;
-
-        if (number != request.number) return false;
-        if (cost != request.cost) return false;
-        if (placesNumber != request.placesNumber) return false;
-        if (username != null ? !username.equals(request.username) : request.username != null) return false;
-        if (type != null ? !type.equals(request.type) : request.type != null) return false;
-        if (status != null ? !status.equals(request.status) : request.status != null) return false;
-        return hostelName != null ? hostelName.equals(request.hostelName) : request.hostelName == null;
+    public int getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = number;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + cost;
-        result = 31 * result + placesNumber;
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (hostelName != null ? hostelName.hashCode() : 0);
-        return result;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                "number=" + number +
-                ", username='" + username + '\'' +
-                ", type='" + type + '\'' +
-                ", cost=" + cost +
-                ", placesNumber=" + placesNumber +
-                ", status='" + status + '\'' +
-                ", hostelName='" + hostelName + '\'' +
-                '}';
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getHostelId() {
+        return hostelId;
+    }
+
+    public void setHostelId(int hostelId) {
+        this.hostelId = hostelId;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }
