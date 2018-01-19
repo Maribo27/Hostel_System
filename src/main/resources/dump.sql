@@ -9,10 +9,10 @@ DROP TABLE IF EXISTS login_data;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE login_data (
-  username varchar(20) NOT NULL,
+  userId varchar(20) NOT NULL,
   password varchar(32) NOT NULL,
   email varchar(20) NOT NULL,
-  PRIMARY KEY (username)
+  PRIMARY KEY (userId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO login_data VALUES
@@ -22,11 +22,11 @@ INSERT INTO login_data VALUES
   ('user','5f4dcc3b5aa765d61d8327deb882cf99','user@temp.by');
 
 CREATE TABLE users (
-  username varchar(20) NOT NULL,
+  userId varchar(20) NOT NULL,
   name varchar(15) NOT NULL,
   discount smallint(6) NOT NULL,
   status enum('administrator','user','banned') DEFAULT NULL,
-  PRIMARY KEY (username)
+  PRIMARY KEY (userId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO users VALUES

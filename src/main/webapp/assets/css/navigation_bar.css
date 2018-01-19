@@ -1,0 +1,57 @@
+#navigation_bar ul{
+    display: none;
+    background-color: #3C3C3C;
+    top: 100%;
+}
+#navigation_bar li:hover ul { display: block; }
+
+#navigation_bar, #navigation_bar ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#navigation_bar {
+    height: 34px;
+    background-color: #3C3C3C;
+    padding-left: 25px;
+    min-width: 470px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#navigation_bar li:not(.system-name) {
+    float: right;
+}
+
+#navigation_bar li:not(.system-name) a {
+    width: 100px;
+}
+
+#navigation_bar li {
+    position: relative;
+    height: 100%;
+}
+
+#navigation_bar li a {
+    display: block;
+    padding: 6px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+#navigation_bar ul li:not(.system-name) { float: none; }
+
+#navigation_bar li:hover:not(.system-name) { background-color: #1C1C1C; }
+#navigation_bar ul li:hover { background-color: #1C1C1C; }
+
+.active {
+    background-color: #1AAEB9;
+}
+
+.system-name {
+    float: left;
+}

@@ -1,0 +1,104 @@
+.slideshow-carousel-items, .slideshow-carousel-labels {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+
+.slideshow-carousel-item {
+    display: block;
+    float: left;
+}
+
+.slideshow-carousel-wrapper {
+    position: relative;
+    padding-top: 40%;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.slideshow-carousel-items {
+    width: 300%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    transition: left .5s ease-out;
+    -o-transition: left .5s ease-out;
+    -moz-transition: left .5s ease-out;
+    -webkit-transition: left .5s ease-out;
+}
+
+.slideshow-carousel-item {
+    width: 33.33333333%;
+    height: 100%;
+    color: white;
+}
+
+.slideshow-carousel-item-one {
+    background-image: url(../images/slide1.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.slideshow-carousel-item-two {
+    background-image: url(../images/slide2.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.slideshow-carousel-item-three {
+    background-image: url(../images/slide3.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.slideshow-carousel-labels {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    height: 20px;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+.slideshow-carousel-selector {
+    display: none;
+}
+.slideshow-carousel-label {
+    display: inline-block;
+}
+.slideshow-carousel-label label {
+    width: 60px;
+    height: 5px;
+    border-radius: 10px;
+    background-color: white;
+    display: block;
+    cursor: pointer;
+}
+
+#slide1:checked ~ .slideshow-carousel-items {
+    left: 0;
+}
+#slide1:checked ~ .slideshow-carousel-labels .slideshow-carousel-label:nth-child(1) label {
+    background-color: black;
+}
+#slide2:checked ~ .slideshow-carousel-items {
+    left: -100%;
+}
+#slide2:checked ~ .slideshow-carousel-labels .slideshow-carousel-label:nth-child(2) label {
+    background-color: black;
+}
+#slide3:checked ~ .slideshow-carousel-items {
+    left: -200%;
+}
+#slide3:checked ~ .slideshow-carousel-labels .slideshow-carousel-label:nth-child(3) label {
+    background-color: black;
+}

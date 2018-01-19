@@ -1,0 +1,95 @@
+.input-data-form {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px 20px 20px;
+    background: white;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.input-data-form h1 {
+    margin: -20px -20px 21px;
+    line-height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #5C5C5C;
+    text-align: center;
+    text-shadow: 0 1px white;
+    background: #f3f3f3;
+    border-bottom: 1px solid #CFCFCF;
+    border-radius: 3px 3px 0 0;
+    -webkit-box-shadow: 0 1px whitesmoke;
+    box-shadow: 0 1px whitesmoke;
+}
+.input-data-form p {
+    margin: 20px 0 0;
+}
+.input-data-form p:first-child {
+    margin-top: 0;
+}
+.input-data-form input {
+    width: 278px;
+}
+
+.input-data-form-help {
+    margin: 20px 0;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    text-shadow: 0 1px #2A85A1;
+}
+
+.input-data-form-help a {
+    color: gray();
+    text-decoration: none;
+}
+
+.input-data-form-help a:hover {
+    text-decoration: underline;
+}
+
+input[type="submit"]{
+    box-sizing: border-box;
+    color: #fff;
+    text-shadow: 0 1px #E3F1F1;
+    background-color: #3C3C3C;
+    padding: 0 18px;
+    position: center;
+    height: 29px;
+    width: 100%;
+    border: 2px solid;
+    border-radius: 1px;
+}
+
+input[type=submit]:hover{
+    background: #1C1C1C;
+}
+
+input[type=submit]:active {
+    background: #1AAEB9;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"]
+{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: white;
+    margin-bottom: 4%;
+    border: 1px solid lightgrey;
+    padding: 3%;
+    color: #555;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus
+{
+    box-shadow: 0 0 5px #1AAEB9;
+    padding: 3%;
+    border: 1px solid #AABCFE;
+}
