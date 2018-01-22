@@ -47,6 +47,5 @@ public class ControlConst {
 
 
 
-    public static final int ROWS_ON_PAGE = 4;
 
 }

@@ -48,7 +48,7 @@
                 </c:otherwise>
             </c:choose>
         </tr>
-        <c:forEach items="${requestScope.users}" var="user" begin="${requestScope.begin}" end="${requestScope.end}">
+        <c:forEach items="${requestScope.users}" var="user">
             <tr>
                 <td><c:out value="${user.id}"/></td>
                 <td><c:out value="${user.username}"/></td>
@@ -90,21 +90,23 @@
     </table>
 </div>
 <div class="input-data-form-help">
-    <c:set var = "next" scope = "session" value = "${requestScope.next + 3}"/>
-    <c:set var = "prev" scope = "session" value = "${requestScope.prev + 3}"/>
-    <c:set var = "last" scope = "session" value = "${requestScope.last + 1}"/>
+    <c:set var = "first" scope = "request" value = "${requestScope.page.first}"/>
+    <c:set var = "next" scope = "request" value = "${requestScope.page.next}"/>
+    <c:set var = "current" scope = "request" value = "${requestScope.page.current}"/>
+    <c:set var = "prev" scope = "request" value = "${requestScope.page.prev}"/>
+    <c:set var = "last" scope = "request" value = "${requestScope.page.last}"/>
     <c:choose>
-        <c:when test = "${requestScope.size <= requestScope.page}">
+        <c:when test = "${first == last}">
         </c:when>
-        <c:when test = "${requestScope.next == 1}">
-            <p><c:out value="${requestScope.next}"/>/<c:out value="${last}"/> <a href="${requestScope.gotonext}"><c:out value="${next + 1}"/></a> ... <a href="${requestScope.gotolast}"><c:out value="${last}"/></a></p>
+        <c:when test = "${current == first}">
+            <p><c:out value="${current}"/>/<c:out value="${last}"/> <a href="${requestScope.page.nextPage}"><c:out value="${next}"/></a> ... <a href="${requestScope.page.lastPage}"><c:out value="${last}"/></a></p>
         </c:when>
-        <c:when test = "${requestScope.next == requestScope.last}">
-            <p><a href="${requestScope.gotofirst}">1</a> ... <a href="${requestScope.gotoprev}"><c:out value="${prev + 1}"/></a> <c:out value="${requestScope.next}"/>/<c:out value="${last}"/></p>
+        <c:when test = "${current == last}">
+            <p><a href="${requestScope.page.firstPage}">1</a> ... <a href="${requestScope.page.prevPage}"><c:out value="${prev}"/></a> <c:out value="${current}"/>/<c:out value="${last}"/></p>
         </c:when>
 
         <c:otherwise>
-            <p><a href="${requestScope.gotofirst}">1</a> <a href="${requestScope.gotoprev}"><c:out value="${prev + 1}"/></a> <c:out value="${requestScope.next}"/>/<c:out value="${last}"/> <a href="${requestScope.gotonext}"><c:out value="${next + 1}"/></a> <a href="${requestScope.gotolast}"><c:out value="${last}"/></a></p>
+            <p><a href="${requestScope.page.firstPage}">1</a> <a href="${requestScope.page.prevPage}"><c:out value="${prev}"/></a> <c:out value="${current}"/>/<c:out value="${last}"/> <a href="${requestScope.page.nextPage}"><c:out value="${next}"/></a> <a href="${requestScope.page.lastPage}"><c:out value="${last}"/></a></p>
         </c:otherwise>
     </c:choose>
 </div>

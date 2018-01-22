@@ -1,7 +1,9 @@
 package by.tc.task31.controller.command.impl.view_command;
 
 import by.tc.task31.controller.command.Command;
+import by.tc.task31.controller.util.ControllerUtil;
 import by.tc.task31.entity.Hostel;
+import by.tc.task31.entity.PaginationHelper;
 import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
@@ -17,6 +19,7 @@ import java.util.List;
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.HOSTELS_INFO_PAGE_URL;
+import static by.tc.task31.controller.util.ControllerUtil.ROWS_ON_PAGE;
 
 public class ShowHostels implements Command {
 
@@ -27,39 +30,18 @@ public class ShowHostels implements Command {
 	    HttpSession session = request.getSession();
 	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
 	    HostelService service = factory.getHostelService();
-	    int page = Integer.parseInt(request.getParameter(NUMBER)) - 1;
-	    int next = page + 2;
+	    int page = Integer.parseInt(request.getParameter(NUMBER));
 
 	    RequestDispatcher requestDispatcher;
 
         try {
 	        List<Hostel> hostels = service.getHostels(lang);
+	        PaginationHelper paginationHelper = new ControllerUtil().createPagination(page, hostels.size(), "SHOW_HOSTELS");
+	        request.setAttribute(PAGE, paginationHelper);
 
-	        request.setAttribute(FIRST_ATTRIBUTE, 0);
-	        request.setAttribute(PREV_ATTRIBUTE, page - 1);
-	        request.setAttribute(NEXT_ATTRIBUTE, next - 1);
+	        List<Hostel> hostelsOnPage = hostels.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
 
-	        int lastPage = hostels.size() / ROWS_ON_PAGE - 1;
-	        if (hostels.size() / ROWS_ON_PAGE != 0){
-		        lastPage++;
-	        }
-	        request.setAttribute(LAST_ATTRIBUTE, lastPage);
-
-	        request.setAttribute(SIZE_ATTRIBUTE, hostels.size());
-
-	        request.setAttribute(BEGIN_ATTRIBUTE, page * ROWS_ON_PAGE);
-	        int end = page * ROWS_ON_PAGE + ROWS_ON_PAGE - 1;
-	        if (page == lastPage) {
-	        	end = hostels.size() - 1;
-	        }
-	        request.setAttribute(END_ATTRIBUTE, end);
-
-	        request.setAttribute(GO_TO_FIRST, "Controller?command=SHOW_HOSTELS&number=1");
-	        request.setAttribute(GO_TO_LAST, "Controller?command=SHOW_HOSTELS&number=" + lastPage);
-	        request.setAttribute(GO_TO_NEXT, "Controller?command=SHOW_HOSTELS&number=" + next);
-	        request.setAttribute(GO_TO_PREV, "Controller?command=SHOW_HOSTELS&number=" + page);
-
-	        request.setAttribute(HOSTELS_ATTRIBUTE, hostels);
+	        request.setAttribute(HOSTELS_ATTRIBUTE, hostelsOnPage);
 	        requestDispatcher = request.getRequestDispatcher(HOSTELS_INFO_PAGE_URL);
 	        requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
