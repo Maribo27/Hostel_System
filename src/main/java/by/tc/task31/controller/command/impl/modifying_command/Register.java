@@ -1,10 +1,10 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.User;
-import by.tc.task31.service.EntityService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
+import by.tc.task31.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tc.task31.controller.command.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.*;
+import static by.tc.task31.controller.command.PageUrl.LOGIN_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
 
 public class Register implements Command {
 
@@ -29,8 +30,9 @@ public class Register implements Command {
         String name = request.getParameter(NAME);
         String surname = request.getParameter(SURNAME);
         String lastname = request.getParameter(LASTNAME);
+        String lang = request.getParameter(LANG_ATTRIBUTE);
 
-        EntityService service = factory.getEntityService();
+        UserService service = factory.getUserService();
 
         RequestDispatcher requestDispatcher;
 
@@ -43,12 +45,14 @@ public class Register implements Command {
             request.setAttribute(SURNAME, surname);
             request.setAttribute(LASTNAME, lastname);
             request.setAttribute(EMAIL, email);
+            request.setAttribute(LANG_ATTRIBUTE, lang);
             requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE_URL);
         } else {
             User user = service.addUserInformation(username, password, name, lastname, surname, email);
             HttpSession session = request.getSession(true);
 
             session.setAttribute(USER_ATTRIBUTE, user);
+            session.setAttribute(LANG_ATTRIBUTE, lang);
             requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
         }
         requestDispatcher.forward(request, response);

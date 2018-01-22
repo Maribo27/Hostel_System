@@ -56,6 +56,9 @@
                                 <input type="hidden" name="command" value="SHOW_PREFERENCES"/>
                                 <input type="submit" value="Change Data"/>
                             </form>
+                            <form action="WEB-INF/jsp/preferences.jsp">
+                                <input type="submit" value="Change Data"/>
+                            </form>
                             <form action="Controller" method="get">
                                 <input type="hidden" name="number" value="1"/>
                                 <input type="hidden" name="command" value="SHOW_USER_REQUESTS"/>
@@ -98,6 +101,9 @@
                             </form>
                             <form action="Controller" method="get">
                                 <input type="hidden" name="command" value="SHOW_PREFERENCES"/>
+                                <input type="submit" value="Изменить данные"/>
+                            </form>
+                            <form action="WEB-INF/jsp/preferences.jsp">
                                 <input type="submit" value="Изменить данные"/>
                             </form>
                             <form action="Controller" method="get">

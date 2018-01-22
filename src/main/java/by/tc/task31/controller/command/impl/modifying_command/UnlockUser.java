@@ -1,10 +1,10 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.User;
-import by.tc.task31.service.EntityService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
+import by.tc.task31.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.HOSTELS_INFO_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.USERS_INFO_PAGE_URL;
 
 public class UnlockUser implements Command {
@@ -24,12 +23,12 @@ public class UnlockUser implements Command {
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
 	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
 	    int userId = Integer.parseInt(request.getParameter(ID));
 
-	    EntityService service = factory.getEntityService();
+	    UserService service = factory.getUserService();
 
         RequestDispatcher requestDispatcher;
 

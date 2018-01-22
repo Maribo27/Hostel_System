@@ -1,10 +1,8 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.Hostel;
-import by.tc.task31.entity.Request;
-import by.tc.task31.entity.User;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -20,14 +18,13 @@ import java.util.List;
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.CREATE_REQUEST_URL;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
 
 public class CreateRequest implements Command {
 
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
 	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
 
@@ -37,7 +34,7 @@ public class CreateRequest implements Command {
 	    int days = Integer.parseInt(request.getParameter(DAYS));
 	    Date date = Date.valueOf(request.getParameter(DATE));
 
-	    EntityService service = factory.getEntityService();
+	    HostelService service = factory.getHostelService();
 
 	    RequestDispatcher requestDispatcher;
 

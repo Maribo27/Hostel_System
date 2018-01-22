@@ -1,8 +1,7 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.entity.Hostel;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.RequestService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -11,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
@@ -26,7 +24,7 @@ public class ChangeRequestStatus implements Command {
 	    int id = Integer.parseInt(request.getParameter(REQUEST));
 	    String status = request.getParameter(STATUS);
 
-	    EntityService service = factory.getEntityService();
+	    RequestService service = factory.getRequestService();
 
         RequestDispatcher requestDispatcher;
 

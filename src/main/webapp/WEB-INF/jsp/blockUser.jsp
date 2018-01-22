@@ -31,7 +31,6 @@
                     </c:forEach>
                 </select>
                 <input type="date" name="date"/>
-                <input id="appt-time" type="time" name="time" step="2">
                 <input type="submit" value="${block}"/>
             </form>
             <form action="Controller" method="get">

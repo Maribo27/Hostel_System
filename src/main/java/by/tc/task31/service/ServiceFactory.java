@@ -1,16 +1,28 @@
 package by.tc.task31.service;
 
-import by.tc.task31.service.impl.EntityServiceImpl;
+import by.tc.task31.service.impl.HostelServiceImpl;
+import by.tc.task31.service.impl.RequestServiceImpl;
+import by.tc.task31.service.impl.UserServiceImpl;
 
 public final class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
 
-    private final EntityService entityService = new EntityServiceImpl();
+    private final HostelService hostelService = new HostelServiceImpl();
+    private final RequestService requestService = new RequestServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     private ServiceFactory() {}
 
-    public EntityService getEntityService() {
-        return entityService;
+    public HostelService getHostelService() {
+        return hostelService;
+    }
+
+    public RequestService getRequestService() {
+        return requestService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 
     public static ServiceFactory getInstance() {

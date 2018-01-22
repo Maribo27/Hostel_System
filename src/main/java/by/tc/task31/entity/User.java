@@ -15,8 +15,8 @@ public class User implements Serializable {
     private String status;
     private String blockReason;
 
-    private Timestamp blockDate;
-    private Timestamp unlockDate;
+    private Date blockDate;
+    private Date unlockDate;
 
     private int id;
     private int discount;
@@ -89,19 +89,19 @@ public class User implements Serializable {
         this.blockReason = blockReason;
     }
 
-    public Timestamp getBlockDate() {
+    public Date getBlockDate() {
         return blockDate;
     }
 
-    public void setBlockDate(Timestamp blockDate) {
+    public void setBlockDate(Date blockDate) {
         this.blockDate = blockDate;
     }
 
-    public Timestamp getUnlockDate() {
+    public Date getUnlockDate() {
         return unlockDate;
     }
 
-    public void setUnlockDate(Timestamp unlockDate) {
+    public void setUnlockDate(Date unlockDate) {
         this.unlockDate = unlockDate;
     }
 

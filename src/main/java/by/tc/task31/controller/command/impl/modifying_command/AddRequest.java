@@ -1,9 +1,9 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.Request;
 import by.tc.task31.entity.User;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.RequestService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -35,7 +35,7 @@ public class AddRequest implements Command {
 	    int discount = ((User)session.getAttribute(USER_ATTRIBUTE)).getDiscount();
 	    int price = rooms * days * cost * discount / 100;
 
-	    EntityService service = factory.getEntityService();
+	    RequestService service = factory.getRequestService();
 
 	    RequestDispatcher requestDispatcher;
 

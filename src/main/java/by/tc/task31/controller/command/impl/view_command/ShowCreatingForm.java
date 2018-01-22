@@ -1,7 +1,7 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.view_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -16,21 +16,28 @@ import java.util.Map;
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.CHOOSE_PARAMETERS_URL;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.PREFERENCES_PAGE_URL;
 
-public class ShowPreferences implements Command {
+public class ShowCreatingForm implements Command {
 
 	private ServiceFactory factory = ServiceFactory.getInstance();
 
 	@Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
 	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
 
-	    EntityService service = factory.getEntityService();
+	    HostelService service = factory.getHostelService();
 
 	    RequestDispatcher requestDispatcher;
-		requestDispatcher = request.getRequestDispatcher(PREFERENCES_PAGE_URL);
-		requestDispatcher.forward(request, response);
-	}
+	    try {
+		    Map<Integer, String> cities = service.getCities(lang);
+		    request.setAttribute(CITIES, cities);
+		    requestDispatcher = request.getRequestDispatcher(CHOOSE_PARAMETERS_URL);
+		    requestDispatcher.forward(request, response);
+	    } catch (ServiceException e) {
+		    request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
+		    dispatcher.forward(request, response);
+	    }
+    }
 }

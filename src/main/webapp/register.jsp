@@ -39,16 +39,18 @@
                     <h1>Введите свои данные</h1>
                 </c:otherwise>
             </c:choose>
-            <form action="Controller" method="get">
+            <form action="Controller" method="post">
                 <c:choose>
                     <c:when test = "${sessionScope.lang.toString() eq 'en'}">
                         <input type="hidden" name="command" value="LOGIN"/>
+                        <input type="hidden" name="lang" value="en"/>
                         <input type="text" name="username" value="${requestScope.username}" placeholder="Enter username or email" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
                         <input type="password" name="password" placeholder="Enter password" pattern="^[\w]{5,12}$"/>
                         <input type="submit" value="Log In"/>
                     </c:when>
                     <c:otherwise>
                         <input type="hidden" name="command" value="LOGIN"/>
+                        <input type="hidden" name="lang" value="ru"/>
                         <input type="text" name="username" value="${sessionScope.username}" placeholder="Введите псевдоним или email" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
                         <input type="password" name="password" placeholder="Введите пароль" pattern="^[\w]{5,12}$"/>
                         <input type="submit" value="Войти"/>

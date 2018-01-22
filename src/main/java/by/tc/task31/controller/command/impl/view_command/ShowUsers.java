@@ -1,10 +1,10 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.view_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.User;
-import by.tc.task31.service.EntityService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
+import by.tc.task31.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.tc.task31.controller.command.ControlConst.*;
-import static by.tc.task31.controller.command.ControlConst.GO_TO_PREV;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.USERS_INFO_PAGE_URL;
 
@@ -23,20 +22,19 @@ public class ShowUsers implements Command {
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
-        EntityService service = factory.getEntityService();
+        UserService service = factory.getUserService();
         int page = Integer.parseInt(request.getParameter(NUMBER)) - 1;
         int next = page + 2;
-        int prev = page;
 
         RequestDispatcher requestDispatcher;
 
         try {
             List<User> users = service.getUsers(lang);
             request.setAttribute(FIRST_ATTRIBUTE, 0);
-            request.setAttribute(PREV_ATTRIBUTE, prev - 1);
+            request.setAttribute(PREV_ATTRIBUTE, page - 1);
             request.setAttribute(NEXT_ATTRIBUTE, next - 1);
 
             int lastPage = users.size() / ROWS_ON_PAGE - 1;
@@ -57,7 +55,7 @@ public class ShowUsers implements Command {
             request.setAttribute(GO_TO_FIRST, "Controller?command=SHOW_USERS&number=1");
             request.setAttribute(GO_TO_LAST, "Controller?command=SHOW_USERS&number=" + lastPage);
             request.setAttribute(GO_TO_NEXT, "Controller?command=SHOW_USERS&number=" + next);
-            request.setAttribute(GO_TO_PREV, "Controller?command=SHOW_USERS&number=" + prev);
+            request.setAttribute(GO_TO_PREV, "Controller?command=SHOW_USERS&number=" + page);
             request.setAttribute(USERS_ATTRIBUTE, users);
             requestDispatcher = request.getRequestDispatcher(USERS_INFO_PAGE_URL);
             requestDispatcher.forward(request, response);

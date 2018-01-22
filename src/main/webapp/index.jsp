@@ -39,10 +39,11 @@
                     <h1>Введите регистрационные данные</h1>
                 </c:otherwise>
             </c:choose>
-            <form action="Controller" method="get">
+            <form action="Controller" method="post">
                 <input type="hidden" name="command" value="REGISTER"/>
                 <c:choose>
                     <c:when test = "${sessionScope.lang.toString() eq 'en'}">
+                        <input type="hidden" name="lang" value="en"/>
                         <input type="text" name="username" placeholder="Enter username (5 or more letters)" pattern="^[\w]{5,20}$" value="${requestScope.username}"/>
                         <input type="text" name="name" placeholder="Enter name (from 2 to 50 letters)" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.name}"/>
                         <input type="text" name="lastname" placeholder="Enter lastname (from 2 to 50 letters)" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.lastname}"/>
@@ -52,6 +53,7 @@
                         <input type="submit" value="Register"/>
                     </c:when>
                     <c:otherwise>
+                        <input type="hidden" name="lang" value="ru"/>
                         <input type="text" name="username" placeholder="Введите псевдоним (5 или более символов)" pattern="^[\w]{5,20}$" value="${requestScope.username}"/>
                         <input type="text" name="name" placeholder="Введите имя (от 2 до 50 символов)" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.name}"/>
                         <input type="text" name="lastname" placeholder="Введите отчество (от 2 до 50 символов)" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.lastname}"/>

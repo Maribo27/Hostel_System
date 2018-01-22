@@ -2,6 +2,8 @@ package by.tc.task31.controller;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.controller.command.impl.*;
+import by.tc.task31.controller.command.impl.modifying_command.*;
+import by.tc.task31.controller.command.impl.view_command.*;
 
 import java.util.HashMap;
 import java.util.Map;

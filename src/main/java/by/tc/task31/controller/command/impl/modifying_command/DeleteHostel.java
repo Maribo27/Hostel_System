@@ -1,7 +1,7 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -24,7 +24,7 @@ public class DeleteHostel implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    int id = Integer.parseInt(request.getParameter(HOSTEL));
 
-	    EntityService service = factory.getEntityService();
+	    HostelService service = factory.getHostelService();
 
 	    RequestDispatcher requestDispatcher;
 

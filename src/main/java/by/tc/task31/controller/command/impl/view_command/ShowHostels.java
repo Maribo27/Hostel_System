@@ -1,8 +1,8 @@
-package by.tc.task31.controller.command.impl;
+package by.tc.task31.controller.command.impl.view_command;
 
 import by.tc.task31.controller.command.Command;
 import by.tc.task31.entity.Hostel;
-import by.tc.task31.service.EntityService;
+import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 
@@ -23,13 +23,12 @@ public class ShowHostels implements Command {
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
 	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
-	    EntityService service = factory.getEntityService();
+	    HostelService service = factory.getHostelService();
 	    int page = Integer.parseInt(request.getParameter(NUMBER)) - 1;
 	    int next = page + 2;
-	    int prev = page;
 
 	    RequestDispatcher requestDispatcher;
 
@@ -37,7 +36,7 @@ public class ShowHostels implements Command {
 	        List<Hostel> hostels = service.getHostels(lang);
 
 	        request.setAttribute(FIRST_ATTRIBUTE, 0);
-	        request.setAttribute(PREV_ATTRIBUTE, prev - 1);
+	        request.setAttribute(PREV_ATTRIBUTE, page - 1);
 	        request.setAttribute(NEXT_ATTRIBUTE, next - 1);
 
 	        int lastPage = hostels.size() / ROWS_ON_PAGE - 1;
@@ -58,7 +57,7 @@ public class ShowHostels implements Command {
 	        request.setAttribute(GO_TO_FIRST, "Controller?command=SHOW_HOSTELS&number=1");
 	        request.setAttribute(GO_TO_LAST, "Controller?command=SHOW_HOSTELS&number=" + lastPage);
 	        request.setAttribute(GO_TO_NEXT, "Controller?command=SHOW_HOSTELS&number=" + next);
-	        request.setAttribute(GO_TO_PREV, "Controller?command=SHOW_HOSTELS&number=" + prev);
+	        request.setAttribute(GO_TO_PREV, "Controller?command=SHOW_HOSTELS&number=" + page);
 
 	        request.setAttribute(HOSTELS_ATTRIBUTE, hostels);
 	        requestDispatcher = request.getRequestDispatcher(HOSTELS_INFO_PAGE_URL);
