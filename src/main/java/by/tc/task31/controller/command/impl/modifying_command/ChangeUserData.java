@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tc.task31.controller.command.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
 
 public class ChangeUserData implements Command {
 
@@ -39,7 +39,7 @@ public class ChangeUserData implements Command {
 
 	    User user = service.changeUserData(lang, id, username, password, name, lastname, surname, email);
 	    session.setAttribute(USER_ATTRIBUTE, user);
-	    requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
+	    requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
 	    requestDispatcher.forward(request, response);
     }
 }

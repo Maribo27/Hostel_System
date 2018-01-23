@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tc.task31.controller.command.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.LOGIN_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.INDEX_URL;
+import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
 
 public class Register implements Command {
 
@@ -46,14 +46,14 @@ public class Register implements Command {
             request.setAttribute(LASTNAME, lastname);
             request.setAttribute(EMAIL, email);
             request.setAttribute(LANG_ATTRIBUTE, lang);
-            requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE_URL);
+            requestDispatcher = request.getRequestDispatcher(INDEX_URL);
         } else {
             User user = service.addUserInformation(username, password, name, lastname, surname, email);
             HttpSession session = request.getSession(true);
 
             session.setAttribute(USER_ATTRIBUTE, user);
             session.setAttribute(LANG_ATTRIBUTE, lang);
-            requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
+            requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
         }
         requestDispatcher.forward(request, response);
     }

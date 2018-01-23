@@ -20,7 +20,6 @@ class CommandDirector {
         commands.put(CommandType.SHOW_REQUESTS, new ShowRequests());
         commands.put(CommandType.SHOW_USER_REQUESTS, new ShowUserRequests());
         commands.put(CommandType.SHOW_HOSTELS, new ShowHostels());
-        commands.put(CommandType.SHOW_PREFERENCES, new ShowPreferences());
 
         commands.put(CommandType.DELETE_HOSTEL, new DeleteHostel());
         commands.put(CommandType.DELETE_USER, new DeleteUser());

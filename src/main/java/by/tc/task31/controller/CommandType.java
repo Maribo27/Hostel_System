@@ -8,7 +8,6 @@ public enum CommandType {
     SHOW_USERS,
     SHOW_REQUESTS,
     SHOW_USER_REQUESTS,
-    SHOW_PREFERENCES,
     SHOW_HOSTELS,
 
     DELETE_HOSTEL,

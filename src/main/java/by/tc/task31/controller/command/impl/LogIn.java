@@ -46,14 +46,14 @@ public class LogIn implements Command {
                 HttpSession session = request.getSession(true);
                 session.setAttribute(USER_ATTRIBUTE, user);
                 session.setAttribute(LANG_ATTRIBUTE, lang);
-                //response.sendRedirect(USER_INFO_PAGE_URL);
-                requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
+                //response.sendRedirect(HOME_PAGE_URL);
+                requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
                 requestDispatcher.forward(request, response);
             } else {
                 request.setAttribute(ERROR_ATTRIBUTE, INVALID_PASSWORD_MESSAGE);
                 request.setAttribute(USERNAME, username);
                 request.setAttribute(LANG_ATTRIBUTE, lang);
-                requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE_URL);
+                requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE_URL);
                 requestDispatcher.forward(request, response);
             }
         }

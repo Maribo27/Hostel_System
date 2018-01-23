@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 import static by.tc.task31.controller.command.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
 
 public class AddRequest implements Command {
 
@@ -50,7 +50,7 @@ public class AddRequest implements Command {
 
 	    service.addRequest(userRequest);
 
-	    requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
+	    requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
 	    requestDispatcher.forward(request, response);
     }
 }

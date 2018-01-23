@@ -1,19 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "WEB-INF/jsp/createRequest.jsp"/>
-    <link rel="stylesheet" href="../../assets/css/carousel.css">
-    <link rel="stylesheet" href="../../assets/css/input_form.css">
-    <link rel="stylesheet" href="../../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <title>Hostels</title>
+    <c:set var = "currentPage" scope = "session" value = "jsp/hostelsInfoPage.jsp"/>
+    <link rel="stylesheet" href="../assets/css/carousel.css">
+    <link rel="stylesheet" href="../assets/css/input_form.css">
+    <link rel="stylesheet" href="../assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../../assets/images/favicon.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
-    <fmt:message bundle="${loc}" key="locale.title.request.creating" var="requestCreating"/>
+    <fmt:message bundle="${loc}" key="locale.title.hostels" var="hostels"/>
     <fmt:message bundle="${loc}" key="locale.table.title.hostel.id" var="id"/>
     <fmt:message bundle="${loc}" key="locale.table.title.hostel.name" var="name"/>
     <fmt:message bundle="${loc}" key="locale.table.title.country" var="country"/>
@@ -24,24 +25,14 @@
     <fmt:message bundle="${loc}" key="locale.table.title.rooms" var="count"/>
     <fmt:message bundle="${loc}" key="locale.table.title.room.cost" var="cost"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
-    <fmt:message bundle="${loc}" key="locale.button.booking" var="request"/>
-    <title> ${requestCreating} | ${sessionScope.user.username} | Hostel System</title>
+    <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
+    <fmt:message bundle="${loc}" key="locale.button.add.request" var="request"/>
+    <title> ${hostels} | ${sessionScope.user.username} | Hostel System</title>
 </head>
-
 <body>
-<div style="padding:20px;"></div>
-<div id="sidebar">
-    <section class="container">
-        <div class="input-data-form">
-            <h3><c:out value="${requestScope.type}"/></h3>
-            <h3><c:out value="${requestScope.city}"/></h3>
-            <h3><c:out value="${requestScope.rooms}"/></h3>
-            <h3><c:out value="${requestScope.days}"/></h3>
-            <h3><c:out value="${requestScope.date}"/></h3>
-        </div>
-    </section>
-</div>
 
+
+<div style="padding:20px;"></div>
 <div class="table-container">
     <table>
         <tr>
@@ -68,16 +59,22 @@
                 <td><c:out value="${hostel.room}"/></td>
                 <td><c:out value="${hostel.cost}"/></td>
                 <td>
-                    <form action="Controller" method="get">
-                        <input type="hidden" name="command" value="ADD_REQUEST"/>
-                        <input type="hidden" name="type" value="${requestScope.type}"/>
-                        <input type="hidden" name="cost" value="${hostel.cost}"/>
-                        <input type="hidden" name="rooms" value="${requestScope.rooms}"/>
-                        <input type="hidden" name="days" value="${requestScope.days}"/>
-                        <input type="hidden" name="date" value="${requestScope.date}"/>
-                        <input type="hidden" name="hostel" value="${hostel.id}"/>
-                        <input type="submit" value="${request}"/>
-                    </form>
+                    <c:choose>
+                        <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
+                            <form action="Controller" method="get">
+                                <input type="hidden" name="command" value="DELETE_HOSTEL"/>
+                                <input type="hidden" name="hostel" value="${hostel.id}"/>
+                                <input type="submit" value="${delete}"/>
+                            </form>
+                        </c:when>
+                        <c:when test = "${sessionScope.user.status.toString() eq 'user'}">
+                            <form action="Controller" method="get">
+                                <input type="hidden" name="command" value="ADD_REQUEST"/>
+                                <input type="hidden" name="hostel" value="${hostel.id}"/>
+                                <input type="submit" value="${request}"/>
+                            </form>
+                        </c:when>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

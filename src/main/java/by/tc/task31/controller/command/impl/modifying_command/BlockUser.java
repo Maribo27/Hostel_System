@@ -17,7 +17,7 @@ import java.util.List;
 
 import static by.tc.task31.controller.command.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.USER_INFO_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
 
 public class BlockUser implements Command {
 
@@ -40,7 +40,7 @@ public class BlockUser implements Command {
 	        List<User> users = service.getUsers(lang);
 
 	        request.setAttribute(USERS_ATTRIBUTE, users);
-	        requestDispatcher = request.getRequestDispatcher(USER_INFO_PAGE_URL);
+	        requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
 	        requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
             request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());

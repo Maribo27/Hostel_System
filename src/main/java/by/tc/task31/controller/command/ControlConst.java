@@ -21,7 +21,6 @@ public class ControlConst {
     public static final String DAYS = "days";
     public static final String COST = "cost";
     public static final String DATE = "date";
-    public static final String TIME = "time";
     public static final String REASON = "reason";
     public static final String REASONS = "reasons";
 
@@ -32,20 +31,5 @@ public class ControlConst {
     public static final String ID = "id";
     public static final String PAGE = "page";
     public static final String NUMBER = "number";
-    public static final String FIRST_ATTRIBUTE = "first";
-    public static final String PREV_ATTRIBUTE = "prev";
-    public static final String NEXT_ATTRIBUTE = "next";
-    public static final String LAST_ATTRIBUTE = "last";
-    public static final String SIZE_ATTRIBUTE = "size";
-    public static final String BEGIN_ATTRIBUTE = "begin";
-    public static final String END_ATTRIBUTE = "end";
-
-    public static final String GO_TO_NEXT = "gotonext";
-    public static final String GO_TO_PREV = "gotoprev";
-    public static final String GO_TO_FIRST = "gotofirst";
-    public static final String GO_TO_LAST = "gotolast";
-
-
-
-
+    public static final String CURRENT_PAGE = "currentPage";
 }
