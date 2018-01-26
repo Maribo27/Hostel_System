@@ -60,13 +60,13 @@
                 <c:choose>
                     <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
                         <td>
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
                                 <input type="hidden" name="request" value="${request.id}"/>
-                                <input type="hidden" name="status" value="approve"/>
+                                <input type="hidden" name="status" value="approved"/>
                                 <input type="submit" value="${approve}"/>
                             </form>
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
                                 <input type="hidden" name="request" value="${request.id}"/>
                                 <input type="hidden" name="status" value="denied"/>
@@ -76,8 +76,8 @@
                     </c:when>
                     <c:otherwise>
                         <td>
-                            <form action="Controller" method="get">
-                                <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
+                                <input type="hidden" name="command" value="DELETE_REQUEST"/>
                                 <input type="hidden" name="request" value="${request.id}"/>
                                 <input type="hidden" name="status" value="denied"/>
                                 <input type="submit" value="${cancel}"/>

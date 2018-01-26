@@ -19,14 +19,14 @@
 </head>
 <body>
 <ul id="navigation_bar">
-    <li><a href="../../index.jsp">${register}</a></li>
+    <li><a href="${pageContext.request.contextPath}/register">${register}</a></li>
     <li><a href="#">${lang}</a>
         <ul>
-            <li><a href="Controller?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
-            <li><a href="Controller?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
         </ul>
     </li>
-    <li class="active"><a href="../../home.jsp">${home}</a></li>
+    <li class="active"><a href="${pageContext.request.contextPath}/home">${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

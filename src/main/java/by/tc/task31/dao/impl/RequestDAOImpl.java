@@ -2,9 +2,9 @@ package by.tc.task31.dao.impl;
 
 import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.RequestDAO;
-import by.tc.task31.dao.connector.ConnectorToDB;
-import by.tc.task31.dao.util.DaoUtil;
+import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.Request;
+import by.tc.task31.util.DaoUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,14 +14,14 @@ import java.util.List;
 
 public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
-
-    private Connection connection;
-    private PreparedStatement statement;
+    
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
     public List<Request> getRequests(String lang) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "SELECT r.id_request, r.user_id, r.hostel_id, CONCAT ('\"', a.hostel_name,'\", ', a.country, ', ', a.city, ', ', a.address) AS hostel_info, " +
                     "r.type, r.room_number, r.days_number, r.cost, r.status, r.reservation_date " +
@@ -49,15 +49,16 @@ public class RequestDAOImpl implements RequestDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public List<Request> getRequests(String lang, int id) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "SELECT r.id_request, r.user_id, r.hostel_id, CONCAT ('\"', a.hostel_name,'\", ', a.country, ', ', a.city, ', ', a.address) AS hostel_info, " +
                     "r.type, r.room_number, r.days_number, r.cost, r.status, r.reservation_date " +
@@ -87,20 +88,21 @@ public class RequestDAOImpl implements RequestDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public void addRequest(Request request) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "INSERT INTO request (user_id, hostel_id, type, room_number, " +
                     "days_number, cost, status, reservation_date) VALUES (?,?,?,?,?,?,'in_process',?)";
 
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, request.getUserId());
             statement.setInt(2, request.getHostelId());
             statement.setString(3, request.getType());
@@ -118,17 +120,40 @@ public class RequestDAOImpl implements RequestDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
+            }
+        }
+    }
+
+    @Override
+    public void deleteRequest(int id) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String query = "DELETE FROM request WHERE id_request=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public void changeRequestStatus(int id, String status) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String query = "UPDATE request SET status=? WHERE id_request=?";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, status);
             statement.setInt(2, id);
             statement.executeUpdate();
@@ -140,7 +165,7 @@ public class RequestDAOImpl implements RequestDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }

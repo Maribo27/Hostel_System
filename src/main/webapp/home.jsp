@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "jsp/home.jsp"/>
+    <c:set var = "currentPage" scope = "session" value = "home.jsp"/>
     <link rel="stylesheet" href="assets/css/carousel.css">
     <link rel="stylesheet" href="assets/css/input_form.css">
     <link rel="stylesheet" href="assets/css/navigation_bar.css">
@@ -41,31 +41,31 @@
             <hr>
             <c:choose>
                 <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="number" value="1"/>
                         <input type="hidden" name="command" value="SHOW_USERS"/>
                         <input type="submit" value="${users}"/>
                     </form>
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="number" value="1"/>
                         <input type="hidden" name="command" value="SHOW_HOSTELS"/>
                         <input type="submit" value="${hostels}"/>
                     </form>
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="number" value="1"/>
                         <input type="hidden" name="command" value="SHOW_REQUESTS"/>
                         <input type="submit" value="${requests}"/>
                     </form>
                 </c:when>
                 <c:when test = "${sessionScope.user.status.toString() eq 'user'}">
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="command" value="SHOW_CREATING_FORM"/>
                         <input type="submit" value="${request}"/>
                     </form>
                     <form action="jsp/preferences.jsp">
                         <input type="submit" value="${preferences}"/>
                     </form>
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="number" value="1"/>
                         <input type="hidden" name="command" value="SHOW_USER_REQUESTS"/>
                         <input type="submit" value="${requests}"/>
@@ -73,7 +73,7 @@
                 </c:when>
             </c:choose>
 
-            <form action="Controller" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="LOGOUT"/>
                 <input type="submit" value="${logout}"/>
             </form>

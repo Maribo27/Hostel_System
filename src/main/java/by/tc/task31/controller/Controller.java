@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.ControlConst.ERROR_ATTRIBUTE;
+import static by.tc.task31.controller.ControlConst.ERROR_ATTRIBUTE;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 
 public class Controller extends HttpServlet {

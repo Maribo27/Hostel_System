@@ -65,14 +65,14 @@
                 <td>
                     <c:choose>
                         <c:when test = "${user.status.toString() eq 'banned'}">
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="UNLOCK"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
                                 <input type="submit" value="${unlock}"/>
                             </form>
                         </c:when>
                         <c:when test = "${user.status.toString() eq 'user'}">
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="OPEN_BLOCK_PAGE"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
                                 <input type="submit" value="${block}"/>

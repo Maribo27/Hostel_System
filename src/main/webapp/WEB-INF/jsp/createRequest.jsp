@@ -68,7 +68,7 @@
                 <td><c:out value="${hostel.room}"/></td>
                 <td><c:out value="${hostel.cost}"/></td>
                 <td>
-                    <form action="Controller" method="get">
+                    <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="command" value="ADD_REQUEST"/>
                         <input type="hidden" name="type" value="${requestScope.type}"/>
                         <input type="hidden" name="cost" value="${hostel.cost}"/>

@@ -2,9 +2,9 @@ package by.tc.task31.dao.impl;
 
 import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.UserDAO;
-import by.tc.task31.dao.connector.ConnectorToDB;
-import by.tc.task31.dao.util.DaoUtil;
+import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.User;
+import by.tc.task31.util.DaoUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -18,33 +18,25 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
     private static final String CONVERT_PASSWORD_ERROR_MESSAGE = "Can't convert password";
 
-    private Connection connection;
-    private PreparedStatement statement;
-
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    
     @Override
     public User getUserInformation(String lang, String username, String password) throws DAOException{
-        connection = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             password = DaoUtil.createPassword(password);
-            return searchUserInDB(username, password, lang);
+            return searchUserInDB(connection, username, password, lang);
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION_MESSAGE);
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
-            }
+                connectionPool.closeConnection(connection);
         }
     }
 
-    private User searchUserInDB(String username, String password, String lang) throws DAOException, SQLException {
-        connection = ConnectorToDB.getConnection();
-
+    private User searchUserInDB(Connection connection, String username, String password, String lang) throws SQLException {
         String validatePassword = "SELECT u.id_user, u.username, u.email, u.password, u.surname, u.name, " +
                 "u.lastname, u.discount, u.balance, u.status, start_of_ban, end_of_ban, reason_type " +
                 "FROM user AS u " +
@@ -54,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
                 "WHERE br.lang_name = ?) AS a " +
                 "ON u.id_user = a.user_id " +
                 "WHERE (username = ? OR email = ?) AND password = ?";
-        statement = connection.prepareStatement(validatePassword);
+        PreparedStatement statement = connection.prepareStatement(validatePassword);
         statement.setString(1, lang);
         statement.setString(2, username);
         statement.setString(3, username);
@@ -70,8 +62,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException {
-        connection = null;
-
+        Connection connection = null;
         try {
             password = DaoUtil.createPassword(password);
             User user = new User();
@@ -84,7 +75,7 @@ public class UserDAOImpl implements UserDAO {
             user.setBalance(0);
             user.setSurname(surname);
             user.setLastname(lastname);
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             addUserToDB(user);
             return user;
         } catch (SQLException e) {
@@ -97,15 +88,16 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     private void addUserToDB(User user) throws SQLException {
+        Connection connection = connectionPool.takeConnection();
         String changeLogInData = "INSERT INTO user (username, email, password, name, " +
                 "surname, lastname, discount, status, balance) VALUES (?,?,?,?,?,?,0,'user',0)";
-        statement = connection.prepareStatement(changeLogInData);
+        PreparedStatement statement = connection.prepareStatement(changeLogInData);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPassword());
@@ -117,11 +109,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean userInDB(String username) throws DAOException{
-        connection = null;
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String searchUser = "SELECT * FROM user WHERE user.username = ? OR user.email = ?";
-            statement = connection.prepareStatement(searchUser);
+            PreparedStatement statement = connection.prepareStatement(searchUser);
             statement.setString(1, username);
             statement.setString(2, username);
             ResultSet resultSet = statement.executeQuery();
@@ -134,16 +126,17 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public List<User> getUsers(String lang) throws DAOException {
+        Connection connection = null;
         try {
 
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "SELECT u.id_user, u.username, u.email, u.surname, u.name, " +
                     "u.lastname, u.discount, u.balance, u.status, start_of_ban, end_of_ban, reason_type " +
@@ -153,7 +146,7 @@ public class UserDAOImpl implements UserDAO {
                     "INNER JOIN ban_reason AS br ON (b.id_reason = br.banned_reason_id)" +
                     "WHERE br.lang_name = ?) AS a " +
                     "ON u.id_user = a.user_id ";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, lang);
             ResultSet resultSet = statement.executeQuery();
 
@@ -170,15 +163,16 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public Map<Integer, String> getReasons(String lang) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "SELECT b.banned_reason_id, b.reason_type " +
                     "FROM ban_reason AS b WHERE b.lang_name = ?";
@@ -201,7 +195,7 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
@@ -210,8 +204,9 @@ public class UserDAOImpl implements UserDAO {
     public void blockUser(int id, Date date, int reason) throws DAOException {
         PreparedStatement userStat;
         PreparedStatement blockStat;
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String userQuery = "UPDATE user SET status='banned' WHERE id_user=?";
             userStat = connection.prepareStatement(userQuery);
@@ -233,7 +228,7 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
@@ -242,8 +237,9 @@ public class UserDAOImpl implements UserDAO {
     public void unlockUser(int id) throws DAOException {
         PreparedStatement userStat;
         PreparedStatement blockStat;
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String userQuery = "UPDATE user SET status='user' WHERE id_user=?";
             userStat = connection.prepareStatement(userQuery);
             userStat.setInt(1, id);
@@ -261,18 +257,19 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public void changeUserData(int id, String username, String password, String name, String lastname, String surname, String email) throws DAOException {
+        Connection connection = null;
         try {
             password = DaoUtil.createPassword(password);
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String query = "UPDATE user SET username=?, email=?, password=?, name=?, surname=?, lastname=? WHERE id_user=?";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, email);
             statement.setString(3, password);
@@ -291,17 +288,18 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public void deleteUser(int id) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String query = "DELETE FROM user WHERE id_user=?";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -312,7 +310,7 @@ public class UserDAOImpl implements UserDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }

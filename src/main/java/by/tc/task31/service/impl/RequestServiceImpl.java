@@ -45,6 +45,17 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public void deleteRequest(int id) throws ServiceException {
+        RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
+
+        try {
+            requestDAO.deleteRequest(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
     public void changeRequestStatus(int id, String status) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 

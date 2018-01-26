@@ -19,11 +19,11 @@
 </head>
 <body>
 <ul id="navigation_bar">
-    <li><a href="Controller?command=LOGOUT">${logout}</a></li>
+    <li><a href="${pageContext.request.contextPath}/hostel_system?command=LOGOUT">${logout}</a></li>
     <li><a href="#">${lang}</a>
         <ul>
-            <li><a href="/Controller?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
-            <li><a href="/Controller?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
         </ul>
     </li>
     <li class="active"><a href="../../home.jsp">${home}</a></li>

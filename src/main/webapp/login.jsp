@@ -37,7 +37,7 @@
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
-            <form action="Controller" method="post">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="LOGIN"/>
                 <input type="text" name="username" value="${requestScope.username}" placeholder="${username}" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
                 <input type="password" name="password" placeholder="${password}" pattern="^[\w]{5,12}$"/>

@@ -43,7 +43,7 @@
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
-            <form action="Controller" method="post">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="REGISTER"/>
                         <input type="hidden" name="lang" value="en"/>
                         <input type="text" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${requestScope.username}"/>

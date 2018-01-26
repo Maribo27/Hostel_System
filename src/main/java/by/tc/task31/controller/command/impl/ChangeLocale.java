@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.ControlConst.CURRENT_PAGE;
-import static by.tc.task31.controller.command.ControlConst.LANG_ATTRIBUTE;
-import static by.tc.task31.controller.command.ControlConst.PAGE;
+import static by.tc.task31.controller.ControlConst.CURRENT_PAGE;
+import static by.tc.task31.controller.ControlConst.LANG_ATTRIBUTE;
 
 public class ChangeLocale implements Command {
 

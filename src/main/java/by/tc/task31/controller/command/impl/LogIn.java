@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.*;
 
 public class LogIn implements Command {

@@ -61,14 +61,14 @@
                 <td>
                     <c:choose>
                         <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="DELETE_HOSTEL"/>
                                 <input type="hidden" name="hostel" value="${hostel.id}"/>
                                 <input type="submit" value="${delete}"/>
                             </form>
                         </c:when>
                         <c:when test = "${sessionScope.user.status.toString() eq 'user'}">
-                            <form action="Controller" method="get">
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="ADD_REQUEST"/>
                                 <input type="hidden" name="hostel" value="${hostel.id}"/>
                                 <input type="submit" value="${request}"/>

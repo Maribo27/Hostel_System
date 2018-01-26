@@ -24,7 +24,7 @@
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
-            <form action="Controller" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="BLOCK"/>
                 <input type="hidden" name="id" value="${requestScope.id}"/>
                 <select name="reason">
@@ -35,7 +35,7 @@
                 <input type="date" name="date"/>
                 <input type="submit" value="${block}"/>
             </form>
-            <form action="Controller" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="SHOW_USERS"/>
                 <input type="submit" value="${return}"/>
             </form>

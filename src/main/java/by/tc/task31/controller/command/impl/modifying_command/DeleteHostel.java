@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.ControlConst.ERROR_ATTRIBUTE;
-import static by.tc.task31.controller.command.ControlConst.HOSTEL;
+import static by.tc.task31.controller.ControlConst.ERROR_ATTRIBUTE;
+import static by.tc.task31.controller.ControlConst.HOSTEL;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.HOSTELS_INFO_PAGE_URL;
 

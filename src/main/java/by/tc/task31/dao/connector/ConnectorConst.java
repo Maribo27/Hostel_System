@@ -6,6 +6,7 @@ class ConnectorConst {
     static final String USER = "db.user";
     static final String URL = "db.url";
     static final String DRIVER = "db.driver";
+    static final String DB_POOL_SIZE = "db.poolSize";
 
     static final String CONNECTION_FAILED_MESSAGE = "Can't get connection to database";
     static final String CONNECTION_CLOSING_FAILED_MESSAGE = "Failed to close database connection";

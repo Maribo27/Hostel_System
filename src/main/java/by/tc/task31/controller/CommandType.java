@@ -12,6 +12,7 @@ public enum CommandType {
 
     DELETE_HOSTEL,
     DELETE_USER,
+    DELETE_REQUEST,
 
     ADD_REQUEST,
     CREATE_REQUEST,

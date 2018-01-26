@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 
-import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
 
 public class AddRequest implements Command {

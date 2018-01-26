@@ -1,4 +1,4 @@
-package by.tc.task31.dao.util;
+package by.tc.task31.util;
 
 import by.tc.task31.entity.Hostel;
 import by.tc.task31.entity.Request;

@@ -2,9 +2,9 @@ package by.tc.task31.dao.impl;
 
 import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.HostelDAO;
-import by.tc.task31.dao.connector.ConnectorToDB;
-import by.tc.task31.dao.util.DaoUtil;
+import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.Hostel;
+import by.tc.task31.util.DaoUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,12 +17,13 @@ import java.util.Map;
 public class HostelDAOImpl implements HostelDAO {
     private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
 
-    private Connection connection;
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
     public List<Hostel> getHostels(String lang) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query =
                     "SELECT h.id_hostel, hl.hostel_name, c.country, c.city, hl.address, " +
@@ -49,15 +50,16 @@ public class HostelDAOImpl implements HostelDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public List<Hostel> getHostels(String lang, int city, int room) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query =
                     "SELECT h.id_hostel, hl.hostel_name, c.country, c.city, hl.address, " +
@@ -86,15 +88,16 @@ public class HostelDAOImpl implements HostelDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public Map<Integer, String> getCities(String lang) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
 
             String query = "SELECT c.id_city, c.city " +
                     "FROM city AS c WHERE c.lang_name = ?";
@@ -117,15 +120,16 @@ public class HostelDAOImpl implements HostelDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }
 
     @Override
     public void deleteHostel(int id) throws DAOException {
+        Connection connection = null;
         try {
-            connection = ConnectorToDB.getConnection();
+            connection = connectionPool.takeConnection();
             String query = "DELETE FROM hostel WHERE id_hostel=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
@@ -138,7 +142,7 @@ public class HostelDAOImpl implements HostelDAO {
                     connection.close();
                 }
             } catch (SQLException e) {
-                ConnectorToDB.closeConnection(connection);
+                connectionPool.closeConnection(connection);
             }
         }
     }

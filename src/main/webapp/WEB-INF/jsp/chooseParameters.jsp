@@ -29,7 +29,7 @@
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
-            <form action="Controller" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="CREATE_REQUEST"/>
                 <select name="type">
                     <option value="booking">${booking}</option>

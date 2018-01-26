@@ -1,6 +1,10 @@
-package by.tc.task31.controller.command;
+package by.tc.task31.controller;
 
 public class ControlConst {
+    public static final String COMMAND = "command";
+    public static final String ADMIN = "admin";
+    public static final String USER = "user";
+    public static final String BANNED = "banned";
     public static final String ERROR_ATTRIBUTE = "error";
     public static final String USER_ATTRIBUTE = "user";
     public static final String HOSTELS_ATTRIBUTE = "hostels";

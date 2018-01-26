@@ -1,13 +1,16 @@
-package by.tc.task31.controller.util;
+package by.tc.task31.util;
 
 import by.tc.task31.entity.PaginationHelper;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class ControllerUtil {
-	public static final int ROWS_ON_PAGE = 5;
-	private static final String CONTROLLER_COMMAND = "Controller?command=";
+	private static final int ROWS_ON_PAGE = 5;
+	private static final String CONTROLLER_COMMAND = "/hostel_system?command=";
 	private static final String PAGE = "&number=";
 
-	public PaginationHelper createPagination(int current, int size, String command){
+	public PaginationHelper createPagination(HttpServletRequest request, int current, int size, String command){
+		String controllerURL = request.getContextPath() + CONTROLLER_COMMAND + command + PAGE;
 		int first = 1;
 
 		PaginationHelper page = new PaginationHelper();
@@ -33,10 +36,10 @@ public class ControllerUtil {
 		end = end > size ? size : end;
 		page.setEnd(end);
 
-		page.setFirstPage(CONTROLLER_COMMAND + command + PAGE + first);
-		page.setPrevPage(CONTROLLER_COMMAND + command + PAGE + prev);
-		page.setNextPage(CONTROLLER_COMMAND + command + PAGE + next);
-		page.setLastPage(CONTROLLER_COMMAND + command + PAGE + lastPage);
+		page.setFirstPage(controllerURL + first);
+		page.setPrevPage(controllerURL + prev);
+		page.setNextPage(controllerURL + next);
+		page.setLastPage(controllerURL + lastPage);
 		return page;
 	}
 }

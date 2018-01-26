@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.CHOOSE_PARAMETERS_URL;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 

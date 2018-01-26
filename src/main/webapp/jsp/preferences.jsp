@@ -29,7 +29,7 @@
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
-            <form action="Controller" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="CHANGE_USER_DATA"/>
                 <input type="text" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${sessionScope.username}"/>
                 <input type="text" name="name" placeholder="${name}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.name}"/>

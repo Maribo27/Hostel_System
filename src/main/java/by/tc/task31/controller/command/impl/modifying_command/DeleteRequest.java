@@ -1,39 +1,35 @@
 package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.entity.User;
+import by.tc.task31.service.RequestService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
-import by.tc.task31.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.tc.task31.controller.ControlConst.ERROR_ATTRIBUTE;
-import static by.tc.task31.controller.ControlConst.USER_ATTRIBUTE;
+import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.HOSTELS_INFO_PAGE_URL;
+import static by.tc.task31.controller.command.PageUrl.REQUESTS_INFO_PAGE_URL;
 
-public class DeleteUser implements Command {
+public class DeleteRequest implements Command {
 
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    HttpSession session = request.getSession();
-	    int userId = ((User)session.getAttribute(USER_ATTRIBUTE)).getId();
+	    int id = Integer.parseInt(request.getParameter(REQUEST));
 
-	    UserService service = factory.getUserService();
+	    RequestService service = factory.getRequestService();
 
 	    RequestDispatcher requestDispatcher;
 
 	    try {
-		    service.deleteUser(userId);
-		    requestDispatcher = request.getRequestDispatcher(HOSTELS_INFO_PAGE_URL);
+		    service.deleteRequest(id);
+		    requestDispatcher = request.getRequestDispatcher(REQUESTS_INFO_PAGE_URL);
 		    requestDispatcher.forward(request, response);
 	    } catch (ServiceException e) {
 		    request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());

@@ -1,7 +1,7 @@
 package by.tc.task31.controller.command.impl.view_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.controller.util.ControllerUtil;
+import by.tc.task31.util.ControllerUtil;
 import by.tc.task31.entity.PaginationHelper;
 import by.tc.task31.entity.Request;
 import by.tc.task31.service.RequestService;
@@ -16,10 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static by.tc.task31.controller.command.ControlConst.*;
+import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.REQUESTS_INFO_PAGE_URL;
-import static by.tc.task31.controller.util.ControllerUtil.ROWS_ON_PAGE;
 
 public class ShowRequests implements Command {
     private ServiceFactory factory = ServiceFactory.getInstance();
@@ -35,7 +34,7 @@ public class ShowRequests implements Command {
 
         try {
             List<Request> requests = service.getRequests(lang);
-            PaginationHelper paginationHelper = new ControllerUtil().createPagination(page, requests.size(), "SHOW_REQUESTS");
+            PaginationHelper paginationHelper = new ControllerUtil().createPagination(request, page, requests.size(), "SHOW_REQUESTS");
             request.setAttribute(PAGE, paginationHelper);
 
             List<Request> requestsOnPage = requests.subList(paginationHelper.getBegin(), paginationHelper.getEnd());

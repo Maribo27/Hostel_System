@@ -8,5 +8,8 @@ public interface RequestDAO {
     List<Request> getRequests(String lang) throws DAOException;
     List<Request> getRequests(String lang, int id) throws DAOException;
     void addRequest(Request request) throws DAOException;
-    void changeRequestStatus(int id, String status) throws DAOException;
+
+	void deleteRequest(int id) throws DAOException;
+
+	void changeRequestStatus(int id, String status) throws DAOException;
 }
