@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%@ taglib prefix="ahs" uri="hostelTag" %>
+
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "jsp/requestsInfoPage.jsp"/>
@@ -58,7 +60,7 @@
                 <td><c:out value="${request.date}"/></td>
                 <td><c:out value="${request.status}"/></td>
                 <c:choose>
-                    <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
+                    <c:when test = "${sessionScope.user.status eq 'admin'}">
                         <td>
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>

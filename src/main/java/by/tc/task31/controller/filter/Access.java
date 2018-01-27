@@ -46,7 +46,7 @@ public class Access implements Filter {
 		if (user == null) {
 			return false;
 		}
-		String status = user.getStatus();
+		String status = user.getStatus().toString();
 		CommandDirector director = CommandDirector.getInstance();
 		String access = director.getStatus(command);
 		return status.equals(access) || access.equals(BANNED);

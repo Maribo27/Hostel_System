@@ -1,6 +1,9 @@
 package by.tc.task31.entity;
 
-public class PaginationHelper {
+import java.io.Serializable;
+
+public class PaginationHelper implements Serializable{
+	private static final long serialVersionUID = 3974115174617028870L;
 	private int first;
 	private int prev;
 	private int current;

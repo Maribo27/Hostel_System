@@ -5,9 +5,10 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class Request implements Serializable {
+    private static final long serialVersionUID = 8261672134275753823L;
     private String hostelInfo;
     private String type;
-    private String status;
+    private Status status;
     private Date date;
     private int id;
     private int userId;
@@ -17,6 +18,10 @@ public class Request implements Serializable {
     private int cost;
 
     public Request(){
+    }
+
+    public enum Status {
+        IN_PROCESS, APPROVED, DENIED
     }
 
     public String getHostelInfo() {
@@ -35,11 +40,15 @@ public class Request implements Serializable {
         this.type = type;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
+        this.status = Status.valueOf(status.toUpperCase());
+    }
+
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -97,5 +106,43 @@ public class Request implements Serializable {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return id == request.id &&
+                userId == request.userId &&
+                hostelId == request.hostelId &&
+                room == request.room &&
+                days == request.days &&
+                cost == request.cost &&
+                Objects.equals(hostelInfo, request.hostelInfo) &&
+                Objects.equals(type, request.type) &&
+                status == request.status &&
+                Objects.equals(date, request.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hostelInfo, type, status, date, id, userId, hostelId, room, days, cost);
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "hostelInfo='" + hostelInfo + '\'' +
+                ", type='" + type + '\'' +
+                ", status=" + status +
+                ", date=" + date +
+                ", id=" + id +
+                ", userId=" + userId +
+                ", hostelId=" + hostelId +
+                ", room=" + room +
+                ", days=" + days +
+                ", cost=" + cost +
+                '}';
     }
 }

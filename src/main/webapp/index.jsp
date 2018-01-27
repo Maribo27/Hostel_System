@@ -33,7 +33,7 @@
 <body>
 <c:choose>
     <c:when test = "${sessionScope.user != null}">
-        <jsp:forward page="home.jsp" />
+        <jsp:forward page="jsp/home.jsp" />
     </c:when>
 </c:choose>
 <div style="padding:20px;"></div>
@@ -56,7 +56,7 @@
             </form>
         </div>
         <div class="input-data-form-help">
-                    <p>${account}? <a href="login.jsp">${click}</a>.</p>
+                    <p>${account}? <a href="${pageContext.request.contextPath}/login">${click}</a>.</p>
         </div>
     </section>
 </div>

@@ -36,4 +36,7 @@ public class ControlConst {
     public static final String PAGE = "page";
     public static final String NUMBER = "number";
     public static final String CURRENT_PAGE = "currentPage";
+
+    public static final String BASE_NAME = "locale.locale";
+
 }

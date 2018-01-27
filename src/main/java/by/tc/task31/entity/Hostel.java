@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Hostel implements Serializable {
+    private static final long serialVersionUID = -7481188849152613348L;
     private String name;
     private String city;
     private String country;

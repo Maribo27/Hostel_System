@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%@ taglib prefix="ahs" uri="hostelTag" %>
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "jsp/usersInfoPage.jsp"/>
@@ -58,20 +59,20 @@
                 <td><c:out value="${user.surname}"/></td>
                 <td><c:out value="${user.lastname}"/></td>
                 <td><c:out value="${user.discount}"/></td>
-                <td><c:out value="${user.status}"/></td>
+                <td><ahs:user-status userStatus="${user.status}"/></td>
                 <td><c:out value="${user.blockReason}"/></td>
                 <td><c:out value="${user.blockDate}"/></td>
                 <td><c:out value="${user.unlockDate}"/></td>
                 <td>
                     <c:choose>
-                        <c:when test = "${user.status.toString() eq 'banned'}">
+                        <c:when test = "${user.status eq 'banned'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="UNLOCK"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
                                 <input type="submit" value="${unlock}"/>
                             </form>
                         </c:when>
-                        <c:when test = "${user.status.toString() eq 'user'}">
+                        <c:when test = "${user.status eq 'user'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="OPEN_BLOCK_PAGE"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
