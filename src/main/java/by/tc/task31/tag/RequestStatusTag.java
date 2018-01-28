@@ -18,21 +18,21 @@ import static by.tc.task31.exception.constant.Message.REQUEST_STATUS_TAG_ERROR;
 public class RequestStatusTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(RequestStatusTag.class);
 	private static final long serialVersionUID = 6259324892174710379L;
-	private Request.Status status;
+	private Request.Status requestStatus;
 
-	public void setUserStatus(Request.Status status) {
-		this.status = status;
+	public void setRequestStatus(Request.Status status) {
+		this.requestStatus = status;
 	}
 
 	@Override
 	public int doStartTag() throws JspException {
-		if (status == null) {
+		if (requestStatus == null) {
 			return SKIP_BODY;
 		}
 
 		String lang = (String) pageContext.getSession().getAttribute(LANG_ATTRIBUTE);
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(BASE_NAME, Locale.forLanguageTag(lang));
-		String property = StatusLocale.getRequestStatus(status);
+		String property = StatusLocale.getRequestStatus(requestStatus);
 		String tag = resourceBundle.getString(property);
 		JspWriter out = pageContext.getOut();
 		return TagUtil.writeTag(out, tag, REQUEST_STATUS_TAG_ERROR, logger);

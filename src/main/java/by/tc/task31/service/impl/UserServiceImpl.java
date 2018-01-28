@@ -96,12 +96,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User changeUserData(String lang, int id, String username, String password, String name, String lastname, String surname, String email) throws ServiceException {
+    public boolean changeUserData(int id, List<String> dataToUpdate) throws ServiceException {
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
-            userDAO.changeUserData(id, username, password, name, lastname, surname, email);
-            return userDAO.getUserInformation(lang, username, password);
+            userDAO.changeUserData(id, dataToUpdate);
+            return true;
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean changePassword(int id, String password) throws ServiceException {
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+
+        try {
+            userDAO.changePassword(id, password);
+            return true;
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

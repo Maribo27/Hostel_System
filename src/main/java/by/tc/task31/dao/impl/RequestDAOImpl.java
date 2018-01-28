@@ -4,7 +4,7 @@ import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.RequestDAO;
 import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.Request;
-import by.tc.task31.util.DaoUtil;
+import by.tc.task31.util.DAOUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RequestDAOImpl implements RequestDAO {
-    private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
-    
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final String SQL_ERROR_WHILE_SEARCHING_REQUESTS = "SQL error while searching requests";
+    private static final String SQL_ERROR_WHILE_CREATING_REQUEST = "SQL error while creating request";
+    private static final String SQL_ERROR_WHILE_DELETING_REQUESTS = "SQL error while deleting requests";
+    private static final String SQL_ERROR_WHILE_CHANGING_REQUEST_STATUS = "SQL error while changing request status";
 
     @Override
     public List<Request> getRequests(String lang) throws DAOException {
@@ -40,17 +42,11 @@ public class RequestDAOImpl implements RequestDAO {
                 return null;
             }
 
-            return DaoUtil.createRequests(resultSet);
+            return DAOUtil.createRequests(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_REQUESTS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -79,17 +75,11 @@ public class RequestDAOImpl implements RequestDAO {
                 return null;
             }
 
-            return DaoUtil.createRequests(resultSet);
+            return DAOUtil.createRequests(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_REQUESTS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -113,15 +103,9 @@ public class RequestDAOImpl implements RequestDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_CREATING_REQUEST);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -135,15 +119,9 @@ public class RequestDAOImpl implements RequestDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_DELETING_REQUESTS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -158,15 +136,9 @@ public class RequestDAOImpl implements RequestDAO {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_CHANGING_REQUEST_STATUS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 }

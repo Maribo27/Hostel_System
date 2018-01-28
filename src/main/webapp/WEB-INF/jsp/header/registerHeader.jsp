@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <link rel="stylesheet" href="../../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../../assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="../../../assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
     <fmt:setLocale value="${sessionScope.lang}"/>
@@ -26,7 +26,7 @@
             <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
         </ul>
     </li>
-    <li class="active"><a href="${pageContext.request.contextPath}/home">${home}</a></li>
+    <li class="active"><a href="${pageContext.request.contextPath}/register">${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

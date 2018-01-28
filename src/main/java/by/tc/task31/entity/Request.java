@@ -21,7 +21,7 @@ public class Request implements Serializable {
     }
 
     public enum Status {
-        IN_PROCESS, APPROVED, DENIED
+        PROCESSING, APPROVED, DENIED
     }
 
     public String getHostelInfo() {

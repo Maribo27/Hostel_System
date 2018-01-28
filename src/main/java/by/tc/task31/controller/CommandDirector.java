@@ -47,6 +47,7 @@ public class CommandDirector {
 
     private void createUserCommands() {
         userCommands.put(CommandType.CHANGE_USER_DATA, new ChangeUserData());
+        userCommands.put(CommandType.CHANGE_PASSWORD, new ChangePassword());
         userCommands.put(CommandType.DELETE_REQUEST, new DeleteRequest());
         userCommands.put(CommandType.ADD_REQUEST, new AddRequest());
         userCommands.put(CommandType.CREATE_REQUEST, new CreateRequest());

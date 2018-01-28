@@ -23,6 +23,9 @@ public class User implements Serializable {
     private int balance;
 
     public User(){
+        this.status = Status.USER;
+        this.discount = 0;
+        this.balance = 0;
     }
 
     public enum Status {

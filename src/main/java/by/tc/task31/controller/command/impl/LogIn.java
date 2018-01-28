@@ -18,7 +18,6 @@ import static by.tc.task31.controller.command.PageUrl.*;
 
 public class LogIn implements Command {
     private static final String USER_NOT_FOUND_MESSAGE = "User not found";
-    private static final String INVALID_PASSWORD_MESSAGE = "Invalid password";
     private static final String DEFAULT_LANG = "ru";
 
     private ServiceFactory factory = ServiceFactory.getInstance();

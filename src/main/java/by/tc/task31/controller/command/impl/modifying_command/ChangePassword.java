@@ -20,7 +20,7 @@ import static by.tc.task31.controller.ControlConst.*;
 import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
 import static by.tc.task31.controller.command.PageUrl.PREFERENCES_URL;
 
-public class ChangeUserData implements Command {
+public class ChangePassword implements Command {
 
     private ServiceFactory factory = ServiceFactory.getInstance();
 
@@ -44,36 +44,11 @@ public class ChangeUserData implements Command {
 	    }
 
 	    int id = ((User)session.getAttribute(USER_ATTRIBUTE)).getId();
+	    String newPassword = request.getParameter(NEW_PASSWORD);
 
-	    List<String> data = new ArrayList<>();
-	    String username = request.getParameter(USERNAME);
-	    if (!Objects.equals(username, newUser.getUsername())){
-	    	data.add(USERNAME + "=" + username);
-	    	newUser.setUsername(username);
-	    }
-	    String email = request.getParameter(EMAIL);
-	    if (!Objects.equals(email, newUser.getEmail())){
-		    data.add(EMAIL + "=" + email);
-		    newUser.setEmail(email);
-	    }
-	    String name = request.getParameter(NAME);
-	    if (!Objects.equals(name, newUser.getName())){
-		    data.add(NAME + "=" + name);
-		    newUser.setName(name);
-	    }
-	    String surname = request.getParameter(SURNAME);
-	    if (!Objects.equals(surname, newUser.getSurname())){
-		    data.add(SURNAME + "=" + surname);
-		    newUser.setSurname(surname);
-	    }
-	    String lastname = request.getParameter(LASTNAME);
-	    if (!Objects.equals(lastname, newUser.getLastname())){
-		    data.add(LASTNAME + "=" + lastname);
-		    newUser.setLastname(lastname);
-	    }
-
-        boolean change = service.changeUserData(id, data);
+        boolean change = service.changePassword(id, newPassword);
 	    if (change) {
+	    	newUser.setPassword(newPassword);
 		    session.setAttribute(USER_ATTRIBUTE, newUser);
 	    }
 	    requestDispatcher = request.getRequestDispatcher(PREFERENCES_URL);

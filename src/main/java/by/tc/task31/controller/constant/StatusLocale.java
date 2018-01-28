@@ -22,7 +22,7 @@ public final class StatusLocale {
 	public static final String USER_USER = "locale.info.users.user";
 	public static final String USER_BANNED = "locale.info.users.banned";
 
-	public static final String REQUEST_IN_PROCESS = "locale.info.requests.process";
+	public static final String REQUEST_PROCESSING = "locale.info.requests.process";
 	public static final String REQUEST_APPROVED = "locale.info.requests.approved";
 	public static final String REQUEST_DENIED = "locale.info.requests.denied";
 

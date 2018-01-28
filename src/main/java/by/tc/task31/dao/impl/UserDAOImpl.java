@@ -4,7 +4,7 @@ import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.UserDAO;
 import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.User;
-import by.tc.task31.util.DaoUtil;
+import by.tc.task31.util.DAOUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -13,26 +13,31 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDAOImpl implements UserDAO {
-    private static final String USER_STATUS = "user";
-
-    private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
     private static final String CONVERT_PASSWORD_ERROR_MESSAGE = "Can't convert password";
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    
+    private static final String SQL_ERROR_WHILE_SEARCHING_USER = "SQL error while searching user";
+    private static final String SQL_ERROR_WHILE_CREATING_USER = "SQL error while creating user";
+    private static final String SQL_ERROR_WHILE_CREATING_USERS = "SQL error while creating users";
+    private static final String SQL_ERROR_WHILE_SEARCHING_BAN_REASONS = "SQL error while searching ban reasons";
+    private static final String SQL_ERROR_WHILE_BLOCKING_USER = "SQL error while blocking user";
+    private static final String SQL_ERROR_WHILE_UNLOCKING_USER = "SQL error while unlocking user";
+    private static final String SQL_ERROR_WHILE_UPDATING_USER_DATA = "SQL error while updating user data";
+    private static final String SQL_ERROR_WHILE_DELETING_USER = "SQL error while deleting user";
+
     @Override
     public User getUserInformation(String lang, String username, String password) throws DAOException{
         Connection connection = null;
         try {
             connection = connectionPool.takeConnection();
-            password = DaoUtil.createPassword(password);
+            password = DAOUtil.createPassword(password);
             return searchUserInDB(connection, username, password, lang);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_USER);
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
-                connectionPool.closeConnection(connection);
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -57,39 +62,30 @@ public class UserDAOImpl implements UserDAO {
             return null;
         }
 
-        return DaoUtil.createUserFromDB(resultSet);
+        return DAOUtil.createUserFromDB(resultSet);
     }
 
     @Override
     public User addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException {
         Connection connection = null;
         try {
-            password = DaoUtil.createPassword(password);
+            password = DAOUtil.createPassword(password);
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
             user.setName(name);
-            user.setDiscount(0);
-            user.setStatus(USER_STATUS);
-            user.setBalance(0);
             user.setSurname(surname);
             user.setLastname(lastname);
             connection = connectionPool.takeConnection();
             addUserToDB(user);
             return user;
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_CREATING_USER);
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -119,15 +115,9 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_USER);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -135,7 +125,6 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getUsers(String lang) throws DAOException {
         Connection connection = null;
         try {
-
             connection = connectionPool.takeConnection();
 
             String query = "SELECT u.id_user, u.username, u.email, u.surname, u.name, " +
@@ -154,17 +143,11 @@ public class UserDAOImpl implements UserDAO {
                 return null;
             }
 
-            return DaoUtil.createUsers(resultSet);
+            return DAOUtil.createUsers(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_CREATING_USERS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -185,18 +168,12 @@ public class UserDAOImpl implements UserDAO {
             }
 
             Map<Integer, String> reasons = new HashMap<>();
-            DaoUtil.createMapFromDB(resultSet, reasons);
+            DAOUtil.translateToMap(resultSet, reasons);
             return reasons;
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_BAN_REASONS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -221,15 +198,9 @@ public class UserDAOImpl implements UserDAO {
             blockStat.setDate(3, date);
             blockStat.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_BLOCKING_USER);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -250,46 +221,51 @@ public class UserDAOImpl implements UserDAO {
             blockStat.setInt(1, id);
             blockStat.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_UNLOCKING_USER);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
     @Override
-    public void changeUserData(int id, String username, String password, String name, String lastname, String surname, String email) throws DAOException {
+    public void changeUserData(int id, List<String> dataToUpdate) throws DAOException {
         Connection connection = null;
         try {
-            password = DaoUtil.createPassword(password);
             connection = connectionPool.takeConnection();
-            String query = "UPDATE user SET username=?, email=?, password=?, name=?, surname=?, lastname=? WHERE id_user=?";
+
+            StringBuilder query = new StringBuilder("UPDATE user SET " + dataToUpdate.get(0));
+            for (int index = 1; index < dataToUpdate.size(); index++){
+                String parameter = ", " + dataToUpdate.get(index);
+                query.append(parameter);
+            }
+            String endQuery = " WHERE id_user=" + id;
+            query.append(endQuery);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (SQLException e) {
+            throw new DAOException(SQL_ERROR_WHILE_UPDATING_USER_DATA);
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void changePassword(int id, String password) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            password = DAOUtil.createPassword(password);
+            String query = "UPDATE user SET password=? WHERE id_user=?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, email);
-            statement.setString(3, password);
-            statement.setString(4, name);
-            statement.setString(5, surname);
-            statement.setString(6, lastname);
-            statement.setInt(7, id);
+            statement.setString(1, password);
+            statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_UPDATING_USER_DATA);
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -303,15 +279,9 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_DELETING_USER);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 }

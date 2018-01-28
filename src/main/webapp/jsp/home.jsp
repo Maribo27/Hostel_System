@@ -17,6 +17,8 @@
     <fmt:message bundle="${loc}" key="locale.title.home" var="home"/>
     <fmt:message bundle="${loc}" key="locale.message.greetings" var="greetings"/>
     <fmt:message bundle="${loc}" key="locale.message.discount" var="discount"/>
+    <fmt:message bundle="${loc}" key="locale.message.balance" var="balance"/>
+    <fmt:message bundle="${loc}" key="locale.message.account.number" var="account"/>
     <fmt:message bundle="${loc}" key="locale.button.logout" var="logout"/>
     <title> ${home} | ${sessionScope.user.username} | Hostel System</title>
 </head>
@@ -35,13 +37,15 @@
         <div class="input-data-form">
             <h3>${greetings}, ${sessionScope.user.name}!</h3>
             ${discount}: ${sessionScope.user.discount}
+            ${balance}: ${sessionScope.user.balance}
+            ${account}: ${sessionScope.user.account}
             <hr>
             <c:choose>
                 <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
-                    <jsp:include page="/WEB-INF/jsp/button/admin/homeButton.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/button/homeAdmin.jsp"/>
                 </c:when>
                 <c:when test = "${sessionScope.user.status eq 'USER'}">
-                    <jsp:include page="/WEB-INF/jsp/button/user/homeButton.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/button/homeUser.jsp"/>
                 </c:when>
             </c:choose>
 
@@ -53,7 +57,7 @@
     </section>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/homeHeader.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 </body>

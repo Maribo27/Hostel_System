@@ -14,6 +14,7 @@ public interface UserDAO {
     Map<Integer, String> getReasons(String lang) throws DAOException;
     void blockUser(int id, Date date, int reason) throws DAOException;
     void unlockUser(int id) throws DAOException;
-    void changeUserData(int id, String username, String password, String name, String lastname, String surname, String email) throws DAOException;
+    void changeUserData(int id, List<String> dataToUpdate) throws DAOException;
+    void changePassword(int id, String password) throws DAOException;
     void deleteUser(int id) throws  DAOException;
 }

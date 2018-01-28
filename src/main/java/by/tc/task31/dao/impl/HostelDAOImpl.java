@@ -4,7 +4,7 @@ import by.tc.task31.dao.DAOException;
 import by.tc.task31.dao.HostelDAO;
 import by.tc.task31.dao.connector.ConnectionPool;
 import by.tc.task31.entity.Hostel;
-import by.tc.task31.util.DaoUtil;
+import by.tc.task31.util.DAOUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HostelDAOImpl implements HostelDAO {
-    private static final String SQL_EXCEPTION_MESSAGE = "SQL error";
-
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final String SQL_ERROR_WHILE_DELETING_HOSTELS = "SQL error while deleting hostels";
+    private static final String SQL_ERROR_WHILE_SEARCHING_CITIES = "SQL error while searching cities";
+    private static final String SQL_ERROR_WHILE_SEARCHING_HOSTELS = "SQL error while searching hostels";
 
     @Override
     public List<Hostel> getHostels(String lang) throws DAOException {
@@ -40,18 +41,11 @@ public class HostelDAOImpl implements HostelDAO {
             if (!resultSet.isBeforeFirst()) {
                 return null;
             }
-
-            return DaoUtil.createHostels(resultSet);
+            return DAOUtil.createHostels(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_HOSTELS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
                 connectionPool.closeConnection(connection);
-            }
         }
     }
 
@@ -79,17 +73,11 @@ public class HostelDAOImpl implements HostelDAO {
                 return null;
             }
 
-            return DaoUtil.createHostels(resultSet);
+            return DAOUtil.createHostels(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_HOSTELS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -110,18 +98,12 @@ public class HostelDAOImpl implements HostelDAO {
             }
 
             Map<Integer, String> cities = new HashMap<>();
-            DaoUtil.createMapFromDB(resultSet, cities);
+            DAOUtil.translateToMap(resultSet, cities);
             return cities;
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_CITIES);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -135,15 +117,9 @@ public class HostelDAOImpl implements HostelDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION_MESSAGE);
+            throw new DAOException(SQL_ERROR_WHILE_DELETING_HOSTELS);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                connectionPool.closeConnection(connection);
-            }
+            connectionPool.closeConnection(connection);
         }
     }
 

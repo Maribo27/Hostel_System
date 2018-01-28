@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DaoUtil {
+public class DAOUtil {
 	private static final String MD_5 = "MD5";
 
 	public static User createUserFromDB(ResultSet resultSet) throws SQLException {
@@ -50,7 +50,7 @@ public class DaoUtil {
 	    return password;
 	}
 
-	public static void createMapFromDB(ResultSet resultSet, Map<Integer, String> cities) throws SQLException {
+	public static void translateToMap(ResultSet resultSet, Map<Integer, String> cities) throws SQLException {
 	    while (resultSet.next()){
 	        int column = 1;
 	        Integer number = resultSet.getInt(column++);

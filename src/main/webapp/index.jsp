@@ -65,7 +65,7 @@
 <div style="padding:15px;"></div>
 
 <jsp:include page="/WEB-INF/jsp/carousel.jsp"/>
-<jsp:include page="/WEB-INF/jsp/registerHeader.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/registerHeader.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 </body>

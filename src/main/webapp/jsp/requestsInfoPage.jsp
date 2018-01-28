@@ -7,12 +7,12 @@
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "jsp/requestsInfoPage.jsp"/>
-    <link rel="stylesheet" href="../assets/css/carousel.css">
-    <link rel="stylesheet" href="../assets/css/input_form.css">
-    <link rel="stylesheet" href="../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.requests" var="requests"/>
@@ -26,9 +26,6 @@
     <fmt:message bundle="${loc}" key="locale.table.title.date" var="date"/>
     <fmt:message bundle="${loc}" key="locale.table.title.status" var="status"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
-    <fmt:message bundle="${loc}" key="locale.button.approve" var="approve"/>
-    <fmt:message bundle="${loc}" key="locale.button.deny" var="deny"/>
-    <fmt:message bundle="${loc}" key="locale.button.cancel" var="cancel"/>
     <title> ${requests} | ${sessionScope.user.username} | Hostel System</title>
 </head>
 
@@ -58,42 +55,23 @@
                 <td><c:out value="${request.days}"/></td>
                 <td><c:out value="${request.cost}"/></td>
                 <td><c:out value="${request.date}"/></td>
-                <td><c:out value="${request.status}"/></td>
-                <c:choose>
-                    <c:when test = "${sessionScope.user.status eq 'admin'}">
-                        <td>
-                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
-                                <input type="hidden" name="request" value="${request.id}"/>
-                                <input type="hidden" name="status" value="approved"/>
-                                <input type="submit" value="${approve}"/>
-                            </form>
-                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
-                                <input type="hidden" name="request" value="${request.id}"/>
-                                <input type="hidden" name="status" value="denied"/>
-                                <input type="submit" value="${deny}"/>
-                            </form>
-                        </td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="DELETE_REQUEST"/>
-                                <input type="hidden" name="request" value="${request.id}"/>
-                                <input type="hidden" name="status" value="denied"/>
-                                <input type="submit" value="${cancel}"/>
-                            </form>
-                        </td>
-                    </c:otherwise>
-                </c:choose>
+                <td><ahs:request-status requestStatus="${request.status}"/></td>
+                <td>
+                    <c:set var = "page" scope="page" value = "/WEB-INF/jsp/button/requestsUser.jsp"/>
+                    <c:if test = "${sessionScope.user.status eq 'ADMIN'}">
+                        <c:set var = "page" scope="page" value = "/WEB-INF/jsp/button/requestsAdmin.jsp"/>
+                    </c:if>
+                    <jsp:include page="${page}">
+                        <jsp:param name="id" value="${request.id}" />
+                    </jsp:include>
+                </td>
             </tr>
         </c:forEach>
     </table>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

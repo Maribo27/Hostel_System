@@ -2,8 +2,9 @@ package by.tc.task31.controller.command;
 
 public class PageUrl {
     public static final String INDEX_URL = "index.jsp";
-    public static final String LOGIN_PAGE_URL = "login.jsp";
+    public static final String LOGIN_PAGE_URL = "jsp/login.jsp";
     public static final String HOME_PAGE_URL = "jsp/home.jsp";
+    public static final String PREFERENCES_URL = "jsp/preferences.jsp";
     public static final String HOSTELS_INFO_PAGE_URL = "jsp/hostelsInfoPage.jsp";
     public static final String REQUESTS_INFO_PAGE_URL = "jsp/requestsInfoPage.jsp";
     public static final String USERS_INFO_PAGE_URL = "jsp/usersInfoPage.jsp";

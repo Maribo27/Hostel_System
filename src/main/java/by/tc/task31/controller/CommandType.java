@@ -21,6 +21,7 @@ public enum CommandType {
 
     CHANGE_REQUEST_STATUS,
     CHANGE_USER_DATA,
+    CHANGE_PASSWORD,
     CHANGE_LOCALE,
     UNLOCK,
     BLOCK,

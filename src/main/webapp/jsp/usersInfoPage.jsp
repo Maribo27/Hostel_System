@@ -6,12 +6,12 @@
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "jsp/usersInfoPage.jsp"/>
-    <link rel="stylesheet" href="../assets/css/carousel.css">
-    <link rel="stylesheet" href="../assets/css/input_form.css">
-    <link rel="stylesheet" href="../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.users" var="users"/>
@@ -65,14 +65,14 @@
                 <td><c:out value="${user.unlockDate}"/></td>
                 <td>
                     <c:choose>
-                        <c:when test = "${user.status eq 'banned'}">
+                        <c:when test = "${user.status eq 'BANNED'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="UNLOCK"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
                                 <input type="submit" value="${unlock}"/>
                             </form>
                         </c:when>
-                        <c:when test = "${user.status eq 'user'}">
+                        <c:when test = "${user.status eq 'USER'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="OPEN_BLOCK_PAGE"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
@@ -87,7 +87,7 @@
 </div>
 
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 </body>

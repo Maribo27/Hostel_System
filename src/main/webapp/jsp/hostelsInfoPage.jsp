@@ -60,14 +60,14 @@
                 <td><c:out value="${hostel.cost}"/></td>
                 <td>
                     <c:choose>
-                        <c:when test = "${sessionScope.user.status.toString() eq 'admin'}">
+                        <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="DELETE_HOSTEL"/>
                                 <input type="hidden" name="hostel" value="${hostel.id}"/>
                                 <input type="submit" value="${delete}"/>
                             </form>
                         </c:when>
-                        <c:when test = "${sessionScope.user.status.toString() eq 'user'}">
+                        <c:when test = "${sessionScope.user.status eq 'USER'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="ADD_REQUEST"/>
                                 <input type="hidden" name="hostel" value="${hostel.id}"/>
@@ -83,7 +83,7 @@
 </div>
 
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

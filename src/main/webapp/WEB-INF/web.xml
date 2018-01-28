@@ -38,7 +38,7 @@
 
   <servlet>
     <servlet-name>LogIn</servlet-name>
-    <jsp-file>/login.jsp</jsp-file>
+    <jsp-file>/jsp/login.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>LogIn</servlet-name>

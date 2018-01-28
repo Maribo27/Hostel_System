@@ -18,6 +18,7 @@ public class ControlConst {
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String NEW_PASSWORD = "new-password";
 
     public static final String HOSTEL = "hostel";
     public static final String TYPE = "type";
@@ -38,5 +39,8 @@ public class ControlConst {
     public static final String CURRENT_PAGE = "currentPage";
 
     public static final String BASE_NAME = "locale.locale";
+
+    public static final String INVALID_PASSWORD_MESSAGE = "Invalid password";
+
 
 }

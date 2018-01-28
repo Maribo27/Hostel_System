@@ -6,12 +6,12 @@
 <head>
     <c:set var = "currentPage" scope = "session" value = "login.jsp"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="assets/css/carousel.css">
-    <link rel="stylesheet" href="assets/css/input_form.css">
-    <link rel="stylesheet" href="assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/carousel.css">
+    <link rel="stylesheet" href="../assets/css/input_form.css">
+    <link rel="stylesheet" href="../assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.png">
 
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
@@ -41,7 +41,7 @@
                 <input type="hidden" name="command" value="LOGIN"/>
                 <input type="text" name="username" value="${requestScope.username}" placeholder="${username}" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
                 <input type="password" name="password" placeholder="${password}" pattern="^[\w]{5,12}$"/>
-                <input type="submit" value="Log In"/>
+                <input type="submit" value="${login}"/>
             </form>
         </div>
         <div class="input-data-form-help">
@@ -52,7 +52,7 @@
 
 
 <jsp:include page="/WEB-INF/jsp/carousel.jsp"/>
-<jsp:include page="/WEB-INF/jsp/logInHeader.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header/logInHeader.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 </body>
