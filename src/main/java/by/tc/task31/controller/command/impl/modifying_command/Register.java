@@ -5,6 +5,8 @@ import by.tc.task31.entity.User;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 import by.tc.task31.service.UserService;
+import by.tc.task31.util.ControllerUtil;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,47 +16,43 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tc.task31.controller.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.INDEX_URL;
-import static by.tc.task31.controller.command.PageUrl.HOME_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.*;
+import static by.tc.task31.controller.constant.UserAttributes.*;
 
 public class Register implements Command {
-
-    private static final String USER_EXCEPTION_MESSAGE = "This user exist";
+    private static final Logger logger = Logger.getLogger(Register.class);
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter(USERNAME);
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME);
         String surname = request.getParameter(SURNAME);
         String lastname = request.getParameter(LASTNAME);
-        String lang = request.getParameter(LANG_ATTRIBUTE);
+        HttpSession session = request.getSession();
+        String sessionLang = (String) session.getAttribute(LANG_ATTRIBUTE);
+        String lang = sessionLang != null ? sessionLang : DEFAULT_LANG;
+        session.setAttribute(LANG_ATTRIBUTE, lang);
 
         UserService service = factory.getUserService();
 
-        RequestDispatcher requestDispatcher;
-
-        boolean userInDB = service.userInDB(username);
-        if (userInDB){
-            request.setAttribute(ERROR_ATTRIBUTE, USER_EXCEPTION_MESSAGE);
-            request.setAttribute(USERNAME, username);
-            request.setAttribute(PASSWORD, password);
-            request.setAttribute(NAME, name);
-            request.setAttribute(SURNAME, surname);
-            request.setAttribute(LASTNAME, lastname);
-            request.setAttribute(EMAIL, email);
-            request.setAttribute(LANG_ATTRIBUTE, lang);
-            requestDispatcher = request.getRequestDispatcher(INDEX_URL);
-        } else {
-            User user = service.addUserInformation(username, password, name, lastname, surname, email);
-            HttpSession session = request.getSession(true);
-
-            session.setAttribute(USER_ATTRIBUTE, user);
-            session.setAttribute(LANG_ATTRIBUTE, lang);
-            requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
+        try {
+            boolean userInDB = service.userInDB(username);
+            if (userInDB){
+                ControllerUtil.showUserExistError(request, response, username, email, name, surname, lastname, INDEX_URL);
+            } else {
+                service.addUserInformation(username, password, name, lastname, surname, email);
+                User user = service.getUserInformation(lang, username, password);
+                session = request.getSession(true);
+                session.setAttribute(USER_ATTRIBUTE, user);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE_URL);
+                requestDispatcher.forward(request, response);
+            }
+        } catch (ServiceException e) {
+            logger.error(e.getMessage(), e);
+            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE_URL);
         }
-        requestDispatcher.forward(request, response);
     }
 }

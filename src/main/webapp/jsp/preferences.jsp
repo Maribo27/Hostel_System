@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "jsp/preferences.jsp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
@@ -21,6 +20,7 @@
     <fmt:message bundle="${loc}" key="locale.message.enter.email" var="email"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.current.password" var="password"/>
     <fmt:message bundle="${loc}" key="locale.button.change" var="change"/>
+    <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <title> ${preferences} | ${sessionScope.user.username} | Hostel System</title>
 </head>
 <body>
@@ -39,6 +39,14 @@
                 <input type="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
                 <input type="submit" value="${change}"/>
             </form>
+            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
+                <c:if test="${requestScope.confirm eq 'true'}">
+                    <input type="password" name="confirm-password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
+                </c:if>
+                <input type="hidden" name="command" value="DELETE_USER"/>
+                <input type="submit" value="${delete}"/>
+            </form>
+            <h2>${requestScope.error}</h2>
         </div>
     </section>
 </div>

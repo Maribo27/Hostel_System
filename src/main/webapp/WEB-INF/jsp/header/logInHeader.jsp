@@ -22,11 +22,15 @@
     <li><a href="${pageContext.request.contextPath}/register">${register}</a></li>
     <li><a href="#">${lang}</a>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
+            <c:set var="params" scope="request"/>
+            <c:if test="${pageContext.request.queryString.length() > 0}">
+                <c:set var="params" value="&${pageContext.request.queryString}"/>
+            </c:if>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/login${params}">${rus}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/login${params}">${eng}</a></li>
         </ul>
     </li>
-    <li class="active"><a href="${pageContext.request.contextPath}/login">${home}</a></li>
+    <li class="active"><a href="${pageContext.request.contextPath}/register">${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

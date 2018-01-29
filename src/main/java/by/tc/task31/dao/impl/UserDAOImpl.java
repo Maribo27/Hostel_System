@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
 
     private User searchUserInDB(Connection connection, String username, String password, String lang) throws SQLException {
         String validatePassword = "SELECT u.id_user, u.username, u.email, u.password, u.surname, u.name, " +
-                "u.lastname, u.discount, u.balance, u.status, start_of_ban, end_of_ban, reason_type " +
+                "u.lastname, u.discount, u.balance, u.account, u.status, start_of_ban, end_of_ban, reason_type " +
                 "FROM user AS u " +
                 "LEFT JOIN (" +
                 "SELECT b.start_of_ban, b.end_of_ban, br.reason_type, b.user_id FROM banned_user AS b " +
@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException {
+    public void addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException {
         Connection connection = null;
         try {
             password = DAOUtil.createPassword(password);
@@ -79,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
             user.setLastname(lastname);
             connection = connectionPool.takeConnection();
             addUserToDB(user);
-            return user;
+            createAccount(username);
         } catch (SQLException e) {
             throw new DAOException(SQL_ERROR_WHILE_CREATING_USER);
         } catch (NoSuchAlgorithmException e) {
@@ -92,7 +92,7 @@ public class UserDAOImpl implements UserDAO {
     private void addUserToDB(User user) throws SQLException {
         Connection connection = connectionPool.takeConnection();
         String changeLogInData = "INSERT INTO user (username, email, password, name, " +
-                "surname, lastname, discount, status, balance) VALUES (?,?,?,?,?,?,0,'user',0)";
+                "surname, lastname, discount, status, balance, account) VALUES (?,?,?,?,?,?,0,'user',0,'unknown')";
         PreparedStatement statement = connection.prepareStatement(changeLogInData);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getEmail());
@@ -100,6 +100,24 @@ public class UserDAOImpl implements UserDAO {
         statement.setString(4, user.getName());
         statement.setString(5, user.getSurname());
         statement.setString(6, user.getLastname());
+        statement.executeUpdate();
+    }
+
+    private void createAccount(String username) throws SQLException, NoSuchAlgorithmException {
+        Connection connection = connectionPool.takeConnection();
+        String searchUser = "SELECT id_user FROM user WHERE user.username = ?";
+        PreparedStatement statement = connection.prepareStatement(searchUser);
+        statement.setString(1, username);
+        ResultSet resultSet = statement.executeQuery();
+        int id = 0;
+        while (resultSet.next()){
+            id = resultSet.getInt(1);
+        }
+        String account = DAOUtil.createPassword(String.valueOf(id));
+        String changeLogInData = "UPDATE user SET account=? WHERE id_user=?";
+        statement = connection.prepareStatement(changeLogInData);
+        statement.setString(1, account);
+        statement.setInt(2, id);
         statement.executeUpdate();
     }
 

@@ -5,13 +5,12 @@
 <html>
 <head>
     <title>Hostels</title>
-    <c:set var = "currentPage" scope = "session" value = "jsp/hostelsInfoPage.jsp"/>
-    <link rel="stylesheet" href="../assets/css/carousel.css">
-    <link rel="stylesheet" href="../assets/css/input_form.css">
-    <link rel="stylesheet" href="../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.hostels" var="hostels"/>
@@ -31,7 +30,6 @@
 </head>
 <body>
 
-
 <div style="padding:20px;"></div>
 <div class="table-container">
     <table>
@@ -43,9 +41,10 @@
             <th>${address}</th>
             <th>${booking}</th>
             <th>${email}</th>
-            <th>${count}</th>
             <th>${cost}</th>
-            <th>${action}</th>
+            <c:if test = "${sessionScope.user.status eq 'USER'}">
+                <th>${action}</th>
+            </c:if>
         </tr>
         <c:forEach items="${requestScope.hostels}" var="hostel">
             <tr>
@@ -56,30 +55,19 @@
                 <td><c:out value="${hostel.address}"/></td>
                 <td><c:out value="${hostel.booking}"/></td>
                 <td><c:out value="${hostel.email}"/></td>
-                <td><c:out value="${hostel.room}"/></td>
                 <td><c:out value="${hostel.cost}"/></td>
                 <td>
-                    <c:choose>
-                        <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
-                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="DELETE_HOSTEL"/>
-                                <input type="hidden" name="hostel" value="${hostel.id}"/>
-                                <input type="submit" value="${delete}"/>
-                            </form>
-                        </c:when>
-                        <c:when test = "${sessionScope.user.status eq 'USER'}">
-                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="ADD_REQUEST"/>
-                                <input type="hidden" name="hostel" value="${hostel.id}"/>
-                                <input type="submit" value="${request}"/>
-                            </form>
-                        </c:when>
-                    </c:choose>
+                    <c:if test = "${sessionScope.user.status eq 'USER'}">
+                        <form action="${pageContext.request.contextPath}/hostel_system" method="get">
+                            <input type="hidden" name="command" value="ADD_REQUEST"/>
+                            <input type="hidden" name="hostel" value="${hostel.id}"/>
+                            <input type="submit" value="${request}"/>
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
     </table>
-
 </div>
 
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>

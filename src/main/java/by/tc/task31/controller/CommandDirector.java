@@ -11,7 +11,7 @@ import by.tc.task31.controller.command.impl.view_command.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.tc.task31.controller.ControlConst.*;
+import static by.tc.task31.controller.constant.Status.*;
 
 public class CommandDirector {
     private Map<CommandType, Command> commands = new HashMap<>();
@@ -29,8 +29,7 @@ public class CommandDirector {
         adminCommands.put(CommandType.SHOW_USERS, new ShowUsers());
         adminCommands.put(CommandType.SHOW_REQUESTS, new ShowRequests());
         adminCommands.put(CommandType.SHOW_HOSTELS, new ShowHostels());
-        adminCommands.put(CommandType.DELETE_HOSTEL, new DeleteHostel());
-        adminCommands.put(CommandType.CHANGE_REQUEST_STATUS, new ChangeRequestStatus());
+        adminCommands.put(CommandType.APPROVE_REQUEST, new ApproveRequest());
         adminCommands.put(CommandType.UNLOCK, new UnlockUser());
         adminCommands.put(CommandType.BLOCK, new BlockUser());
         adminCommands.put(CommandType.OPEN_BLOCK_PAGE, new BlockPage());
@@ -48,10 +47,10 @@ public class CommandDirector {
     private void createUserCommands() {
         userCommands.put(CommandType.CHANGE_USER_DATA, new ChangeUserData());
         userCommands.put(CommandType.CHANGE_PASSWORD, new ChangePassword());
-        userCommands.put(CommandType.DELETE_REQUEST, new DeleteRequest());
+        userCommands.put(CommandType.CANCEL_REQUEST, new CancelRequest());
         userCommands.put(CommandType.ADD_REQUEST, new AddRequest());
-        userCommands.put(CommandType.CREATE_REQUEST, new CreateRequest());
-        userCommands.put(CommandType.SHOW_CREATING_FORM, new ShowCreatingForm());
+        userCommands.put(CommandType.SHOW_AVAILABLE_HOSTELS, new ShowAvailableHostels());
+        userCommands.put(CommandType.GET_CITIES, new CreateCitiesField());
     }
 
     Command getCommand(String name) {

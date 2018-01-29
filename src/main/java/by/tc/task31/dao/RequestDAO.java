@@ -7,9 +7,9 @@ import java.util.List;
 public interface RequestDAO {
     List<Request> getRequests(String lang) throws DAOException;
     List<Request> getRequests(String lang, int id) throws DAOException;
-    void addRequest(Request request) throws DAOException;
+    int addRequest(Request request, int balance) throws DAOException;
 
-	void deleteRequest(int id) throws DAOException;
+	int cancelRequest(int requestId, int userId, String status) throws DAOException;
 
-	void changeRequestStatus(int id, String status) throws DAOException;
+	void approveRequest(int id) throws DAOException;
 }

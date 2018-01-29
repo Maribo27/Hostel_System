@@ -12,11 +12,11 @@ import java.util.Map;
 import static by.tc.task31.controller.constant.Message.CANNOT_ACCESS_CLASS_FIELD;
 import static by.tc.task31.controller.constant.Message.CANNOT_FIND_CLASS_FIELD;
 
-public final class StatusLocale {
+public final class ErrorLocale {
 	private static Map<User.Status, String> userStatus = new HashMap<>();
 	private static Map<Request.Status, String> requestStatus = new HashMap<>();
 
-	private final static Logger logger = Logger.getLogger(StatusLocale.class);
+	private final static Logger logger = Logger.getLogger(ErrorLocale.class);
 
 	public static final String USER_ADMIN = "locale.info.users.admin";
 	public static final String USER_USER = "locale.info.users.user";
@@ -27,7 +27,7 @@ public final class StatusLocale {
 	public static final String REQUEST_DENIED = "locale.info.requests.denied";
 	public static final String REQUEST_DELETED = "locale.info.requests.deleted";
 
-	public static String getUserStatus(User.Status status) {
+	public static String getError(User.Status status) {
 		return userStatus.get(status);
 	}
 
@@ -40,14 +40,14 @@ public final class StatusLocale {
 
 			for (User.Status status : User.Status.values()){
 				String fieldName = "USER_" + status.name();
-				Field field = StatusLocale.class.getField(fieldName);
+				Field field = ErrorLocale.class.getField(fieldName);
 				String value = (String) field.get(null);
 				userStatus.put(status, value);
 			}
 
 			for (Request.Status status : Request.Status.values()){
 				String fieldName = "REQUEST_" + status.name();
-				Field field = StatusLocale.class.getField(fieldName);
+				Field field = ErrorLocale.class.getField(fieldName);
 				String value = (String) field.get(null);
 				requestStatus.put(status, value);
 			}
@@ -60,5 +60,5 @@ public final class StatusLocale {
 		}
 	}
 
-	private StatusLocale() {}
+	private ErrorLocale() {}
 }

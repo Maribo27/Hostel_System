@@ -4,6 +4,8 @@ import by.tc.task31.controller.command.Command;
 import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
+import by.tc.task31.util.ControllerUtil;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,11 +16,11 @@ import java.io.IOException;
 import java.util.Map;
 
 import static by.tc.task31.controller.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.CHOOSE_PARAMETERS_URL;
-import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.CHOOSE_PARAMETERS_URL;
+import static by.tc.task31.controller.constant.PageUrl.ERROR_PAGE_URL;
 
-public class ShowCreatingForm implements Command {
-
+public class CreateCitiesField implements Command {
+	private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
 	private ServiceFactory factory = ServiceFactory.getInstance();
 
 	@Override
@@ -35,9 +37,8 @@ public class ShowCreatingForm implements Command {
 		    requestDispatcher = request.getRequestDispatcher(CHOOSE_PARAMETERS_URL);
 		    requestDispatcher.forward(request, response);
 	    } catch (ServiceException e) {
-		    request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
-		    RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
-		    dispatcher.forward(request, response);
+		    logger.error(e.getMessage(), e);
+		    ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE_URL);
 	    }
     }
 }

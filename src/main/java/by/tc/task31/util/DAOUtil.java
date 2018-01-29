@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static by.tc.task31.controller.ControlConst.DELETED;
+
 public class DAOUtil {
 	private static final String MD_5 = "MD5";
 
@@ -28,6 +30,7 @@ public class DAOUtil {
 	        user.setLastname(resultSet.getString(column++));
 	        user.setDiscount(resultSet.getInt(column++));
 	        user.setBalance(resultSet.getInt(column++));
+		    user.setAccount(resultSet.getString(column++));
 	        user.setStatus(resultSet.getString(column++));
 	        user.setBlockDate(resultSet.getDate(column++));
 	        user.setUnlockDate(resultSet.getDate(column++));
@@ -59,20 +62,26 @@ public class DAOUtil {
 	    }
 	}
 
-	public static List<Hostel> createHostels(ResultSet resultSet) throws SQLException {
+	public static List<Hostel> createHostels(ResultSet resultSet, int room) throws SQLException {
 	    List<Hostel> hostels = new ArrayList<>();
 	    while (resultSet.next()){
 	        int column = 1;
 	        Hostel hostel = new Hostel();
+
 	        hostel.setId(resultSet.getInt(column++));
 	        hostel.setName(resultSet.getString(column++));
 	        hostel.setCountry(resultSet.getString(column++));
 	        hostel.setCity(resultSet.getString(column++));
 	        hostel.setAddress(resultSet.getString(column++));
-	        hostel.setRoom(resultSet.getInt(column++));
-	        hostel.setBooking(resultSet.getString(column++));
+	        if (room == 0) {
+		        hostel.setBooking(resultSet.getString(column++));
+	        }
 	        hostel.setCost(resultSet.getInt(column++));
-	        hostel.setEmail(resultSet.getString(column));
+	        hostel.setEmail(resultSet.getString(column++));
+		    hostel.setRoom(resultSet.getInt(column));
+		    if (hostel.getRoom() < room){
+			    continue;
+		    }
 	        hostels.add(hostel);
 	    }
 	    return hostels;
@@ -91,8 +100,12 @@ public class DAOUtil {
 	        req.setRoom(resultSet.getInt(column++));
 	        req.setDays(resultSet.getInt(column++));
 	        req.setCost(resultSet.getInt(column++));
-	        req.setStatus(resultSet.getString(column++));
-	        req.setDate(resultSet.getDate(column));
+		    String status = resultSet.getString(column++);
+		    req.setStatus(status);
+		    if (status.equals(DELETED)){
+		    	continue;
+		    }
+		    req.setDate(resultSet.getDate(column));
 	        requests.add(req);
 	    }
 	    return requests;

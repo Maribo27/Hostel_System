@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ taglib prefix="ahs" uri="hostelTag" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "jsp/requestsInfoPage.jsp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
@@ -32,7 +32,8 @@
 <body>
 <div style="padding:20px;"></div>
 <div class="table-container">
-    <table>
+    <c:if test="${fn:length(requestScope.requests) gt 0}">
+        <table>
         <tr>
             <th>${requestId}</th>
             <th>${userId}</th>
@@ -61,13 +62,18 @@
                     <c:if test = "${sessionScope.user.status eq 'ADMIN'}">
                         <c:set var = "page" scope="page" value = "/WEB-INF/jsp/button/requestsAdmin.jsp"/>
                     </c:if>
-                    <jsp:include page="${page}">
-                        <jsp:param name="id" value="${request.id}" />
-                    </jsp:include>
+                    <c:if test = "${request.status eq 'PROCESSING'}">
+                        <jsp:include page="${page}">
+                            <jsp:param name="page" value="${requestScope.page.current}" />
+                            <jsp:param name="userId" value="${sessionScope.user.id}" />
+                            <jsp:param name="requestId" value="${request.id}" />
+                        </jsp:include>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    </c:if>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>

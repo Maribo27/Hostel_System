@@ -10,6 +10,7 @@ public class Request implements Serializable {
     private String type;
     private Status status;
     private Date date;
+    private Date endDate;
     private int id;
     private int userId;
     private int hostelId;
@@ -21,7 +22,7 @@ public class Request implements Serializable {
     }
 
     public enum Status {
-        PROCESSING, APPROVED, DENIED
+        PROCESSING, APPROVED, DENIED, DELETED
     }
 
     public String getHostelInfo() {
@@ -58,6 +59,14 @@ public class Request implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public int getId() {
@@ -122,12 +131,13 @@ public class Request implements Serializable {
                 Objects.equals(hostelInfo, request.hostelInfo) &&
                 Objects.equals(type, request.type) &&
                 status == request.status &&
-                Objects.equals(date, request.date);
+                Objects.equals(date, request.date) &&
+                Objects.equals(endDate, request.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hostelInfo, type, status, date, id, userId, hostelId, room, days, cost);
+        return Objects.hash(hostelInfo, type, status, date, endDate, id, userId, hostelId, room, days, cost);
     }
 
     @Override
@@ -137,6 +147,7 @@ public class Request implements Serializable {
                 ", type='" + type + '\'' +
                 ", status=" + status +
                 ", date=" + date +
+                ", endDate=" + endDate +
                 ", id=" + id +
                 ", userId=" + userId +
                 ", hostelId=" + hostelId +

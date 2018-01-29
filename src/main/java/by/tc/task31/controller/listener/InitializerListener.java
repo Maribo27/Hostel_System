@@ -14,6 +14,7 @@ import java.io.File;
 public class InitializerListener implements ServletContextListener{
 	public final static Logger logger = Logger.getLogger(ServletContextListener.class);
 	private static final String LOG4J_CONFIG_LOCATION = "log4j-config-location";
+	private static final String FAILED_TO_INIT_CONNECTION_POOL = "Failed to init connection pool";
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -31,8 +32,8 @@ public class InitializerListener implements ServletContextListener{
 		try {
 			connectionPool.initPoolData();
 		} catch (ConnectionPoolException e) {
-			logger.log(Level.FATAL, "Failed to init connection pool", e);
-			throw new ConnectionPoolException("Failed to init connection pool", e);
+			logger.log(Level.FATAL, FAILED_TO_INIT_CONNECTION_POOL, e);
+			throw new ConnectionPoolException(FAILED_TO_INIT_CONNECTION_POOL, e);
 		}
 	}
 

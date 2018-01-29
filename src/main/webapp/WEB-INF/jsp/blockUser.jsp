@@ -5,16 +5,16 @@
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "WEB-INF/jsp/blockUser.jsp"/>
-    <link rel="stylesheet" href="../../assets/css/carousel.css">
-    <link rel="stylesheet" href="../../assets/css/input_form.css">
-    <link rel="stylesheet" href="../../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.block" var="blockPage"/>
-    <fmt:message bundle="${loc}" key="locale.button.return" var="return"/>
+    <fmt:message bundle="${loc}" key="locale.button.return" var="goBack"/>
     <fmt:message bundle="${loc}" key="locale.button.block" var="block"/>
     <title> ${blockPage} | ${sessionScope.user.username} | Hostel System</title>
 </head>
@@ -26,18 +26,24 @@
         <div class="input-data-form">
             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="BLOCK"/>
+                <input type="hidden" name="number" value="${requestScope.number}"/>
                 <input type="hidden" name="id" value="${requestScope.id}"/>
-                <select name="reason">
-                    <c:forEach items="${requestScope.reasons}" var="reason">
-                        <option value="${reason.key}">${reason.value}</option>
-                    </c:forEach>
-                </select>
-                <input type="date" name="date"/>
+                <label>
+                    <select name="reason">
+                        <c:forEach items="${requestScope.reasons}" var="reason">
+                            <option value="${reason.key}">${reason.value}</option>
+                        </c:forEach>
+                    </select>
+                </label>
+                <label>
+                    <input type="date" name="date"/>
+                </label>
                 <input type="submit" value="${block}"/>
             </form>
             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="SHOW_USERS"/>
-                <input type="submit" value="${return}"/>
+                <input type="hidden" name="number" value="${requestScope.number}"/>
+                <input type="submit" value="${goBack}"/>
             </form>
         </div>
     </section>

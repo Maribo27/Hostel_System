@@ -1,24 +1,17 @@
 package by.tc.task31.controller;
 
 public class ControlConst {
-    public static final String COMMAND = "command";
-    public static final String ADMIN = "admin";
-    public static final String USER = "user";
-    public static final String BANNED = "banned";
+    public static final String DEFAULT_LANG = "ru";
+
+    public static final String COMMAND_ATTRIBUTE = "command";
+    public static final String CONFIRM_PASSWORD = "confirm-password";
     public static final String ERROR_ATTRIBUTE = "error";
     public static final String USER_ATTRIBUTE = "user";
     public static final String HOSTELS_ATTRIBUTE = "hostels";
     public static final String REQUESTS_ATTRIBUTE = "requests";
     public static final String USERS_ATTRIBUTE = "users";
     public static final String LANG_ATTRIBUTE = "lang";
-
-    public static final String NAME = "name";
-    public static final String SURNAME = "surname";
-    public static final String LASTNAME = "lastname";
-    public static final String EMAIL = "email";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
-    public static final String NEW_PASSWORD = "new-password";
+    public static final String DELETED = "deleted";
 
     public static final String HOSTEL = "hostel";
     public static final String TYPE = "type";

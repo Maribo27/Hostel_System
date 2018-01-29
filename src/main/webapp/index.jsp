@@ -33,7 +33,7 @@
 <body>
 <c:choose>
     <c:when test = "${sessionScope.user != null}">
-        <jsp:forward page="jsp/home.jsp" />
+        <jsp:forward page="${pageContext.request.contextPath}/home" />
     </c:when>
 </c:choose>
 <div style="padding:20px;"></div>
@@ -54,6 +54,7 @@
                         <input type="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
                         <input type="submit" value="${register}"/>
             </form>
+            <h2>${requestScope.error}</h2>
         </div>
         <div class="input-data-form-help">
                     <p>${account}? <a href="${pageContext.request.contextPath}/login">${click}</a>.</p>

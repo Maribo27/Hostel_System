@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "jsp/changePassword.jsp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">

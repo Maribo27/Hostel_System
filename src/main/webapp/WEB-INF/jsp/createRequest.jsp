@@ -5,12 +5,12 @@
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "WEB-INF/jsp/createRequest.jsp"/>
-    <link rel="stylesheet" href="../../assets/css/carousel.css">
-    <link rel="stylesheet" href="../../assets/css/input_form.css">
-    <link rel="stylesheet" href="../../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.request.creating" var="requestCreating"/>
@@ -25,23 +25,12 @@
     <fmt:message bundle="${loc}" key="locale.table.title.room.cost" var="cost"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.booking" var="request"/>
+    <fmt:message bundle="${loc}" key="locale.button.payment" var="payment"/>
     <title> ${requestCreating} | ${sessionScope.user.username} | Hostel System</title>
 </head>
 
 <body>
 <div style="padding:20px;"></div>
-<div id="sidebar">
-    <section class="container">
-        <div class="input-data-form">
-            <h3><c:out value="${requestScope.type}"/></h3>
-            <h3><c:out value="${requestScope.city}"/></h3>
-            <h3><c:out value="${requestScope.rooms}"/></h3>
-            <h3><c:out value="${requestScope.days}"/></h3>
-            <h3><c:out value="${requestScope.date}"/></h3>
-        </div>
-    </section>
-</div>
-
 <div class="table-container">
     <table>
         <tr>
@@ -50,9 +39,7 @@
             <th>${country}</th>
             <th>${city}</th>
             <th>${address}</th>
-            <th>${booking}</th>
             <th>${email}</th>
-            <th>${count}</th>
             <th>${cost}</th>
             <th>${action}</th>
         </tr>
@@ -63,20 +50,23 @@
                 <td><c:out value="${hostel.country}"/></td>
                 <td><c:out value="${hostel.city}"/></td>
                 <td><c:out value="${hostel.address}"/></td>
-                <td><c:out value="${hostel.booking}"/></td>
                 <td><c:out value="${hostel.email}"/></td>
-                <td><c:out value="${hostel.room}"/></td>
                 <td><c:out value="${hostel.cost}"/></td>
                 <td>
+                    <c:set var="addRequest" scope="request" value="${payment}"/>
+                    <c:if test="${requestScope.type eq 'booking'}">
+                        <c:set var="addRequest" scope="request" value="${request}"/>
+                    </c:if>
                     <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                         <input type="hidden" name="command" value="ADD_REQUEST"/>
+                        <input type="hidden" name="number" value="1"/>
                         <input type="hidden" name="type" value="${requestScope.type}"/>
                         <input type="hidden" name="cost" value="${hostel.cost}"/>
                         <input type="hidden" name="rooms" value="${requestScope.rooms}"/>
                         <input type="hidden" name="days" value="${requestScope.days}"/>
                         <input type="hidden" name="date" value="${requestScope.date}"/>
                         <input type="hidden" name="hostel" value="${hostel.id}"/>
-                        <input type="submit" value="${request}"/>
+                        <input type="submit" value="${addRequest}"/>
                     </form>
                 </td>
             </tr>

@@ -26,12 +26,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUserInformation(String username, String password, String name, String lastname, String surname, String email) throws ServiceException {
+    public void addUserInformation(String username, String password, String name, String lastname, String surname, String email) throws ServiceException {
 
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
-            return userDAO.addUser(username, password, name, lastname, surname, email);
+            userDAO.addUser(username, password, name, lastname, surname, email);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

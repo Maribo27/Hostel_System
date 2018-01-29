@@ -7,6 +7,7 @@ import by.tc.task31.entity.User;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 import by.tc.task31.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,10 +18,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.tc.task31.controller.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.USERS_INFO_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.ERROR_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.USERS_INFO_PAGE_URL;
 
 public class ShowUsers implements Command {
+    private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
@@ -34,6 +36,11 @@ public class ShowUsers implements Command {
 
         try {
             List<User> users = service.getUsers(lang);
+            if (users == null){
+                requestDispatcher = request.getRequestDispatcher(USERS_INFO_PAGE_URL);
+                requestDispatcher.forward(request, response);
+                return;
+            }
             PaginationHelper paginationHelper = new ControllerUtil().createPagination(request, page, users.size(), "SHOW_USERS");
             request.setAttribute(PAGE, paginationHelper);
 
@@ -42,9 +49,8 @@ public class ShowUsers implements Command {
             requestDispatcher = request.getRequestDispatcher(USERS_INFO_PAGE_URL);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
-            dispatcher.forward(request, response);
+            logger.error(e.getMessage(), e);
+            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE_URL);
         }
     }
 }

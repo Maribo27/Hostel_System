@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
-    <fmt:message bundle="${loc}" key="locale.button.cancel" var="cancel"/>
+    <fmt:message bundle="${loc}" key="locale.button.show.requests" var="requests"/>
+    <fmt:message bundle="${loc}" key="locale.button.preferences" var="preferences"/>
 </head>
 <body>
+<form action="${pageContext.request.contextPath}/preferences">
+    <input type="submit" value="${preferences}"/>
+</form>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-    <input type="hidden" name="command" value="CANCEL_REQUEST"/>
-    <input type="hidden" name="next-command" value="SHOW_USER_REQUESTS"/>
-    <input type="hidden" name="number" value="${param.page}"/>
-    <input type="hidden" name="request" value="${param.requestId}"/>
-    <input type="hidden" name="id" value="${param.userId}"/>
-    <input type="hidden" name="status" value="deleted"/>
-    <input type="submit" value="${cancel}"/>
+    <input type="hidden" name="number" value="1"/>
+    <input type="hidden" name="command" value="SHOW_USER_REQUESTS"/>
+    <input type="submit" value="${requests}"/>
 </form>
 </body>
 </html>

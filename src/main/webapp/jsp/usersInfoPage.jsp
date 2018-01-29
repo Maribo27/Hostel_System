@@ -5,7 +5,6 @@
 <%@ taglib prefix="ahs" uri="hostelTag" %>
 <html>
 <head>
-    <c:set var = "currentPage" scope = "session" value = "jsp/usersInfoPage.jsp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
@@ -68,13 +67,16 @@
                         <c:when test = "${user.status eq 'BANNED'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="UNLOCK"/>
+                                <input type="hidden" name="number" value="${requestScope.page.current}"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
+                                <input type="hidden" name="parameters" value="${user.id}"/>
                                 <input type="submit" value="${unlock}"/>
                             </form>
                         </c:when>
                         <c:when test = "${user.status eq 'USER'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                                 <input type="hidden" name="command" value="OPEN_BLOCK_PAGE"/>
+                                <input type="hidden" name="number" value="${requestScope.page.current}"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
                                 <input type="submit" value="${block}"/>
                             </form>

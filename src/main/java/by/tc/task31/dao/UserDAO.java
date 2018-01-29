@@ -9,7 +9,7 @@ import java.util.Map;
 public interface UserDAO {
     User getUserInformation(String lang, String username, String password) throws DAOException;
     boolean userInDB(String username) throws DAOException;
-    User addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException;
+    void addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException;
     List<User> getUsers(String lang) throws DAOException;
     Map<Integer, String> getReasons(String lang) throws DAOException;
     void blockUser(int id, Date date, int reason) throws DAOException;

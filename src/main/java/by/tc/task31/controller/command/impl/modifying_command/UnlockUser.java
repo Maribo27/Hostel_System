@@ -1,48 +1,39 @@
 package by.tc.task31.controller.command.impl.modifying_command;
 
 import by.tc.task31.controller.command.Command;
-import by.tc.task31.entity.User;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
 import by.tc.task31.service.UserService;
+import by.tc.task31.util.ControllerUtil;
+import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-import static by.tc.task31.controller.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.USERS_INFO_PAGE_URL;
+import static by.tc.task31.controller.ControlConst.ID;
+import static by.tc.task31.controller.ControlConst.NUMBER;
+import static by.tc.task31.controller.constant.PageUrl.ERROR_PAGE_URL;
 
 public class UnlockUser implements Command {
-
-    private ServiceFactory factory = ServiceFactory.getInstance();
+	private static final Logger logger = Logger.getLogger(AddRequest.class);
+	private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    HttpSession session = request.getSession();
-	    String lang = (String) session.getAttribute(LANG_ATTRIBUTE);
 	    int userId = Integer.parseInt(request.getParameter(ID));
+	    int page = Integer.parseInt(request.getParameter(NUMBER));
 
 	    UserService service = factory.getUserService();
 
-        RequestDispatcher requestDispatcher;
-
         try {
 	        service.unlockUser(userId);
-	        List<User> users = service.getUsers(lang);
-
-	        request.setAttribute(USERS_ATTRIBUTE, users);
-	        requestDispatcher = request.getRequestDispatcher(USERS_INFO_PAGE_URL);
-	        requestDispatcher.forward(request, response);
+	        String address = request.getContextPath() + "/hostel_system?command=SHOW_USERS&number=" + page;
+	        response.sendRedirect(address);
         } catch (ServiceException e) {
-            request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
-            dispatcher.forward(request, response);
+	        logger.error(e.getMessage(), e);
+	        ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE_URL);
         }
     }
 }

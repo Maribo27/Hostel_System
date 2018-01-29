@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.tc.task31.controller.command.PageUrl.INDEX_URL;
+import static by.tc.task31.controller.constant.PageUrl.INDEX_URL;
 
 public class LogOut implements Command {
     @Override

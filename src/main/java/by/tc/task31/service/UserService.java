@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UserService {
     User getUserInformation(String lang, String username, String password) throws ServiceException;
-    User addUserInformation(String username, String password, String name, String lastname, String surname, String email) throws ServiceException;
+    void addUserInformation(String username, String password, String name, String lastname, String surname, String email) throws ServiceException;
     boolean userInDB(String username) throws ServiceException;
     List<User> getUsers(String lang) throws ServiceException;
     Map<Integer, String> getReasons(String lang) throws ServiceException;

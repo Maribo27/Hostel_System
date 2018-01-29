@@ -7,6 +7,7 @@ import by.tc.task31.entity.Hostel;
 import by.tc.task31.service.HostelService;
 import by.tc.task31.service.ServiceException;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,11 @@ public class HostelServiceImpl implements HostelService {
     }
 
     @Override
-    public List<Hostel> getHostels(String lang, int city, int room) throws ServiceException {
+    public List<Hostel> getHostels(String lang, int city, int room, Date start, Date end) throws ServiceException {
         HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
 
         try {
-            return hostelDAO.getHostels(lang, city, room);
+            return hostelDAO.getHostels(lang, city, room, start, end);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
@@ -40,17 +41,6 @@ public class HostelServiceImpl implements HostelService {
 
         try {
             return hostelDAO.getCities(lang);
-        } catch (DAOException e) {
-            throw new ServiceException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void deleteHostel(int id) throws ServiceException {
-        HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
-
-        try {
-            hostelDAO.deleteHostel(id);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

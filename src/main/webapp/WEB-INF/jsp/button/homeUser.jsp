@@ -14,7 +14,7 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-    <input type="hidden" name="command" value="SHOW_CREATING_FORM"/>
+    <input type="hidden" name="command" value="GET_CITIES"/>
     <input type="submit" value="${request}"/>
 </form>
 <form action="${pageContext.request.contextPath}/preferences">

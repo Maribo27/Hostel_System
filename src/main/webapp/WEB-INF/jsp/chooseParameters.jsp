@@ -5,12 +5,12 @@
 <html>
 <head>
     <c:set var = "currentPage" scope = "session" value = "WEB-INF/jsp/chooseParameters.jsp"/>
-    <link rel="stylesheet" href="../../assets/css/carousel.css">
-    <link rel="stylesheet" href="../../assets/css/input_form.css">
-    <link rel="stylesheet" href="../../assets/css/navigation_bar.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="../../assets/images/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.booking" var="bookingPage"/>
@@ -30,19 +30,26 @@
     <section class="container">
         <div class="input-data-form">
             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                <input type="hidden" name="command" value="CREATE_REQUEST"/>
-                <select name="type">
-                    <option value="booking">${booking}</option>
-                    <option value="payment">${payment}</option>
-                </select>
-                <select name="city">
-                    <c:forEach items="${requestScope.cities}" var="city">
-                        <option value="${city.key}">${city.value}</option>
-                    </c:forEach>
-                </select>
+                <input type="hidden" name="command" value="SHOW_AVAILABLE_HOSTELS"/>
+                <input type="hidden" name="number" value="1"/>
+                <label>
+                    <select name="type">
+                        <option value="booking">${booking}</option>
+                        <option value="payment">${payment}</option>
+                    </select>
+                </label>
+                <label>
+                    <select name="city">
+                        <c:forEach items="${requestScope.cities}" var="city">
+                            <option value="${city.key}">${city.value}</option>
+                        </c:forEach>
+                    </select>
+                </label>
                 <input type="number" name="rooms" placeholder="${rooms}" pattern="^[\w]{5,20}$" value="${sessionScope.username}"/>
                 <input type="number" name="days" placeholder="${days}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.name}"/>
-                <input type="date" name="date"/>
+                <label>
+                    <input type="date" name="date"/>
+                </label>
                 <input type="submit" value="${search}"/>
             </form>
         </div>

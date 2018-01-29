@@ -13,14 +13,18 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-    <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
-    <input type="hidden" name="request" value="${param.id}"/>
-    <input type="hidden" name="status" value="approved"/>
+    <input type="hidden" name="next-command" value="SHOW_REQUESTS"/>
+    <input type="hidden" name="number" value="${param.page}"/>
+    <input type="hidden" name="command" value="APPROVE_REQUEST"/>
+    <input type="hidden" name="request" value="${param.requestId}"/>
     <input type="submit" value="${approve}"/>
 </form>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-    <input type="hidden" name="command" value="CHANGE_REQUEST_STATUS"/>
-    <input type="hidden" name="request" value="${param.id}"/>
+    <input type="hidden" name="next-command" value="SHOW_REQUESTS"/>
+    <input type="hidden" name="number" value="${param.page}"/>
+    <input type="hidden" name="command" value="CANCEL_REQUEST"/>
+    <input type="hidden" name="request" value="${param.requestId}"/>
+    <input type="hidden" name="id" value="${param.userId}"/>
     <input type="hidden" name="status" value="denied"/>
     <input type="submit" value="${deny}"/>
 </form>

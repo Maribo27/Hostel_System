@@ -34,33 +34,33 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void addRequest(Request request) throws ServiceException {
+    public int addRequest(Request request, int balance) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            requestDAO.addRequest(request);
+            return requestDAO.addRequest(request, balance);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public void deleteRequest(int id) throws ServiceException {
+    public int cancelRequest(int requestId, int userId, String status) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            requestDAO.deleteRequest(id);
+            return requestDAO.cancelRequest(requestId, userId, status);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public void changeRequestStatus(int id, String status) throws ServiceException {
+    public void approveRequest(int id) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            requestDAO.changeRequestStatus(id, status);
+            requestDAO.approveRequest(id);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

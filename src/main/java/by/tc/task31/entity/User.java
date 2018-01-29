@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String surname;
     private String lastname;
     private Status status;
+    private String account;
     private String blockReason;
 
     private Date blockDate;
@@ -140,6 +141,14 @@ public class User implements Serializable {
         this.balance = balance;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,6 +164,7 @@ public class User implements Serializable {
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(lastname, user.lastname) &&
                 status == user.status &&
+                Objects.equals(account, user.account) &&
                 Objects.equals(blockReason, user.blockReason) &&
                 Objects.equals(blockDate, user.blockDate) &&
                 Objects.equals(unlockDate, user.unlockDate);
@@ -162,7 +172,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, email, password, name, surname, lastname, status, blockReason, blockDate, unlockDate, id, discount, balance);
+        return Objects.hash(username, email, password, name, surname, lastname, status, account, blockReason, blockDate, unlockDate, id, discount, balance);
     }
 
     @Override
@@ -175,6 +185,7 @@ public class User implements Serializable {
                 ", surname='" + surname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", status=" + status +
+                ", account=" + account +
                 ", blockReason='" + blockReason + '\'' +
                 ", blockDate=" + blockDate +
                 ", unlockDate=" + unlockDate +

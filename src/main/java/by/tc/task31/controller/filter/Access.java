@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.tc.task31.controller.ControlConst.*;
+import static by.tc.task31.controller.ControlConst.COMMAND_ATTRIBUTE;
+import static by.tc.task31.controller.ControlConst.USER_ATTRIBUTE;
+import static by.tc.task31.controller.constant.Status.BANNED;
 
 public class Access implements Filter {
 	@Override
@@ -19,14 +21,14 @@ public class Access implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-		String command = servletRequest.getParameter(COMMAND);
+		String command = servletRequest.getParameter(COMMAND_ATTRIBUTE);
 		if (command == null){
 			HttpServletResponse response = (HttpServletResponse) servletResponse;
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return;
 		}
 
-		boolean isAccessGranted = checkAccess(servletRequest.getParameter(COMMAND), (HttpServletRequest) servletRequest);
+		boolean isAccessGranted = checkAccess(servletRequest.getParameter(COMMAND_ATTRIBUTE), (HttpServletRequest) servletRequest);
 		if (isAccessGranted) {
 			filterChain.doFilter(servletRequest, servletResponse);
 		} else {

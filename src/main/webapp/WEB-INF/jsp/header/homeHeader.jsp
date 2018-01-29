@@ -22,8 +22,8 @@
     <li><a href="${pageContext.request.contextPath}/hostel_system?command=LOGOUT">${logout}</a></li>
     <li><a href="#">${lang}</a>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru">${rus}</a></li>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en">${eng}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/home">${rus}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/home">${eng}</a></li>
         </ul>
     </li>
     <li class="active"><a href="${pageContext.request.contextPath}/home">${home}</a></li>

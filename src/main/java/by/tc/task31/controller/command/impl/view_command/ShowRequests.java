@@ -7,6 +7,7 @@ import by.tc.task31.entity.Request;
 import by.tc.task31.service.RequestService;
 import by.tc.task31.service.ServiceException;
 import by.tc.task31.service.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,10 +18,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.tc.task31.controller.ControlConst.*;
-import static by.tc.task31.controller.command.PageUrl.ERROR_PAGE_URL;
-import static by.tc.task31.controller.command.PageUrl.REQUESTS_INFO_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.ERROR_PAGE_URL;
+import static by.tc.task31.controller.constant.PageUrl.REQUESTS_INFO_PAGE_URL;
 
 public class ShowRequests implements Command {
+    private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
@@ -34,6 +36,11 @@ public class ShowRequests implements Command {
 
         try {
             List<Request> requests = service.getRequests(lang);
+            if (requests == null){
+                requestDispatcher = request.getRequestDispatcher(REQUESTS_INFO_PAGE_URL);
+                requestDispatcher.forward(request, response);
+                return;
+            }
             PaginationHelper paginationHelper = new ControllerUtil().createPagination(request, page, requests.size(), "SHOW_REQUESTS");
             request.setAttribute(PAGE, paginationHelper);
 
@@ -42,9 +49,8 @@ public class ShowRequests implements Command {
             requestDispatcher = request.getRequestDispatcher(REQUESTS_INFO_PAGE_URL);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_PAGE_URL);
-            dispatcher.forward(request, response);
+            logger.error(e.getMessage(), e);
+            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE_URL);
         }
     }
 }

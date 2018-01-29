@@ -13,15 +13,15 @@ import java.util.ResourceBundle;
 
 import static by.tc.task31.controller.ControlConst.BASE_NAME;
 import static by.tc.task31.controller.ControlConst.LANG_ATTRIBUTE;
-import static by.tc.task31.exception.constant.Message.REQUEST_STATUS_TAG_ERROR;
+import static by.tc.task31.controller.constant.Message.REQUEST_STATUS_TAG_ERROR;
 
 public class RequestStatusTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(RequestStatusTag.class);
 	private static final long serialVersionUID = 6259324892174710379L;
 	private Request.Status requestStatus;
 
-	public void setRequestStatus(Request.Status status) {
-		this.requestStatus = status;
+	public void setRequestStatus(Request.Status requestStatus) {
+		this.requestStatus = requestStatus;
 	}
 
 	@Override
