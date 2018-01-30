@@ -1,6 +1,7 @@
 package by.tc.task31.controller.filter;
 
 import by.tc.task31.controller.CommandDirector;
+import by.tc.task31.controller.CommandType;
 import by.tc.task31.entity.User;
 
 import javax.servlet.*;
@@ -27,6 +28,12 @@ public class Access implements Filter {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return;
 		}
+		boolean commonCommand = command.equals(CommandType.LOGIN.toString()) || command.equals(CommandType.LOGOUT.toString())
+				|| command.equals(CommandType.REGISTER.toString()) || command.equals(CommandType.CHANGE_LOCALE.toString());
+			if (commonCommand) {
+				filterChain.doFilter(servletRequest, servletResponse);
+				return;
+			}
 
 		boolean isAccessGranted = checkAccess(servletRequest.getParameter(COMMAND_ATTRIBUTE), (HttpServletRequest) servletRequest);
 		if (isAccessGranted) {
@@ -51,6 +58,6 @@ public class Access implements Filter {
 		String status = user.getStatus().toString();
 		CommandDirector director = CommandDirector.getInstance();
 		String access = director.getStatus(command);
-		return status.equals(access) || access.equals(BANNED);
+		return status.equalsIgnoreCase(access);
 	}
 }

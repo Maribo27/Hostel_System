@@ -5,7 +5,6 @@
 <html>
 
 <head>
-    <c:set var = "currentPage" scope = "session" value = "index.jsp"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="assets/css/carousel.css">
     <link rel="stylesheet" href="assets/css/input_form.css">
@@ -43,21 +42,45 @@
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
-            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
+            <form id="registration" action="${pageContext.request.contextPath}/hostel_system" method="get">
+                <label for="username">
+                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${sessionScope.user.username}" minlength="3" required>
+                    <ul class="input-requirements">
+                        <li>At least 3 characters long</li>
+                        <li>Must only contain letters and numbers (no special characters)</li>
+                    </ul>
+                </label>
+
+                <input type="text" id="name" name="name" placeholder="${name}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.name}"/>
+                <input type="text" id="lastname" name="lastname" placeholder="${lastname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.lastname}"/>
+                <input type="text" id="surname" name="surname" placeholder="${surname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.surname}"/>
+                <input type="email" id="email" name="email" placeholder="${email}" pattern="^[\w]+@[A-Za-z]+\.[A-Za-z]{2,3}$" value="${sessionScope.user.email}"/>
+
+                <label for="password">
+                    <input type="password" id="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$" maxlength="100" minlength="5" required/>
+                    <ul class="input-requirements">
+                        <li>At least 5 characters long (and less than 100 characters)</li>
+                        <li>Contains at least 1 number</li>
+                        <li>Contains at least 1 lowercase letter</li>
+                        <li>Contains at least 1 uppercase letter</li>
+                        <li>Contains a special character (e.g. @ !)</li>
+                    </ul>
+                </label>
+
+                <label for="password_repeat">
+                    <span>Repeat Password</span>
+                    <input type="password" id="password_repeat" maxlength="100" minlength="8" required>
+                </label>
+
                 <input type="hidden" name="command" value="REGISTER"/>
-                        <input type="hidden" name="lang" value="en"/>
-                        <input type="text" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${requestScope.username}"/>
-                        <input type="text" name="name" placeholder="${name}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.name}"/>
-                        <input type="text" name="lastname" placeholder="${lastname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.lastname}"/>
-                        <input type="text" name="surname" placeholder="${surname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${requestScope.surname}"/>
-                        <input type="email" name="email" placeholder="${email}" pattern="^[\w]+@[A-Za-z]+\.[A-Za-z]{2,3}$" value="${requestScope.email}"/>
-                        <input type="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
-                        <input type="submit" value="${register}"/>
+                <input type="submit" value="${register}"/>
             </form>
+
+            <script src="assets/js/validation.js"></script>
             <h2>${requestScope.error}</h2>
         </div>
         <div class="input-data-form-help">
-                    <p>${account}? <a href="${pageContext.request.contextPath}/login">${click}</a>.</p>
+            <p>${account}? <a href="${pageContext.request.contextPath}/login">${click}</a>.</p>
         </div>
     </section>
 </div>

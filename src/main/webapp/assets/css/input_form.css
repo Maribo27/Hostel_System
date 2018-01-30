@@ -49,7 +49,23 @@
     text-decoration: underline;
 }
 
-input[type="submit"]{
+.input-requirements {
+    font-size: 0.6rem;
+    text-align: left;
+    list-style: none;
+    color: rgb(150,150,150);
+}
+
+
+.input-requirements li.invalid {
+    color: #e74c3c;
+}
+.input-requirements li.valid {
+    color: #2ecc71;
+}
+
+input[type="submit"],
+input[type="reset"] {
     box-sizing: border-box;
     color: #fff;
     text-shadow: 0 1px #E3F1F1;
@@ -62,16 +78,22 @@ input[type="submit"]{
     border-radius: 1px;
 }
 
-input[type=submit]:hover{
+input[type="submit"]:hover,
+input[type="reset"]:hover{
     background: #1C1C1C;
 }
 
-input[type=submit]:active {
+input[type="submit"]:active,
+input[type="reset"]:active {
     background: #1AAEB9;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"]
-{
+select,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+input[type="number"] {
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
@@ -87,9 +109,31 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
     color: #555;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus
-{
+input:focus,
+select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus {
     box-shadow: 0 0 5px #1AAEB9;
     padding: 3%;
     border: 1px solid #AABCFE;
+}
+
+input:not([type="submit"]):valid {
+    border-color: #2ecc71;
+}
+
+input:not([type="submit"]) + .input-requirements {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 1s ease-out;
+}
+
+input:not([type="submit"]):hover + .input-requirements,
+input:not([type="submit"]):focus + .input-requirements,
+input:not([type="submit"]):active + .input-requirements {
+    max-height: 1000px;
+    transition: max-height 1s ease-in;
 }

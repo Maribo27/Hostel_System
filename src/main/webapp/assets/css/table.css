@@ -1,0 +1,29 @@
+.table-container {
+    font: 95% Arial, Helvetica, sans-serif;
+    padding: 16px;
+    text-align: center;
+    margin: auto 10px;
+}
+
+table {
+    margin: 0 auto;
+}
+
+th {
+    font-size: 13px;
+    font-weight: normal;
+    background: #b9c9fe;
+    border-top: 4px solid #aabcfe;
+    border-bottom: 1px solid #fff;
+    color: #039;
+    padding: 8px;
+}
+td {
+    background: #e8edff;
+    border-bottom: 1px solid #fff;
+    color: #669;
+    opacity: 0.5; /* Полупрозрачность таблицы */
+    border-top: 1px solid transparent;
+    padding: 8px;
+}
+tr:hover td {background: #ccddff;}

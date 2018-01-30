@@ -39,9 +39,8 @@ public class CommandDirector {
         commands.put(CommandType.LOGIN, new LogIn());
         commands.put(CommandType.LOGOUT, new LogOut());
         commands.put(CommandType.REGISTER, new Register());
-        commands.put(CommandType.SHOW_USER_REQUESTS, new ShowUserRequests());
-        commands.put(CommandType.DELETE_USER, new DeleteUser());
         commands.put(CommandType.CHANGE_LOCALE, new ChangeLocale());
+        commands.put(CommandType.SHOW_USER_REQUESTS, new ShowUserRequests());
     }
 
     private void createUserCommands() {
@@ -51,6 +50,7 @@ public class CommandDirector {
         userCommands.put(CommandType.ADD_REQUEST, new AddRequest());
         userCommands.put(CommandType.SHOW_AVAILABLE_HOSTELS, new ShowAvailableHostels());
         userCommands.put(CommandType.GET_CITIES, new CreateCitiesField());
+        userCommands.put(CommandType.DELETE_USER, new DeleteUser());
     }
 
     Command getCommand(String name) {
