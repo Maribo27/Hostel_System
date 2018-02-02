@@ -13,7 +13,7 @@
   </jsp-config>
 
   <listener>
-    <listener-class>by.tc.task31.listener.InitializerListener</listener-class>
+    <listener-class>by.tc.hostel_system.listener.InitializerListener</listener-class>
   </listener>
 
   <error-page>
@@ -28,7 +28,7 @@
 
   <servlet>
     <servlet-name>Controller</servlet-name>
-    <servlet-class>by.tc.task31.controller.Controller</servlet-class>
+    <servlet-class>by.tc.hostel_system.controller.Controller</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -120,7 +120,7 @@
 
   <filter>
     <filter-name>NoCacheFilter</filter-name>
-    <filter-class>by.tc.task31.filter.NoCacheFilter</filter-class>
+    <filter-class>by.tc.hostel_system.filter.NoCacheFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>NoCacheFilter</filter-name>
@@ -129,7 +129,7 @@
 
   <filter>
     <filter-name>Access</filter-name>
-    <filter-class>by.tc.task31.filter.Access</filter-class>
+    <filter-class>by.tc.hostel_system.filter.Access</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>Access</filter-name>

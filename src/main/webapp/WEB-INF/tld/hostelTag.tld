@@ -11,7 +11,7 @@
 
     <tag>
         <name>user-status</name>
-        <tag-class>by.tc.task31.tag.UserStatusTag</tag-class>
+        <tag-class>by.tc.hostel_system.tag.UserStatusTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>userStatus</name>
@@ -22,7 +22,7 @@
 
     <tag>
         <name>request-status</name>
-        <tag-class>by.tc.task31.tag.RequestStatusTag</tag-class>
+        <tag-class>by.tc.hostel_system.tag.RequestStatusTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>requestStatus</name>
@@ -33,7 +33,7 @@
 
     <tag>
         <name>booking-type</name>
-        <tag-class>by.tc.task31.tag.HostelBookingTag</tag-class>
+        <tag-class>by.tc.hostel_system.tag.HostelBookingTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>bookingType</name>
