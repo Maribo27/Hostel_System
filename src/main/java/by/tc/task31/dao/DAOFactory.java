@@ -1,8 +1,11 @@
 package by.tc.task31.dao;
 
-import by.tc.task31.dao.impl.HostelDAOImpl;
-import by.tc.task31.dao.impl.RequestDAOImpl;
-import by.tc.task31.dao.impl.UserDAOImpl;
+import by.tc.task31.dao.hostel.HostelDAO;
+import by.tc.task31.dao.hostel.HostelDAOImpl;
+import by.tc.task31.dao.request.RequestDAO;
+import by.tc.task31.dao.request.RequestDAOImpl;
+import by.tc.task31.dao.user.UserDAO;
+import by.tc.task31.dao.user.UserDAOImpl;
 
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();

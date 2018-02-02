@@ -3,9 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">

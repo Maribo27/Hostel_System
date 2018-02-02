@@ -30,7 +30,7 @@ public class User implements Serializable {
     }
 
     public enum Status {
-        ADMIN, USER, BANNED
+        BANNED, USER, ADMIN
     }
 
     public String getUsername() {

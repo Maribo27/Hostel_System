@@ -4,9 +4,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
@@ -35,10 +33,29 @@
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
-            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
+            <form id="login" action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="LOGIN"/>
-                <input type="text" name="username" value="${requestScope.username}" placeholder="${username}" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
-                <input type="password" name="password" placeholder="${password}" pattern="^[\w]{5,12}$"/>
+
+                <label for="username">
+                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.username}" maxlength="20" minlength="5" required>
+                    <ul class="input-requirements">
+                        <li>At least 5 characters long (and less than 20 characters)</li>
+                        <li>First symbol - letter</li>
+                        <li>Must only contain latin letters, numbers, "." and "_"</li>
+                    </ul>
+                </label>
+
+
+                <label for="password">
+                    <input type="password" id="password" name="password" placeholder="${password}" pattern="^[\w\d\.\_]{5,12}$" maxlength="12" minlength="5" required/>
+                    <ul class="input-requirements">
+                        <li>At least 5 characters long (and less than 12 characters)</li>
+                        <li>Must only contain latin letters, numbers, "_" and "."</li>
+                    </ul>
+                </label>
+
+                <!-- <input type="text" name="username" value="${requestScope.username}" placeholder="${username}" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
+                <input type="password" name="password" placeholder="${password}" pattern="^[\w]{5,12}$"/> -->
                 <input type="submit" value="${login}"/>
             </form>
             <h2>${requestScope.error}</h2>
@@ -48,6 +65,8 @@
         </div>
     </section>
 </div>
+<script src="${pageContext.request.contextPath}/assets/js/validation.js"></script>
+
 
 
 <jsp:include page="/WEB-INF/jsp/carousel.jsp"/>

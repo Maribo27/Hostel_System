@@ -9,10 +9,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static by.tc.task31.controller.ControlConst.DELETED;
 
 public class DAOUtil {
 	private static final String MD_5 = "MD5";
@@ -53,13 +52,15 @@ public class DAOUtil {
 	    return password;
 	}
 
-	public static void translateToMap(ResultSet resultSet, Map<Integer, String> cities) throws SQLException {
+	public static Map<Integer, String> translateToMap(ResultSet resultSet) throws SQLException {
+		Map<Integer, String> cities = new HashMap<>();
 	    while (resultSet.next()){
 	        int column = 1;
 	        Integer number = resultSet.getInt(column++);
 	        String reason = resultSet.getString(column);
 	        cities.put(number, reason);
 	    }
+	    return cities;
 	}
 
 	public static List<Hostel> createHostels(ResultSet resultSet, int room) throws SQLException {
@@ -102,7 +103,8 @@ public class DAOUtil {
 	        req.setCost(resultSet.getInt(column++));
 		    String status = resultSet.getString(column++);
 		    req.setStatus(status);
-		    if (status.equals(DELETED)){
+		    String deleted = Request.Status.DELETED.name();
+		    if (status.equalsIgnoreCase(deleted)){
 		    	continue;
 		    }
 		    req.setDate(resultSet.getDate(column));

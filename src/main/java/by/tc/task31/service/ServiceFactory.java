@@ -1,8 +1,11 @@
 package by.tc.task31.service;
 
-import by.tc.task31.service.impl.HostelServiceImpl;
-import by.tc.task31.service.impl.RequestServiceImpl;
-import by.tc.task31.service.impl.UserServiceImpl;
+import by.tc.task31.service.hostel.HostelService;
+import by.tc.task31.service.hostel.HostelServiceImpl;
+import by.tc.task31.service.request.RequestService;
+import by.tc.task31.service.request.RequestServiceImpl;
+import by.tc.task31.service.user.UserService;
+import by.tc.task31.service.user.UserServiceImpl;
 
 public final class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();

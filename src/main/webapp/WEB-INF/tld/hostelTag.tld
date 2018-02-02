@@ -30,4 +30,15 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
+    <tag>
+        <name>booking-type</name>
+        <tag-class>by.tc.task31.tag.HostelBookingTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>bookingType</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

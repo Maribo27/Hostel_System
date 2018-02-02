@@ -1,6 +1,5 @@
 package by.tc.task31.tag;
 
-import by.tc.task31.controller.constant.StatusLocale;
 import by.tc.task31.entity.Request;
 import by.tc.task31.util.TagUtil;
 import org.apache.log4j.Logger;
@@ -11,9 +10,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static by.tc.task31.controller.ControlConst.BASE_NAME;
-import static by.tc.task31.controller.ControlConst.LANG_ATTRIBUTE;
-import static by.tc.task31.controller.constant.Message.REQUEST_STATUS_TAG_ERROR;
+import static by.tc.task31.controller.constant.ControlConst.BASE_NAME;
+import static by.tc.task31.controller.constant.ControlConst.LANG;
 
 public class RequestStatusTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(RequestStatusTag.class);
@@ -30,11 +28,11 @@ public class RequestStatusTag extends TagSupport {
 			return SKIP_BODY;
 		}
 
-		String lang = (String) pageContext.getSession().getAttribute(LANG_ATTRIBUTE);
+		String lang = (String) pageContext.getSession().getAttribute(LANG);
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(BASE_NAME, Locale.forLanguageTag(lang));
 		String property = StatusLocale.getRequestStatus(requestStatus);
 		String tag = resourceBundle.getString(property);
 		JspWriter out = pageContext.getOut();
-		return TagUtil.writeTag(out, tag, REQUEST_STATUS_TAG_ERROR, logger);
+		return TagUtil.writeTag(out, tag, "Cannot write request status tag to page", logger);
 	}
 }

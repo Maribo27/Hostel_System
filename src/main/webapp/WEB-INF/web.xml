@@ -13,7 +13,7 @@
   </jsp-config>
 
   <listener>
-    <listener-class>by.tc.task31.controller.listener.InitializerListener</listener-class>
+    <listener-class>by.tc.task31.listener.InitializerListener</listener-class>
   </listener>
 
   <error-page>
@@ -73,6 +73,33 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>Hostels</servlet-name>
+    <jsp-file>/jsp/hostels.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Hostels</servlet-name>
+    <url-pattern>/hostels</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Requests</servlet-name>
+    <jsp-file>/jsp/requests.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Requests</servlet-name>
+    <url-pattern>/requests</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Users</servlet-name>
+    <jsp-file>/jsp/users.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Users</servlet-name>
+    <url-pattern>/users</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>Forbidden</servlet-name>
     <jsp-file>/WEB-INF/jsp/error/forbidden.jsp</jsp-file>
   </servlet>
@@ -93,7 +120,7 @@
 
   <filter>
     <filter-name>NoCacheFilter</filter-name>
-    <filter-class>by.tc.task31.controller.filter.NoCacheFilter</filter-class>
+    <filter-class>by.tc.task31.filter.NoCacheFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>NoCacheFilter</filter-name>
@@ -102,7 +129,7 @@
 
   <filter>
     <filter-name>Access</filter-name>
-    <filter-class>by.tc.task31.controller.filter.Access</filter-class>
+    <filter-class>by.tc.task31.filter.Access</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>Access</filter-name>

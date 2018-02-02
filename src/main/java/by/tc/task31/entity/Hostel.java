@@ -9,13 +9,17 @@ public class Hostel implements Serializable {
     private String city;
     private String country;
     private String address;
-    private String booking;
+    private Booking booking;
     private String email;
     private int id;
     private int room;
     private int cost;
 
     public Hostel(){
+    }
+
+    public enum Booking {
+        BOOKING, PAYMENT
     }
 
     public String getName() {
@@ -50,11 +54,15 @@ public class Hostel implements Serializable {
         this.address = address;
     }
 
-    public String getBooking() {
+    public Booking getBooking() {
         return booking;
     }
 
     public void setBooking(String booking) {
+        this.booking = Booking.valueOf(booking.toUpperCase());
+    }
+
+    public void setBooking(Booking booking) {
         this.booking = booking;
     }
 
@@ -102,7 +110,7 @@ public class Hostel implements Serializable {
                 Objects.equals(city, hostel.city) &&
                 Objects.equals(country, hostel.country) &&
                 Objects.equals(address, hostel.address) &&
-                Objects.equals(booking, hostel.booking) &&
+                booking == hostel.booking &&
                 Objects.equals(email, hostel.email);
     }
 
@@ -118,7 +126,7 @@ public class Hostel implements Serializable {
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", address='" + address + '\'' +
-                ", booking='" + booking + '\'' +
+                ", booking=" + booking +
                 ", email='" + email + '\'' +
                 ", id=" + id +
                 ", room=" + room +

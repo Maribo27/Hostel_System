@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-import static by.tc.task31.controller.ControlConst.ERROR_ATTRIBUTE;
-import static by.tc.task31.controller.constant.Error.USER_EXCEPTION_MESSAGE;
-import static by.tc.task31.controller.constant.UserAttributes.*;
+import static by.tc.task31.controller.constant.EntityAttributes.*;
 
 public class ControllerUtil {
 	private static final int ROWS_ON_PAGE = 5;
+	private static final String ERROR = "error";
 	private static final String CONTROLLER_COMMAND = "/hostel_system?command=";
 	private static final String PAGE = "&number=";
 
-	public PaginationHelper createPagination(HttpServletRequest request, int current, int size, String command){
+	public static PaginationHelper createPagination(HttpServletRequest request, int current, int size, String command){
 		String controllerURL = request.getContextPath() + CONTROLLER_COMMAND + command + PAGE;
 		int first = 1;
 
@@ -54,7 +53,7 @@ public class ControllerUtil {
 
 	public static void updateWithErrorMessage(HttpServletRequest request, HttpServletResponse response, String message, String errorPageUrl) throws ServletException, IOException {
 		RequestDispatcher requestDispatcher;
-		request.setAttribute(ERROR_ATTRIBUTE, message);
+		request.setAttribute(ERROR, message);
 		requestDispatcher = request.getRequestDispatcher(errorPageUrl);
 		requestDispatcher.forward(request, response);
 	}
@@ -65,11 +64,15 @@ public class ControllerUtil {
 		request.setAttribute(SURNAME, surname);
 		request.setAttribute(LASTNAME, lastname);
 		request.setAttribute(EMAIL, email);
-		ControllerUtil.updateWithErrorMessage(request, response, USER_EXCEPTION_MESSAGE, url);
+		ControllerUtil.updateWithErrorMessage(request, response, "This user exist", url);
 	}
 
 	public static Date getEndDate(int days, Date date) {
 		long end = date.getTime() + 86400000 * days;
 		return new Date(end);
+	}
+
+	public static String createAddressWithPaging(HttpServletRequest request, String command, String page){
+		return request.getContextPath() + CONTROLLER_COMMAND + command + PAGE + page;
 	}
 }
