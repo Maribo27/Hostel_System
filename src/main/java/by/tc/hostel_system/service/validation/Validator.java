@@ -89,26 +89,10 @@ public class Validator {
 		return true;
 	}
 
-	static boolean isSurname(String surname) throws UserValidator.InputException {
-		boolean incorrectSurname = surname != null && !surname.matches(NAME_REGEX);
-		if (incorrectSurname) {
-			throw new UserValidator.InputException("Incorrect surname");
-		}
-		return true;
-	}
-
-	static boolean isLastname(String lastname) throws UserValidator.InputException {
-		boolean incorrectLastname = lastname == null || !lastname.matches(NAME_REGEX);
-		if (incorrectLastname) {
-			throw new UserValidator.InputException("Incorrect lastname");
-		}
-		return true;
-	}
-
-	static boolean isName(String name) throws UserValidator.InputException {
+	static boolean isName(String name, String type) throws UserValidator.InputException {
 		boolean incorrectName = name == null || !name.matches(NAME_REGEX);
 		if (incorrectName) {
-			throw new UserValidator.InputException("Incorrect name");
+			throw new UserValidator.InputException("Incorrect" + type);
 		}
 		return true;
 	}

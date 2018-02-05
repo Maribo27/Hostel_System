@@ -2,6 +2,9 @@ package by.tc.hostel_system.service.validation;
 
 import by.tc.hostel_system.entity.User;
 
+import static by.tc.hostel_system.controller.constant.EntityAttributes.LASTNAME;
+import static by.tc.hostel_system.controller.constant.EntityAttributes.NAME;
+import static by.tc.hostel_system.controller.constant.EntityAttributes.SURNAME;
 import static by.tc.hostel_system.service.validation.Validator.*;
 
 public class UserValidator {
@@ -24,9 +27,9 @@ public class UserValidator {
 			throws InputException {
 		boolean validUsername = isUsername(username);
 		boolean validPassword = isPassword(password);
-		boolean validName = isName(name);
-		boolean validLastname = isLastname(lastname);
-		boolean validSurname = isSurname(surname);
+		boolean validName = isName(name, NAME);
+		boolean validLastname = isName(lastname, LASTNAME);
+		boolean validSurname = isName(surname, SURNAME);
 		boolean validEmail = isEmail(email);
 		return validUsername && validPassword && validName && validLastname && validSurname && validEmail;
 	}
@@ -48,9 +51,9 @@ public class UserValidator {
 			throw new InputException("User ID is null");
 		}
 		boolean validUsername = isUsername(username);
-		boolean validName = isName(name);
-		boolean validLastname = isLastname(lastname);
-		boolean validSurname = isSurname(surname);
+		boolean validName = isName(name, NAME);
+		boolean validLastname = isName(lastname, LASTNAME);
+		boolean validSurname = isName(surname, SURNAME);
 		boolean validEmail = isEmail(email);
 		return validEmail && validLastname && validName && validSurname && validUsername;
 	}

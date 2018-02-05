@@ -18,7 +18,7 @@ public interface UserDAO {
     void changeUserData(int id, List<String> dataToUpdate) throws DAOException;
     void changePassword(int id, String password) throws DAOException;
     void deleteUser(int id) throws  DAOException;
-    void checkUser(String data, String bundle) throws DAOException, UserExistException;
+    boolean checkUser(String data, String bundle) throws DAOException, UserExistException;
     void changeUserDiscount(int userId, int userDiscount) throws DAOException;
 
 	int getUserDiscount(int id) throws DAOException;

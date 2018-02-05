@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String USER_NOT_FOUND = "User not found";
 
     @Override
-    public void checkUser(String data, String bundle) throws DAOException {
+    public boolean checkUser(String data, String bundle) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -37,6 +37,7 @@ public class UserDAOImpl implements UserDAO {
             if (resultSet.isBeforeFirst()) {
                 throw new CurrentEntityExist("Current user exist in database");
             }
+            return true;
         } catch (SQLException e) {
             throw new DAOException("SQL error while searching user");
         } finally {
@@ -137,38 +138,6 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
             connectionPool.closeConnection(connection);
-        }
-    }
-
-    private void addUserToDB(String username, String password, String email, String name, String surname, String lastname, Connection connection) throws SQLException {
-        String changeLogInData = resourceBundle.getString(USER_ADD_ACCOUNT);
-        PreparedStatement statement = connection.prepareStatement(changeLogInData);
-        statement.setString(1, username);
-        statement.setString(2, email);
-        statement.setString(3, password);
-        statement.setString(4, name);
-        statement.setString(5, surname);
-        statement.setString(6, lastname);
-        statement.executeUpdate();
-    }
-
-    private void createAccount(String username) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
-        Connection connection = connectionPool.getConnection();
-        String searchUser = resourceBundle.getString(USER_SEARCH_ACCOUNT);
-        PreparedStatement statement = connection.prepareStatement(searchUser);
-        statement.setString(1, username);
-        ResultSet resultSet = statement.executeQuery();
-        if (!resultSet.isBeforeFirst()) {
-            throw new EntityNotFoundException(USER_NOT_FOUND);
-        }
-        while (resultSet.next()) {
-            int id = resultSet.getInt(1);
-            String account = DAOUtil.createPassword(String.valueOf(id));
-            String changeLogInData = resourceBundle.getString(USER_CREATE_ACCOUNT_NUMBER);
-            statement = connection.prepareStatement(changeLogInData);
-            statement.setString(1, account);
-            statement.setInt(2, id);
-            statement.executeUpdate();
         }
     }
 
@@ -325,6 +294,38 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("SQL error while deleting user");
         } finally {
             connectionPool.closeConnection(connection);
+        }
+    }
+
+    private void addUserToDB(String username, String password, String email, String name, String surname, String lastname, Connection connection) throws SQLException {
+        String changeLogInData = resourceBundle.getString(USER_ADD_ACCOUNT);
+        PreparedStatement statement = connection.prepareStatement(changeLogInData);
+        statement.setString(1, username);
+        statement.setString(2, email);
+        statement.setString(3, password);
+        statement.setString(4, name);
+        statement.setString(5, surname);
+        statement.setString(6, lastname);
+        statement.executeUpdate();
+    }
+
+    private void createAccount(String username) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
+        Connection connection = connectionPool.getConnection();
+        String searchUser = resourceBundle.getString(USER_SEARCH_ACCOUNT);
+        PreparedStatement statement = connection.prepareStatement(searchUser);
+        statement.setString(1, username);
+        ResultSet resultSet = statement.executeQuery();
+        if (!resultSet.isBeforeFirst()) {
+            throw new EntityNotFoundException(USER_NOT_FOUND);
+        }
+        while (resultSet.next()) {
+            int id = resultSet.getInt(1);
+            String account = DAOUtil.createPassword(String.valueOf(id));
+            String changeLogInData = resourceBundle.getString(USER_CREATE_ACCOUNT_NUMBER);
+            statement = connection.prepareStatement(changeLogInData);
+            statement.setString(1, account);
+            statement.setInt(2, id);
+            statement.executeUpdate();
         }
     }
 }
