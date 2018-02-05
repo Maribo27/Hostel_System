@@ -45,6 +45,47 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public int getUserDiscount(int id) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            String query = resourceBundle.getString(USER_SEARCH_DISCOUNT);
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                throw new EntityNotFoundException(USER_NOT_FOUND);
+            }
+            int discount = 0;
+            while (resultSet.next()) {
+                discount = resultSet.getInt(1);
+            }
+            return discount;
+        } catch (SQLException e) {
+            throw new DAOException("Error while updating user discount");
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void changeUserDiscount(int userId, int userDiscount) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            String query = resourceBundle.getString(USER_UPDATE_DISCOUNT);
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userDiscount);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error while updating user discount");
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
+    }
+
+    @Override
     public User getUserInformation(String lang, String username, String password) throws DAOException{
         Connection connection = null;
         try {

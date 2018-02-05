@@ -19,6 +19,7 @@ import static by.tc.hostel_system.dao.SQLQuery.USER_SEARCH_EMAIL;
 import static by.tc.hostel_system.dao.SQLQuery.USER_SEARCH_USERNAME;
 
 public class UserServiceImpl implements UserService {
+    private static final int DISCOUNT = 5;
 
     @Override
     public User getUserInformation(String lang, Object user, String password) throws ServiceException {
@@ -156,10 +157,47 @@ public class UserServiceImpl implements UserService {
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
-            boolean inputDataValid = Validator.checkNumber(id);
+            boolean inputDataValid = Validator.checkPositiveNumber(id);
             userDAO.deleteUser(id);
         } catch (NotNumberException e) {
 	        throw new InvalidParametersException(e.getMessage());
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public int getUserDiscount(String userId) throws ServiceException {
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+
+        try {
+            boolean inputDataValid = Validator.isNumber(userId);
+            int id = Integer.parseInt(userId);
+            int discount = userDAO.getUserDiscount(id);
+            return discount;
+        } catch (NotNumberException e) {
+            throw new InvalidParametersException(e.getMessage());
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void changeUserDiscount(int userId, int userDiscount, String sign, String page) throws ServiceException {
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+
+        try {
+            boolean inputDataValid = UserValidator.checkDiscount(userId, userDiscount, sign, page);
+            sign = sign.replace("plus", "");
+            sign = sign.replace("minus", "-");
+            int newDiscount = Integer.parseInt(sign + DISCOUNT);
+            int discount = newDiscount + userDiscount;
+            if (discount > 50 || discount < 0) {
+                throw new InvalidParametersException("Cannot change discount");
+            }
+            userDAO.changeUserDiscount(userId, discount);
+        } catch (NotNumberException e) {
+            throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

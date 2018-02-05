@@ -26,8 +26,10 @@ public final class SQLQuery {
 	public static final String USER_BAN = "user.ban";
 	public static final String USER_UNBAN = "user.unban";
 	public static final String USER_DELETE = "user.delete";
+	public static final String USER_UPDATE_DISCOUNT = "user.update.discount";
 	public static final String USER_SEARCH_EMAIL = "user.search.email";
 	public static final String USER_SEARCH_USERNAME = "user.search.username";
+	public static final String USER_SEARCH_DISCOUNT = "user.search.discount";
 
 	private SQLQuery() {
 	}

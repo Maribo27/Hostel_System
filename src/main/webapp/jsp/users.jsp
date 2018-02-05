@@ -44,6 +44,7 @@
             <th>${reason}</th>
             <th>${blockDate}</th>
             <th>${unlockDate}</th>
+            <th>${requests}</th>
             <th>${action}</th>
         </tr>
         <c:forEach items="${requestScope.users}" var="user">
@@ -54,11 +55,24 @@
                 <td><c:out value="${user.name}"/></td>
                 <td><c:out value="${user.surname}"/></td>
                 <td><c:out value="${user.lastname}"/></td>
-                <td><c:out value="${user.discount}"/></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${user.discount ge 50}">
+                            <ahs:minus id="${user.id}" page="${requestScope.page.current}"/>${user.discount}
+                        </c:when>
+                        <c:when test="${user.discount le 0}">
+                            ${user.discount}<ahs:plus id="${user.id}" page="${requestScope.page.current}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <ahs:minus id="${user.id}" page="${requestScope.page.current}"/>${user.discount}<ahs:plus id="${user.id}" page="${requestScope.page.current}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td><ahs:user-status userStatus="${user.status}"/></td>
                 <td><c:out value="${user.blockReason}"/></td>
                 <td><c:out value="${user.blockDate}"/></td>
                 <td><c:out value="${user.unlockDate}"/></td>
+                <td><c:out value="${user.requests}"/></td>
                 <td>
                     <c:choose>
                         <c:when test = "${user.status eq 'BANNED'}">

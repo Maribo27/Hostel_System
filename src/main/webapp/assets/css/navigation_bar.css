@@ -25,7 +25,7 @@
     float: right;
 }
 
-#navigation_bar li:not(.system-name) a {
+#navigation_bar li:not(.system-name) a{
     width: 100px;
 }
 
@@ -45,7 +45,8 @@
 
 #navigation_bar ul li:not(.system-name) { float: none; }
 
-#navigation_bar li:hover:not(.system-name) { background-color: #1C1C1C; }
+#navigation_bar li:hover:not(.system-name, .balance) li { background-color: #1C1C1C; }
+
 #navigation_bar ul li:hover { background-color: #1C1C1C; }
 
 .active {
@@ -54,4 +55,7 @@
 
 .system-name {
     float: left;
+}
+
+.balance {
 }

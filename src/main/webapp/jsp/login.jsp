@@ -35,7 +35,6 @@
             <h1>${data}</h1>
             <form id="login" action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="LOGIN"/>
-
                 <label for="username">
                     <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.username}" maxlength="20" minlength="5" required>
                     <ul class="input-requirements">
@@ -44,8 +43,6 @@
                         <li>Must only contain latin letters, numbers, "." and "_"</li>
                     </ul>
                 </label>
-
-
                 <label for="password">
                     <input type="password" id="password" name="password" placeholder="${password}" pattern="^[\w\d\.\_]{5,12}$" maxlength="12" minlength="5" required/>
                     <ul class="input-requirements">
@@ -53,9 +50,6 @@
                         <li>Must only contain latin letters, numbers, "_" and "."</li>
                     </ul>
                 </label>
-
-                <!-- <input type="text" name="username" value="${requestScope.username}" placeholder="${username}" pattern="([\w\.]{3,10}@[A-Za-z]+\.[A-Za-z]{2,3}|[\w\.]{3,20})"/>
-                <input type="password" name="password" placeholder="${password}" pattern="^[\w]{5,12}$"/> -->
                 <input type="submit" value="${login}"/>
             </form>
             <h2>${requestScope.error}</h2>

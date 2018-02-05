@@ -118,7 +118,11 @@ public class DAOUtil {
 	    while (resultSet.next()){
 	        User user = new User();
 	        int column = 1;
-	        user.setId(resultSet.getInt(column++));
+	        int tempId = resultSet.getInt(column++);
+	        if (tempId == 1) {
+	        	continue;
+	        }
+	        user.setId(tempId);
 	        user.setUsername(resultSet.getString(column++));
 	        user.setEmail(resultSet.getString(column++));
 	        user.setSurname(resultSet.getString(column++));
@@ -129,8 +133,9 @@ public class DAOUtil {
 	        user.setStatus(resultSet.getString(column++));
 	        user.setBlockDate(resultSet.getDate(column++));
 	        user.setUnlockDate(resultSet.getDate(column++));
-	        user.setBlockReason(resultSet.getString(column));
-	        users.add(user);
+	        user.setBlockReason(resultSet.getString(column++));
+		    user.setRequests(resultSet.getInt(column));
+		    users.add(user);
 	    }
 	    return users;
 	}

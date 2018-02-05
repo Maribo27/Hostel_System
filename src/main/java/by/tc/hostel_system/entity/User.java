@@ -22,6 +22,7 @@ public class User implements Serializable {
     private int id;
     private int discount;
     private int balance;
+    private int requests;
 
     public User(){
         this.status = Status.USER;
@@ -141,6 +142,14 @@ public class User implements Serializable {
         this.balance = balance;
     }
 
+    public int getRequests() {
+        return requests;
+    }
+
+    public void setRequests(int requests) {
+        this.requests = requests;
+    }
+
     public String getAccount() {
         return account;
     }
@@ -157,6 +166,7 @@ public class User implements Serializable {
         return id == user.id &&
                 discount == user.discount &&
                 balance == user.balance &&
+                requests == user.requests &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
@@ -172,7 +182,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, email, password, name, surname, lastname, status, account, blockReason, blockDate, unlockDate, id, discount, balance);
+        return Objects.hash(username, email, password, name, surname, lastname, status, account, blockReason, blockDate, unlockDate, id, discount, balance, requests);
     }
 
     @Override
@@ -192,6 +202,7 @@ public class User implements Serializable {
                 ", id=" + id +
                 ", discount=" + discount +
                 ", balance=" + balance +
+                ", requests=" + requests +
                 '}';
     }
 }

@@ -16,4 +16,8 @@ public interface UserService {
     void changeUserData(User user, String username, String email, String name, String surname, String lastname) throws ServiceException;
     void changePassword(int id, String password) throws ServiceException;
     void deleteUser(int id) throws  ServiceException;
+
+	void changeUserDiscount(int userId, int userDiscount, String sign, String page) throws ServiceException;
+
+	int getUserDiscount(String userId) throws ServiceException;
 }

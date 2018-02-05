@@ -48,7 +48,7 @@
                 <td><c:out value="${request.id}"/></td>
                 <td><c:out value="${request.userId}"/></td>
                 <td><c:out value="${request.hostelId}"/></td>
-                <td><c:out value="${request.type}"/></td>
+                <td><ahs:booking-type bookingType="${request.type}"/></td>
                 <td><c:out value="${request.room}"/></td>
                 <td><c:out value="${request.days}"/></td>
                 <td><c:out value="${request.cost}"/></td>
@@ -62,7 +62,7 @@
                     <c:if test = "${request.status eq 'PROCESSING'}">
                         <jsp:include page="${page}">
                             <jsp:param name="page" value="${requestScope.page.current}" />
-                            <jsp:param name="userId" value="${sessionScope.user.id}" />
+                            <jsp:param name="userId" value="${request.userId}" />
                             <jsp:param name="requestId" value="${request.id}" />
                         </jsp:include>
                     </c:if>

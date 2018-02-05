@@ -24,6 +24,7 @@ public class CommandDirector {
         commands.put(CommandType.SHOW_USERS, new CommandRights(rights, new ShowUsers()));
         commands.put(CommandType.SHOW_REQUESTS, new CommandRights(rights, new ShowRequests()));
         commands.put(CommandType.SHOW_HOSTELS, new CommandRights(rights, new ShowHostels()));
+        commands.put(CommandType.CHANGE_USER_DISCOUNT, new CommandRights(rights, new ChangeUserDiscount()));
         commands.put(CommandType.APPROVE_REQUEST, new CommandRights(rights, new ApproveRequest()));
         commands.put(CommandType.UNLOCK, new CommandRights(rights, new UnlockUser()));
         commands.put(CommandType.BLOCK, new CommandRights(rights, new BlockUser()));

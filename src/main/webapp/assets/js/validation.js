@@ -52,8 +52,6 @@ CustomValidation.prototype = {
         this.inputNode.addEventListener('keyup', function() {
             CustomValidation.checkInput();
         });
-
-
     }
 
 };
@@ -197,44 +195,54 @@ var passwordValidityChecks = [
 var passwordRepeatValidityChecks = [
     {
         isInvalid: function() {
-            return passwordRepeatInput.value != passwordInput.value;
+            return passwordRepeatInput.value !== passwordInput.value;
         },
         invalidityMessage: 'This password needs to match the first one'
     }
 ];
 
-
-
 var usernameInput = document.getElementById('username');
-usernameInput.CustomValidation = new CustomValidation(usernameInput);
-usernameInput.CustomValidation.validityChecks = usernameValidityChecks;
-
+if (usernameInput != null) {
+    usernameInput.CustomValidation = new CustomValidation(usernameInput);
+    usernameInput.CustomValidation.validityChecks = usernameValidityChecks;
+}
 
 var nameInput = document.getElementById('name');
-nameInput.CustomValidation = new CustomValidation(nameInput);
-nameInput.CustomValidation.validityChecks = nameValidityChecks;
+if (nameInput != null) {
+    nameInput.CustomValidation = new CustomValidation(nameInput);
+    nameInput.CustomValidation.validityChecks = nameValidityChecks;
+}
 
 var lastnameInput = document.getElementById('lastname');
-lastnameInput.CustomValidation = new CustomValidation(lastnameInput);
-lastnameInput.CustomValidation.validityChecks = lastnameValidityChecks;
+if (lastnameInput != null) {
+    lastnameInput.CustomValidation = new CustomValidation(lastnameInput);
+    lastnameInput.CustomValidation.validityChecks = lastnameValidityChecks;
+}
 
 var surnameInput = document.getElementById('surname');
-surnameInput.CustomValidation = new CustomValidation(surnameInput);
-surnameInput.CustomValidation.validityChecks = surnameValidityChecks;
+if (surnameInput != null) {
+    surnameInput.CustomValidation = new CustomValidation(surnameInput);
+    surnameInput.CustomValidation.validityChecks = surnameValidityChecks;
+}
 
 var emailInput = document.getElementById('email');
-emailInput.CustomValidation = new CustomValidation(emailInput);
-emailInput.CustomValidation.validityChecks = emailValidityChecks;
+if (emailInput != null) {
+    emailInput.CustomValidation = new CustomValidation(emailInput);
+    emailInput.CustomValidation.validityChecks = emailValidityChecks;
+}
 
 
 var passwordInput = document.getElementById('password');
-passwordInput.CustomValidation = new CustomValidation(passwordInput);
-passwordInput.CustomValidation.validityChecks = passwordValidityChecks;
+if (passwordInput != null) {
+    passwordInput.CustomValidation = new CustomValidation(passwordInput);
+    passwordInput.CustomValidation.validityChecks = passwordValidityChecks;
+}
 
 var passwordRepeatInput = document.getElementById('password_repeat');
-passwordRepeatInput.CustomValidation = new CustomValidation(passwordRepeatInput);
-passwordRepeatInput.CustomValidation.validityChecks = passwordRepeatValidityChecks;
-
+if (passwordRepeatInput != null) {
+    passwordRepeatInput.CustomValidation = new CustomValidation(passwordRepeatInput);
+    passwordRepeatInput.CustomValidation.validityChecks = passwordRepeatValidityChecks;
+}
 
 var inputs = document.querySelectorAll('input:not([type="submit"])');
 var submit = document.querySelector('input[type="submit"');

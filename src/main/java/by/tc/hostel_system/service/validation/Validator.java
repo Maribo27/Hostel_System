@@ -4,7 +4,9 @@ import by.tc.hostel_system.entity.Hostel;
 import by.tc.hostel_system.entity.Request;
 
 public class Validator {
-	private static final String DIGIT = "\\d+";
+	private static final String NUMBER = "\\d+";
+	private static final String SIGN = "plus|minus";
+	private static final String DIGIT = "[-]?[1-9]\\d*";
 	private static final String DATE = "[1-9][\\d]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])";
 	private static final String USERNAME_REGEX = "^[\\w][\\w._\\d]{4,20}$";
 	private static final String PASSWORD_REGEX = "^[\\w\\d._]{5,12}$";
@@ -14,8 +16,15 @@ public class Validator {
 	private static final String INCORRECT_PASSWORD = "Incorrect password";
 
 
-	public static boolean checkNumber(int id) throws NotNumberException {
+	public static boolean checkPositiveNumber(int id) throws NotNumberException {
 		if (id <= 0) {
+			throw new NotNumberException(String.format("%s - is not a right number", id));
+		}
+		return true;
+	}
+
+	static boolean checkNumber(int id) throws NotNumberException {
+		if (id < 0) {
 			throw new NotNumberException(String.format("%s - is not a right number", id));
 		}
 		return true;
@@ -37,8 +46,22 @@ public class Validator {
 	}
 
 	public static boolean isNumber(String number) throws NotNumberException {
-		if (!number.matches(DIGIT)){
+		if (!number.matches(NUMBER)){
 			throw new NotNumberException(String.format("%s - is not a right number", number));
+		}
+		return true;
+	}
+
+	static boolean isSign(String sign) throws NotNumberException {
+		if (!sign.matches(SIGN)){
+			throw new NotNumberException(String.format("%s - is not a sign", sign));
+		}
+		return true;
+	}
+
+	static boolean isDigit(String number) throws NotNumberException {
+		if (!number.matches(DIGIT)){
+			throw new NotNumberException(String.format("%s - is not a number", number));
 		}
 		return true;
 	}

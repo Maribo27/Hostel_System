@@ -69,4 +69,12 @@ public class UserValidator {
 			super(message);
 		}
 	}
+
+	public static boolean checkDiscount(int userId, int userDiscount, String sign, String page) throws NotNumberException {
+		boolean validId = checkPositiveNumber(userId);
+		boolean validDiscount = checkNumber(userDiscount);
+		boolean validSign = isSign(sign);
+		boolean validPage = isNumber(page);
+		return validId && validDiscount && validPage && validSign;
+	}
 }

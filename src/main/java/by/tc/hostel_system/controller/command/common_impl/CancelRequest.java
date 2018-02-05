@@ -37,8 +37,10 @@ public class CancelRequest implements Command {
 	    try {
 		    int balance = requestService.cancelRequest(requestId, userId, status, user, page);
 		    User newUser = (User) user;
-		    newUser.setBalance(balance);
-		    session.setAttribute(USER, newUser);
+		    if (newUser.getStatus() != User.Status.ADMIN) {
+		    	newUser.setBalance(balance);
+			    session.setAttribute(USER, newUser);
+		    }
 		    String address = ControllerUtil.createAddressWithPaging(request, nextCommand, page);
 		    response.sendRedirect(address);
 	    } catch (ServiceException e) {

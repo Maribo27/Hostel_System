@@ -12,6 +12,7 @@ public enum CommandType {
 
     DELETE_USER,
     CANCEL_REQUEST,
+    CHANGE_USER_DISCOUNT,
 
     ADD_REQUEST,
     SHOW_AVAILABLE_HOSTELS,
