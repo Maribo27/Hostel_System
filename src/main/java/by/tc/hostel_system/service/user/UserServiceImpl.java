@@ -207,27 +207,27 @@ public class UserServiceImpl implements UserService {
         List<String> data = new ArrayList<>();
 
         if (!username.equalsIgnoreCase(newUser.getUsername())){
-            data.add(USERNAME + "=" + username);
+            data.add(USERNAME + "='" + username + "'");
             newUser.setUsername(username);
         }
 
         if (!email.equalsIgnoreCase(newUser.getEmail())){
-            data.add(EMAIL + "=" + email);
+            data.add(EMAIL + "='" + email + "'");
             newUser.setEmail(email);
         }
 
         if (!name.equalsIgnoreCase(newUser.getName())){
-            data.add(NAME + "=" + name);
+            data.add(NAME + "='" + name + "'");
             newUser.setName(name);
         }
 
         if (!surname.equalsIgnoreCase(newUser.getSurname())){
-            data.add(SURNAME + "=" + surname);
+            data.add(SURNAME + "='" + surname + "'");
             newUser.setSurname(surname);
         }
 
         if (!lastname.equalsIgnoreCase(newUser.getLastname())){
-            data.add(LASTNAME + "=" + lastname);
+            data.add(LASTNAME + "='" + lastname + "'");
             newUser.setLastname(lastname);
         }
         return data;

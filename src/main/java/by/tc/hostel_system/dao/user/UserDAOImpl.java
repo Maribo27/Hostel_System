@@ -129,9 +129,8 @@ public class UserDAOImpl implements UserDAO {
                 throw new UserExistException("Current user exist in database");
             }
             password = DAOUtil.createPassword(password);
-            connection = connectionPool.getConnection();
             addUserToDB(username, password, email, name, surname, lastname, connection);
-            createAccount(username);
+            createAccount(username, connection);
         } catch (SQLException e) {
             throw new DAOException("SQL error while creating user");
         } catch (NoSuchAlgorithmException e) {
@@ -309,8 +308,7 @@ public class UserDAOImpl implements UserDAO {
         statement.executeUpdate();
     }
 
-    private void createAccount(String username) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
-        Connection connection = connectionPool.getConnection();
+    private void createAccount(String username, Connection connection) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
         String searchUser = resourceBundle.getString(USER_SEARCH_ACCOUNT);
         PreparedStatement statement = connection.prepareStatement(searchUser);
         statement.setString(1, username);
