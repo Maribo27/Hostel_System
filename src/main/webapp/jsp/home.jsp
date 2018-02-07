@@ -11,12 +11,6 @@
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.home" var="home"/>
-    <fmt:message bundle="${loc}" key="locale.message.greetings" var="greetings"/>
-    <fmt:message bundle="${loc}" key="locale.message.discount" var="discount"/>
-    <fmt:message bundle="${loc}" key="locale.message.balance" var="balance"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.block.date" var="date"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
-    <fmt:message bundle="${loc}" key="locale.message.account.number" var="account"/>
     <fmt:message bundle="${loc}" key="locale.button.logout" var="logout"/>
     <title> ${home} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
@@ -33,25 +27,15 @@
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
-            <h3>${greetings}, ${sessionScope.user.personalInfo.name}!</h3>
-            ${discount}: ${sessionScope.user.discount} <br>
-            ${balance}: ${sessionScope.user.balance} <br>
-            ${account}: ${sessionScope.user.account}
-            <c:if test = "${sessionScope.user.status eq 'BANNED'}">
-                <br>${message}
-                <br>${reason}: ${sessionScope.user.blockInfo.blockReason}
-                <br>${date}: ${sessionScope.user.blockInfo.blockDate}
-            </c:if>
-            <hr>
             <c:choose>
                 <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
-                    <jsp:include page="/WEB-INF/jsp/button/homeAdmin.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/panel/homeAdmin.jsp"/>
                 </c:when>
                 <c:when test = "${sessionScope.user.status eq 'USER'}">
-                    <jsp:include page="/WEB-INF/jsp/button/homeUser.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/panel/homeUser.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    <jsp:include page="/WEB-INF/jsp/button/homeBan.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/panel/homeBan.jsp"/>
                 </c:otherwise>
             </c:choose>
 

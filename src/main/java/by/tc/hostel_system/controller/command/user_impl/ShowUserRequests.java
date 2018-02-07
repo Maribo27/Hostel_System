@@ -1,14 +1,13 @@
 package by.tc.hostel_system.controller.command.user_impl;
 
 import by.tc.hostel_system.controller.command.Command;
-import by.tc.hostel_system.service.request.RequestNotFoundException;
-import by.tc.hostel_system.service.user.UserNotFoundException;
-import by.tc.hostel_system.util.ControllerUtil;
 import by.tc.hostel_system.entity.PaginationHelper;
 import by.tc.hostel_system.entity.Request;
-import by.tc.hostel_system.service.request.RequestService;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.ServiceFactory;
+import by.tc.hostel_system.service.request.RequestNotFoundException;
+import by.tc.hostel_system.service.request.RequestService;
+import by.tc.hostel_system.util.ControllerUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -20,12 +19,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
-import static by.tc.hostel_system.controller.constant.PageUrl.ERROR_PAGE;
 import static by.tc.hostel_system.controller.constant.PageUrl.NOTHING_FOUND_PAGE;
 import static by.tc.hostel_system.controller.constant.PageUrl.REQUESTS_PAGE;
 
 public class ShowUserRequests implements Command {
-    private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
+    private static final Logger logger = Logger.getLogger(ShowUserRequests.class);
     private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
@@ -50,15 +48,11 @@ public class ShowUserRequests implements Command {
             requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
             requestDispatcher.forward(request, response);
         } catch (RequestNotFoundException e) {
-            requestDispatcher = request.getRequestDispatcher(NOTHING_FOUND_PAGE);
-            requestDispatcher.forward(request, response);
-        } catch (UserNotFoundException e) {
             logger.error(e.getMessage(), e);
-            requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
-            requestDispatcher.forward(request, response);
+            ControllerUtil.updateWithMessage(request, response, e.getMessage(), NOTHING_FOUND_PAGE);
         } catch (ServiceException e) {
             logger.error(e.getMessage(), e);
-            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

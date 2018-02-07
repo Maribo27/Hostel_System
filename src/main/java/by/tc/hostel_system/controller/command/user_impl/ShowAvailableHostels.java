@@ -23,7 +23,7 @@ import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
 import static by.tc.hostel_system.controller.constant.PageUrl.*;
 
 public class ShowAvailableHostels implements Command {
-	private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
+	private static final Logger logger = Logger.getLogger(ShowAvailableHostels.class);
     private ServiceFactory factory = ServiceFactory.getInstance();
 	private static final String CITY = "city";
 
@@ -43,14 +43,12 @@ public class ShowAvailableHostels implements Command {
 	    RequestDispatcher requestDispatcher;
 	    try {
 		    List<Hostel> hostels = service.getHostels(lang, city, rooms, date, days, page, type);
-		    if (hostels != null){
-		    	int currentPage = Integer.parseInt(page);
-			    PaginationHelper paginationHelper = ControllerUtil.createPagination(request, currentPage, hostels.size(), "SHOW_HOSTELS");
-			    request.setAttribute(PAGE, paginationHelper);
+		    int currentPage = Integer.parseInt(page);
+		    PaginationHelper paginationHelper = ControllerUtil.createPagination(request, currentPage, hostels.size(), "SHOW_HOSTELS");
+		    request.setAttribute(PAGE, paginationHelper);
 
-			    List<Hostel> hostelsOnPage = hostels.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
-			    request.setAttribute(HOSTELS, hostelsOnPage);
-		    }
+		    List<Hostel> hostelsOnPage = hostels.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
+		    request.setAttribute(HOSTELS, hostelsOnPage);
 
 		    request.setAttribute(TYPE, type);
 		    request.setAttribute(CITY, city);
@@ -60,11 +58,11 @@ public class ShowAvailableHostels implements Command {
 		    requestDispatcher = request.getRequestDispatcher(CREATE_REQUEST_PAGE);
 		    requestDispatcher.forward(request, response);
 	    } catch (HostelNotFoundException e) {
-		    requestDispatcher = request.getRequestDispatcher(NOTHING_FOUND_PAGE);
-		    requestDispatcher.forward(request, response);
+		    logger.error(e.getMessage(), e);
+		    ControllerUtil.updateWithMessage(request, response, e.getMessage(), NOTHING_FOUND_PAGE);
 	    } catch (ServiceException e) {
 		    logger.error(e.getMessage(), e);
-		    ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE);
+		    response.sendError(HttpServletResponse.SC_NOT_FOUND);
 	    }
     }
 }

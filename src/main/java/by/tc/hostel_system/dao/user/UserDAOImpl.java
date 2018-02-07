@@ -307,11 +307,25 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
             String query = resourceBundle.getString(USER_DELETE);
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
+            statement.close();
+
+            query = resourceBundle.getString(USER_AFTER_DELETING);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while deleting user");
+            }
             throw new DAOException("SQL error while deleting user");
         } finally {
             connectionPool.closeConnection(connection);

@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!lastname.equalsIgnoreCase(person.getLastname())){
-            data.add(LASTNAME + "='" + lastname + "'");
+            data.add(LAST_NAME + "='" + lastname + "'");
             person.setLastname(lastname);
         }
         return data;

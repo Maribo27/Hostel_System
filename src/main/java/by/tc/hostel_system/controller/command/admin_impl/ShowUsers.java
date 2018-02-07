@@ -2,13 +2,12 @@ package by.tc.hostel_system.controller.command.admin_impl;
 
 import by.tc.hostel_system.controller.command.Command;
 import by.tc.hostel_system.controller.command.CommandType;
-import by.tc.hostel_system.controller.command.user_impl.CreateCitiesField;
 import by.tc.hostel_system.entity.PaginationHelper;
 import by.tc.hostel_system.entity.User;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.ServiceFactory;
-import by.tc.hostel_system.service.user.UserService;
 import by.tc.hostel_system.service.user.UserNotFoundException;
+import by.tc.hostel_system.service.user.UserService;
 import by.tc.hostel_system.util.ControllerUtil;
 import org.apache.log4j.Logger;
 
@@ -19,13 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
-import static by.tc.hostel_system.controller.constant.PageUrl.ERROR_PAGE;
+import static by.tc.hostel_system.controller.constant.PageUrl.NOTHING_FOUND_PAGE;
 import static by.tc.hostel_system.controller.constant.PageUrl.USERS_PAGE;
+import static sun.security.x509.IssuingDistributionPointExtension.REASONS;
 
 public class ShowUsers implements Command {
-    private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
+    private static final Logger logger = Logger.getLogger(ShowUsers.class);
     private static final String USERS = "users";
 
     @Override
@@ -35,6 +36,7 @@ public class ShowUsers implements Command {
         UserService service = ServiceFactory.getInstance().getUserService();
         String page = request.getParameter(NUMBER);
         RequestDispatcher requestDispatcher;
+
         try {
             List<User> users = service.getUsers(lang);
             int currentPage = Integer.parseInt(page);
@@ -43,15 +45,16 @@ public class ShowUsers implements Command {
             request.setAttribute(PAGE, paginationHelper);
             List<User> usersOnPage = users.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
             request.setAttribute(USERS, usersOnPage);
+            Map<Integer, String> reasons = service.getReasons(lang);
+            request.setAttribute(REASONS, reasons);
             requestDispatcher = request.getRequestDispatcher(USERS_PAGE);
             requestDispatcher.forward(request, response);
         } catch (UserNotFoundException e) {
             logger.error(e.getMessage(), e);
-            requestDispatcher = request.getRequestDispatcher(USERS_PAGE);
-            requestDispatcher.forward(request, response);
+            ControllerUtil.updateWithMessage(request, response, e.getMessage(), NOTHING_FOUND_PAGE);
         } catch (ServiceException e) {
             logger.error(e.getMessage(), e);
-            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

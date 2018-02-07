@@ -26,7 +26,7 @@ public class UserValidator {
 		boolean validUsername = isUsername(username);
 		boolean validPassword = isPassword(password);
 		boolean validName = isName(name, NAME);
-		boolean validLastname = lastname.isEmpty() || isName(lastname, LASTNAME);
+		boolean validLastname = lastname.isEmpty() || isName(lastname, LAST_NAME);
 		boolean validSurname = isName(surname, SURNAME);
 		boolean validEmail = isEmail(email);
 		return validUsername && validPassword && validName && validLastname && validSurname && validEmail;
@@ -49,7 +49,7 @@ public class UserValidator {
 		}
 		boolean validUsername = isUsername(username);
 		boolean validName = isName(name, NAME);
-		boolean validLastname = isName(lastname, LASTNAME);
+		boolean validLastname = lastname.isEmpty() || isName(lastname, LAST_NAME);
 		boolean validSurname = isName(surname, SURNAME);
 		boolean validEmail = isEmail(email);
 		return validEmail && validLastname && validName && validSurname && validUsername;

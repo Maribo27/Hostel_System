@@ -7,5 +7,6 @@ public class TagWritingException extends JspException {
 	private static final long serialVersionUID = -1427859375759651282L;
 
 	public TagWritingException(String message, IOException e) {
+		super(message, e);
 	}
 }

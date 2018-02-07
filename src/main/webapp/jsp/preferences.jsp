@@ -17,6 +17,7 @@
     <fmt:message bundle="${loc}" key="locale.message.enter.surname" var="surname"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.email" var="email"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.current.password" var="password"/>
+    <fmt:message bundle="${loc}" key="locale.message.enter.new.password" var="newPassword"/>
     <fmt:message bundle="${loc}" key="locale.button.change" var="change"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <title> ${preferences} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
@@ -37,12 +38,17 @@
                 <input type="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
                 <input type="submit" value="${change}"/>
             </form>
-            <form action="${pageContext.request.contextPath}/jsp/changePassword.jsp" method="post">
-                <input type="submit" value="${changePassword}"/>
+            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
+                <input type="hidden" name="command" value="CHANGE_PASSWORD"/>
+                <c:if test="${requestScope.change eq 'true'}">
+                    <input type="text" name="new-password" placeholder="${newPassword}" pattern="^[\w]{6,12}$"/>
+                    <input type="password" name="change-confirm-password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
+                </c:if>
+                <input type="submit" value="${change}"/>
             </form>
             <form action="${pageContext.request.contextPath}/hostel_system" method="post">
-                <c:if test="${requestScope.confirm eq 'true'}">
-                    <input type="password" name="confirm-password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
+                <c:if test="${requestScope.delete eq 'true'}">
+                    <input type="password" name="delete-confirm-password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
                 </c:if>
                 <input type="hidden" name="command" value="DELETE_USER"/>
                 <input type="submit" value="${delete}"/>

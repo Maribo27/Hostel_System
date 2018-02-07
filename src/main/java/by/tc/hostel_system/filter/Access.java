@@ -24,7 +24,6 @@ public class Access implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		String command = servletRequest.getParameter(COMMAND);
-		System.out.println(command);
 		if (command == null){
 			HttpServletResponse response = (HttpServletResponse) servletResponse;
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -18,7 +18,8 @@ import java.io.IOException;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
-import static by.tc.hostel_system.controller.constant.PageUrl.*;
+import static by.tc.hostel_system.controller.constant.PageUrl.HOME_PAGE;
+import static by.tc.hostel_system.controller.constant.PageUrl.INDEX_URL;
 
 public class Register implements Command {
     private static final Logger logger = Logger.getLogger(Register.class);
@@ -33,7 +34,7 @@ public class Register implements Command {
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME);
         String surname = request.getParameter(SURNAME);
-        String lastname = request.getParameter(LASTNAME);
+        String lastname = request.getParameter(LAST_NAME);
         String sessionLang = (String) session.getAttribute(LANG);
         String lang = sessionLang != null ? sessionLang : DEFAULT_LANG;
 
@@ -55,7 +56,7 @@ public class Register implements Command {
             ControllerUtil.showUserExistError(request, response, username, email, name, surname, lastname, INDEX_URL);
         } catch (ServiceException e) {
             logger.error(e.getMessage(), e);
-            ControllerUtil.updateWithErrorMessage(request, response, e.getMessage(), ERROR_PAGE);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

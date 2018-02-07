@@ -6,7 +6,6 @@ import by.tc.hostel_system.entity.Request;
 public class Validator {
 	private static final String NUMBER = "\\d+";
 	private static final String SIGN = "plus|minus";
-	private static final String DIGIT = "[-]?[1-9]\\d*";
 	private static final String DATE = "[1-9][\\d]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])";
 	private static final String USERNAME_REGEX = "^[\\w][\\w._\\d]{4,20}$";
 	private static final String PASSWORD_REGEX = "^[\\w\\d._]{5,12}$";
@@ -18,14 +17,14 @@ public class Validator {
 
 	public static boolean checkPositiveNumber(int id) throws NotNumberException {
 		if (id <= 0) {
-			throw new NotNumberException(String.format("%s - is not a right number", id));
+			throw new NotNumberException(String.format("%d - is not a right number", id));
 		}
 		return true;
 	}
 
 	static boolean checkNumber(int id) throws NotNumberException {
 		if (id < 0) {
-			throw new NotNumberException(String.format("%s - is not a right number", id));
+			throw new NotNumberException(String.format("%d - is not a right number", id));
 		}
 		return true;
 	}

@@ -26,7 +26,7 @@
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
-            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
+            <form action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="SHOW_AVAILABLE_HOSTELS"/>
                 <input type="hidden" name="number" value="1"/>
                 <label>
@@ -42,8 +42,8 @@
                         </c:forEach>
                     </select>
                 </label>
-                <input type="number" name="rooms" placeholder="${rooms}" pattern="^[\w]{5,20}$" value="${sessionScope.username}"/>
-                <input type="number" name="days" placeholder="${days}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.name}"/>
+                <input type="number" name="rooms" placeholder="${rooms}" value="${sessionScope.username}"/>
+                <input type="number" name="days" placeholder="${days}" value="${sessionScope.name}"/>
                 <label>
                     <input type="date" name="date"/>
                 </label>

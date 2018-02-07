@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation_bar.css">
@@ -20,12 +21,8 @@
     <li><a href="${pageContext.request.contextPath}/register">${register}</a></li>
     <li><a href="#">${lang}</a>
         <ul>
-            <c:set var="params" scope="request"/>
-            <c:if test="${pageContext.request.queryString.length() > 0}">
-                <c:set var="params" value="&${pageContext.request.queryString}"/>
-            </c:if>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/login${params}">${rus}</a></li>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/login${params}">${eng}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/login">${rus}</a></li>
+            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/login">${eng}</a></li>
         </ul>
     </li>
     <li class="active"><a href="${pageContext.request.contextPath}/register">${home}</a></li>

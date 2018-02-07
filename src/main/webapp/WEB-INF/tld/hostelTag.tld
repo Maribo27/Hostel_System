@@ -6,8 +6,8 @@
         version="2.1">
 
     <tlib-version>1.0</tlib-version>
-    <short-name>mpb</short-name>
-    <uri>http://web.tr.by/mpb</uri>
+    <short-name>ahs</short-name>
+    <uri>http://hostel.tc.web/hostel</uri>
 
     <tag>
         <name>user-status</name>
@@ -68,6 +68,26 @@
         </attribute>
         <attribute>
             <name>page</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>full-name</name>
+        <tag-class>by.tc.hostel_system.tag.FullNameTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>lastname</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>surname</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

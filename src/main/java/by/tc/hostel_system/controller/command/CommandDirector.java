@@ -28,7 +28,6 @@ public class CommandDirector {
         commands.put(CommandType.APPROVE_REQUEST, new CommandRights(rights, new ApproveRequest()));
         commands.put(CommandType.UNLOCK, new CommandRights(rights, new UnlockUser()));
         commands.put(CommandType.BLOCK, new CommandRights(rights, new BlockUser()));
-        commands.put(CommandType.GET_REASONS, new CommandRights(rights, new CreateBlockReasons()));
 
         rights = new ArrayList<>();
         rights.add(User.Status.ADMIN);
@@ -50,7 +49,6 @@ public class CommandDirector {
         rights.add(User.Status.USER);
         commands.put(CommandType.ADD_REQUEST, new CommandRights(rights, new AddRequest()));
         commands.put(CommandType.SHOW_AVAILABLE_HOSTELS, new CommandRights(rights, new ShowAvailableHostels()));
-        commands.put(CommandType.GET_CITIES, new CommandRights(rights, new CreateCitiesField()));
 
         commonCommands.put(CommandType.LOGIN, new LogIn());
         commonCommands.put(CommandType.REGISTER, new Register());

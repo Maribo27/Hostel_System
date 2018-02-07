@@ -82,9 +82,16 @@
                         </c:when>
                         <c:when test = "${user.status eq 'USER'}">
                             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                                <input type="hidden" name="command" value="GET_REASONS"/>
+                                <input type="hidden" name="command" value="BLOCK"/>
                                 <input type="hidden" name="number" value="${requestScope.page.current}"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
+                                <label>
+                                    <select name="reason">
+                                        <c:forEach items="${requestScope.reasons}" var="reason">
+                                            <option value="${reason.key}">${reason.value}</option>
+                                        </c:forEach>
+                                    </select>
+                                </label>
                                 <input type="submit" value="${block}"/>
                             </form>
                         </c:when>

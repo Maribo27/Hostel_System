@@ -27,11 +27,10 @@ public class DAOUtil {
 	        builder.addId(resultSet.getInt(column++));
 	        String username = resultSet.getString(column++);
 	        String email = resultSet.getString(column++);
-	        String password = resultSet.getString(column++);
 	        String surname = resultSet.getString(column++);
 	        String name = resultSet.getString(column++);
 	        String lastname = resultSet.getString(column++);
-	        builder.addPersonalInfo(username, email, password, name, surname, lastname);
+	        builder.addPersonalInfo(username, email, "", name, surname, lastname);
 	        builder.addDiscount(resultSet.getInt(column++));
 	        builder.addBalance(resultSet.getInt(column++));
 		    builder.addAccount(resultSet.getString(column++));

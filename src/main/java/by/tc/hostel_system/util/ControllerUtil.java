@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
+import static by.tc.hostel_system.controller.constant.PageUrl.PREFERENCES_PAGE;
 
 public class ControllerUtil {
 	private static final int ROWS_ON_PAGE = 5;
@@ -51,7 +52,7 @@ public class ControllerUtil {
 		return page;
 	}
 
-	public static void updateWithErrorMessage(HttpServletRequest request, HttpServletResponse response, String message, String errorPageUrl) throws ServletException, IOException {
+	public static void updateWithMessage(HttpServletRequest request, HttpServletResponse response, String message, String errorPageUrl) throws ServletException, IOException {
 		RequestDispatcher requestDispatcher;
 		request.setAttribute(ERROR, message);
 		requestDispatcher = request.getRequestDispatcher(errorPageUrl);
@@ -62,9 +63,9 @@ public class ControllerUtil {
 		request.setAttribute(USERNAME, username);
 		request.setAttribute(NAME, name);
 		request.setAttribute(SURNAME, surname);
-		request.setAttribute(LASTNAME, lastname);
+		request.setAttribute(LAST_NAME, lastname);
 		request.setAttribute(EMAIL, email);
-		ControllerUtil.updateWithErrorMessage(request, response, "This user exist", url);
+		ControllerUtil.updateWithMessage(request, response, "This user exist", url);
 	}
 
 	public static Date getEndDate(int days, Date date) {
@@ -74,5 +75,12 @@ public class ControllerUtil {
 
 	public static String createAddressWithPaging(HttpServletRequest request, String command, String page){
 		return request.getContextPath() + CONTROLLER_COMMAND + command + PAGE + page;
+	}
+
+	public static void showHiddenBlock(HttpServletRequest request, HttpServletResponse response, String attribute) throws ServletException, IOException {
+		request.setAttribute(attribute, true);
+		RequestDispatcher requestDispatcher;
+		requestDispatcher = request.getRequestDispatcher(PREFERENCES_PAGE);
+		requestDispatcher.forward(request, response);
 	}
 }
