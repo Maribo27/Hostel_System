@@ -36,7 +36,7 @@ public class LogIn implements Command {
         UserService service = ServiceFactory.getInstance().getUserService();
         try {
             User tempUser = new User();
-            tempUser.setUsername(username);
+            tempUser.getPersonalInfo().setUsername(username);
             User user = service.getUserInformation(lang, tempUser, password);
             session = request.getSession(true);
             session.setAttribute(USER, user);

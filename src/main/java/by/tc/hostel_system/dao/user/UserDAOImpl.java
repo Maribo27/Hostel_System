@@ -1,7 +1,7 @@
 package by.tc.hostel_system.dao.user;
 
-import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.CurrentEntityExist;
+import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.EntityNotFoundException;
 import by.tc.hostel_system.dao.connector.ConnectionPool;
 import by.tc.hostel_system.entity.User;
@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String USER_NOT_FOUND = "User not found";
 
     @Override
-    public boolean checkUser(String data, String bundle) throws DAOException {
+    public void checkUser(String data, String bundle) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -37,7 +37,6 @@ public class UserDAOImpl implements UserDAO {
             if (resultSet.isBeforeFirst()) {
                 throw new CurrentEntityExist("Current user exist in database");
             }
-            return true;
         } catch (SQLException e) {
             throw new DAOException("SQL error while searching user");
         } finally {
@@ -129,9 +128,17 @@ public class UserDAOImpl implements UserDAO {
                 throw new UserExistException("Current user exist in database");
             }
             password = DAOUtil.createPassword(password);
+            connection.setAutoCommit(false);
             addUserToDB(username, password, email, name, surname, lastname, connection);
             createAccount(username, connection);
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while creating user");
+            }
             throw new DAOException("SQL error while creating user");
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
@@ -188,12 +195,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void blockUser(int id, Date date, int reason) throws DAOException {
+    public void blockUser(int id, int reason) throws DAOException {
         PreparedStatement userStat;
         PreparedStatement blockStat;
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
 
             String userQuery = resourceBundle.getString(USER_CHANGE_STATUS);
             userStat = connection.prepareStatement(userQuery);
@@ -205,9 +213,15 @@ public class UserDAOImpl implements UserDAO {
             blockStat = connection.prepareStatement(blockQuery);
             blockStat.setInt(1, reason);
             blockStat.setInt(2, id);
-            blockStat.setDate(3, date);
             blockStat.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while blocking user");
+            }
             throw new DAOException("SQL error while blocking user");
         } finally {
             connectionPool.closeConnection(connection);
@@ -221,6 +235,7 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
             String userQuery = resourceBundle.getString(USER_CHANGE_STATUS);
             userStat = connection.prepareStatement(userQuery);
             userStat.setString(1,"user");
@@ -231,7 +246,14 @@ public class UserDAOImpl implements UserDAO {
             blockStat = connection.prepareStatement(blockQuery);
             blockStat.setInt(1, id);
             blockStat.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while unlocking user");
+            }
             throw new DAOException("SQL error while unlocking user");
         } finally {
             connectionPool.closeConnection(connection);

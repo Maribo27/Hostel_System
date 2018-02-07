@@ -12,7 +12,7 @@
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.hostels" var="hostels"/>
-    <title> ${hostels} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${hostels} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 

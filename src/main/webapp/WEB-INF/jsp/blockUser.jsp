@@ -13,7 +13,7 @@
     <fmt:message bundle="${loc}" key="locale.title.block" var="blockPage"/>
     <fmt:message bundle="${loc}" key="locale.button.return" var="goBack"/>
     <fmt:message bundle="${loc}" key="locale.button.block" var="block"/>
-    <title> ${blockPage} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${blockPage} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 
 <body>
@@ -31,9 +31,6 @@
                             <option value="${reason.key}">${reason.value}</option>
                         </c:forEach>
                     </select>
-                </label>
-                <label>
-                    <input type="date" name="date"/>
                 </label>
                 <input type="submit" value="${block}"/>
             </form>

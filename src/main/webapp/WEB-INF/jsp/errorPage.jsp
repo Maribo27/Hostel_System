@@ -12,7 +12,7 @@
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.error" var="error"/>
     <fmt:message bundle="${loc}" key="locale.nav.home" var="home"/>
-    <title> ${error} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${error} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 
 <body>

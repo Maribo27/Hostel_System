@@ -19,7 +19,7 @@
     <fmt:message bundle="${loc}" key="locale.message.enter.current.password" var="password"/>
     <fmt:message bundle="${loc}" key="locale.button.change" var="change"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
-    <title> ${preferences} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${preferences} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 <div style="padding:20px;"></div>
@@ -29,13 +29,16 @@
             <h1>${data}</h1>
             <form action="${pageContext.request.contextPath}/hostel_system" method="get">
                 <input type="hidden" name="command" value="CHANGE_USER_DATA"/>
-                <input type="text" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${sessionScope.user.username}"/>
-                <input type="text" name="name" placeholder="${name}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.name}"/>
-                <input type="text" name="lastname" placeholder="${lastname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.lastname}"/>
-                <input type="text" name="surname" placeholder="${surname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.surname}"/>
-                <input type="email" name="email" placeholder="${email}" pattern="^[\w]+@[A-Za-z]+\.[A-Za-z]{2,3}$" value="${sessionScope.user.email}"/>
+                <input type="text" name="username" placeholder="${username}" pattern="^[\w]{5,20}$" value="${sessionScope.user.personalInfo.username}"/>
+                <input type="text" name="name" placeholder="${name}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.personalInfo.name}"/>
+                <input type="text" name="lastname" placeholder="${lastname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.personalInfo.lastname}"/>
+                <input type="text" name="surname" placeholder="${surname}" pattern="^[A-Za-zА-Яа-я]{2,50}$" value="${sessionScope.user.personalInfo.surname}"/>
+                <input type="email" name="email" placeholder="${email}" pattern="^[\w]+@[A-Za-z]+\.[A-Za-z]{2,3}$" value="${sessionScope.user.personalInfo.email}"/>
                 <input type="password" name="password" placeholder="${password}" pattern="^[\w]{6,12}$"/>
                 <input type="submit" value="${change}"/>
+            </form>
+            <form action="${pageContext.request.contextPath}/jsp/changePassword.jsp" method="post">
+                <input type="submit" value="${changePassword}"/>
             </form>
             <form action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <c:if test="${requestScope.confirm eq 'true'}">

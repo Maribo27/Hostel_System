@@ -42,8 +42,9 @@ public class HostelServiceImpl implements HostelService {
             int roomId = Integer.parseInt(room);
             int daysNumber = Integer.parseInt(days);
             Date startDate = Date.valueOf(start);
+            Hostel.Booking bookingType = Hostel.Booking.valueOf(type);
             Date endDate = ControllerUtil.getEndDate(daysNumber, startDate);
-            return hostelDAO.getHostels(lang, cityId, roomId, startDate, endDate);
+            return hostelDAO.getHostels(lang, bookingType, cityId, roomId, startDate, endDate);
         } catch (LangNotSupportedException | NotDateException | NotNumberException | UserValidator.InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e){

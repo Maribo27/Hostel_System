@@ -54,6 +54,7 @@ public class CommandDirector {
 
         commonCommands.put(CommandType.LOGIN, new LogIn());
         commonCommands.put(CommandType.REGISTER, new Register());
+
     }
 
     public Command getCommand(String name) {
@@ -66,6 +67,10 @@ public class CommandDirector {
     }
 
     public void checkAccess(String commandName, User user) throws AccessIsNotAllowedException {
+        final boolean changeLocale = commandName.equalsIgnoreCase(CommandType.CHANGE_LOCALE.name());
+        if (changeLocale){
+            return;
+        }
         if (isCommon(commandName) && user == null) {
             return;
         }

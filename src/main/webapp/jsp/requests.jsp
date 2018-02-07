@@ -23,7 +23,7 @@
     <fmt:message bundle="${loc}" key="locale.table.title.date" var="date"/>
     <fmt:message bundle="${loc}" key="locale.table.title.status" var="status"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
-    <title> ${requests} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${requests} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 
 <body>

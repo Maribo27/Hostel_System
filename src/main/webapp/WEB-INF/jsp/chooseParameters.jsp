@@ -18,7 +18,7 @@
     <fmt:message bundle="${loc}" key="locale.button.search" var="search"/>
     <fmt:message bundle="${loc}" key="locale.list.booking" var="booking"/>
     <fmt:message bundle="${loc}" key="locale.list.payment" var="payment"/>
-    <title> ${bookingPage} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${bookingPage} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 
 <body>

@@ -34,7 +34,7 @@ public class HostelDAOImpl implements HostelDAO {
                 throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
             }
 
-            return DAOUtil.createHostels(resultSet, 0);
+            return DAOUtil.createHostels(resultSet, Hostel.Booking.PAYMENT, 0);
         } catch (SQLException e) {
             throw new DAOException(SQL_ERROR_WHILE_SEARCHING_HOSTELS);
         } finally {
@@ -43,7 +43,7 @@ public class HostelDAOImpl implements HostelDAO {
     }
 
     @Override
-    public List<Hostel> getHostels(String lang, int city, int room, Date start, Date end) throws DAOException {
+    public List<Hostel> getHostels(String lang, Hostel.Booking type, int city, int room, Date start, Date end) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -65,7 +65,11 @@ public class HostelDAOImpl implements HostelDAO {
                 throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
             }
 
-            return DAOUtil.createHostels(resultSet, room);
+            final List<Hostel> hostels = DAOUtil.createHostels(resultSet, type, room);
+            if (hostels.size() == 0) {
+                throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
+            }
+            return hostels;
         } catch (SQLException e) {
             throw new DAOException(SQL_ERROR_WHILE_SEARCHING_HOSTELS);
         } finally {

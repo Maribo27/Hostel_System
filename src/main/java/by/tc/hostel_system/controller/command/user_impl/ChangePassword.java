@@ -39,7 +39,7 @@ public class ChangePassword implements Command {
 	    try {
 		    User newUser = service.getUserInformation(lang, user, password);
 		    service.changePassword(newUser.getId(), newPassword);
-		    newUser.setPassword(newPassword);
+		    newUser.getPersonalInfo().setPassword(newPassword);
 		    session.setAttribute(USER, newUser);
 		    requestDispatcher = request.getRequestDispatcher(PREFERENCES_PAGE);
 		    requestDispatcher.forward(request, response);

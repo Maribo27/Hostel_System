@@ -14,7 +14,7 @@
     <fmt:message bundle="${loc}" key="locale.message.enter.new.password" var="newPassword"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.current.password" var="password"/>
     <fmt:message bundle="${loc}" key="locale.button.change" var="change"/>
-    <title> ${preferences} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${preferences} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 <div style="padding:20px;"></div>

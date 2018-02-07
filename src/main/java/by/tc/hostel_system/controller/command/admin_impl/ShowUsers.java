@@ -26,14 +26,13 @@ import static by.tc.hostel_system.controller.constant.PageUrl.USERS_PAGE;
 
 public class ShowUsers implements Command {
     private static final Logger logger = Logger.getLogger(CreateCitiesField.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
     private static final String USERS = "users";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String lang = (String) session.getAttribute(LANG);
-        UserService service = factory.getUserService();
+        UserService service = ServiceFactory.getInstance().getUserService();
         String page = request.getParameter(NUMBER);
         RequestDispatcher requestDispatcher;
         try {

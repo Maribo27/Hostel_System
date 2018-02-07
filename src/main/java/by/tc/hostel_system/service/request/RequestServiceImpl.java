@@ -33,17 +33,17 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> getRequests(String lang, Object user, String id) throws ServiceException {
+    public List<Request> getRequests(String lang, Object user, String page) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
             boolean langValid = Validator.isLanguage(lang);
-            boolean inputDataValid = Validator.isNumber(id);
-            int requestId = Integer.parseInt(id);
-            return requestDAO.getRequests(lang, requestId);
+            boolean inputDataValid = UserValidator.isUserRequestData(user, page);
+            User newUser = (User) user;
+            return requestDAO.getRequests(lang, newUser.getId());
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
-        } catch (LangNotSupportedException | NotNumberException e) {
+        } catch (LangNotSupportedException | UserValidator.InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());

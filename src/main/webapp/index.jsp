@@ -29,7 +29,7 @@
 
 <body>
 <c:choose>
-    <c:when test = "${sessionScope.user != null}">
+    <c:when test = "${not empty sessionScope.user}">
         <jsp:forward page="${pageContext.request.contextPath}/home" />
     </c:when>
 </c:choose>
@@ -42,7 +42,7 @@
             <h1>${data}</h1>
             <form id="registration" action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <label for="username">
-                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.username}" maxlength="20" minlength="5" required>
+                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.personalInfo.username}" maxlength="20" minlength="5" required>
                     <ul class="input-requirements">
                         <li>At least 5 characters long (and less than 20 characters)</li>
                         <li>First symbol - letter</li>
@@ -51,7 +51,7 @@
                 </label>
 
                 <label for="name">
-                    <input type="text" id="name" name="name" placeholder="${name}" pattern="^[A-ZА-Я][a-zа-я]{1,50}$" value="${sessionScope.user.name}" maxlength="50" minlength="2" required/>
+                    <input type="text" id="name" name="name" placeholder="${name}" pattern="^[A-ZА-Я][a-zа-я]{1,50}$" value="${sessionScope.user.personalInfo.name}" maxlength="50" minlength="2" required/>
                     <ul class="input-requirements">
                         <li>At least 2 characters long (and less than 50 characters)</li>
                         <li>Must only contain letters</li>
@@ -60,7 +60,7 @@
                 </label>
 
                 <label for="lastname">
-                    <input type="text" id="lastname" name="lastname" placeholder="${lastname}" pattern="^[A-ZА-Я][a-zа-я]{1,50}$" value="${sessionScope.user.lastname}" maxlength="50" minlength="2"/>
+                    <input type="text" id="lastname" name="lastname" placeholder="${lastname}" value="${sessionScope.user.personalInfo.lastname}"/>
                     <ul class="input-requirements">
                         <li>At least 2 characters long (and less than 50 characters)</li>
                         <li>Must only contain letters</li>
@@ -69,7 +69,7 @@
                 </label>
 
                 <label for="surname">
-                    <input type="text" id="surname" name="surname" placeholder="${surname}" pattern="^[A-ZА-Я][a-zа-я]{1,50}$" value="${sessionScope.user.surname}" maxlength="50" minlength="2" required/>
+                    <input type="text" id="surname" name="surname" placeholder="${surname}" pattern="^[A-ZА-Я][a-zа-я]{1,50}$" value="${sessionScope.user.personalInfo.surname}" maxlength="50" minlength="2" required/>
                     <ul class="input-requirements">
                         <li>At least 2 characters long (and less than 50 characters)</li>
                         <li>Must only contain letters</li>
@@ -78,7 +78,7 @@
                 </label>
 
                 <label for="email">
-                    <input type="email" id="email" name="email" placeholder="${email}" pattern="^[\w\.\_\d\-]+@[A-Za-z]+.[A-Za-z]{2,3}$" value="${sessionScope.user.email}" required/>
+                    <input type="email" id="email" name="email" placeholder="${email}" pattern="^[\w\.\_\d\-]+@[A-Za-z]+.[A-Za-z]{2,3}$" value="${sessionScope.user.personalInfo.email}" required/>
                     <ul class="input-requirements">
                         <li>Must only contain latin letters, numbers, "_", "-" and "."</li>
                         <li>Contains "@"</li>

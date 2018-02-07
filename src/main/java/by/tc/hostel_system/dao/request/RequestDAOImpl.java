@@ -3,6 +3,7 @@ package by.tc.hostel_system.dao.request;
 import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.EntityNotFoundException;
 import by.tc.hostel_system.dao.connector.ConnectionPool;
+import by.tc.hostel_system.entity.Hostel;
 import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.util.DAOUtil;
 
@@ -59,7 +60,12 @@ public class RequestDAOImpl implements RequestDAO {
                 throw new EntityNotFoundException(REQUESTS_NOT_FOUND);
             }
 
-            return DAOUtil.createRequests(resultSet);
+            final List<Request> requests = DAOUtil.createRequests(resultSet);
+
+            if (requests.size() == 0) {
+                throw new EntityNotFoundException(REQUESTS_NOT_FOUND);
+            }
+            return requests;
         } catch (SQLException e) {
             throw new DAOException(SQL_ERROR_WHILE_SEARCHING_REQUESTS);
         } finally {
@@ -75,16 +81,24 @@ public class RequestDAOImpl implements RequestDAO {
         int numberOfRooms = request.getRoom();
         int days = request.getDays();
         int cost = request.getCost();
-        String type = request.getType();
+        Hostel.Booking type = request.getType();
         Date requestDate = request.getDate();
         Date endDate = request.getEndDate();
         try {
             connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
             updateRequests(connection, userId, hostelId, numberOfRooms, days, cost, type, requestDate);
             searchFreeRoom(connection, hostelId, numberOfRooms, requestDate, endDate);
             balance = updateBalance(balance, connection, userId, cost);
+            connection.commit();
+            connection.setAutoCommit(true);
             return balance;
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while creating request");
+            }
             throw new DAOException("SQL error while creating request");
         } finally {
             connectionPool.closeConnection(connection);
@@ -96,11 +110,18 @@ public class RequestDAOImpl implements RequestDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-
+            connection.setAutoCommit(false);
             updateRequestStatus(requestId, status, connection);
             balance = getNewBalance(requestId, userId, balance, connection);
+            connection.commit();
+            connection.setAutoCommit(true);
             return balance;
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DAOException("SQL rollback error while deleting request");
+            }
             throw new DAOException("SQL error while deleting requests");
         } finally {
             connectionPool.closeConnection(connection);
@@ -163,12 +184,12 @@ public class RequestDAOImpl implements RequestDAO {
         statement.executeUpdate();
     }
 
-    private void updateRequests(Connection connection, int userId, int hostelId, int numberOfRooms, int days, int cost, String type, Date requestDate) throws SQLException {
+    private void updateRequests(Connection connection, int userId, int hostelId, int numberOfRooms, int days, int cost, Hostel.Booking type, Date requestDate) throws SQLException {
         String query = resourceBundle.getString(REQUEST_ADD_REQUEST);
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, userId);
         statement.setInt(2, hostelId);
-        statement.setString(3, type);
+        statement.setString(3, type.name());
         statement.setInt(4, numberOfRooms);
         statement.setInt(5, days);
         statement.setInt(6, cost);
@@ -186,9 +207,14 @@ public class RequestDAOImpl implements RequestDAO {
             throw new EntityNotFoundException("Cannot find cost and balance");
         }
         while (resultSet.next()) {
-            int payment = resultSet.getInt(1);
-            balance = resultSet.getInt(2);
-            balance = updateBalance(balance, connection, userId, -payment);
+            int column = 1;
+            int payment = resultSet.getInt(column++);
+            balance = resultSet.getInt(column++);
+            final String bookingType = resultSet.getString(column).toUpperCase();
+            Hostel.Booking type = Hostel.Booking.valueOf(bookingType);
+            if (type == Hostel.Booking.PAYMENT) {
+                balance = updateBalance(balance, connection, userId, -payment);
+            }
         }
         return balance;
     }

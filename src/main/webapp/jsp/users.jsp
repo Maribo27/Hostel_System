@@ -21,11 +21,10 @@
     <fmt:message bundle="${loc}" key="locale.table.title.status" var="status"/>
     <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
     <fmt:message bundle="${loc}" key="locale.table.title.block.date" var="blockDate"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.unlock.date" var="unlockDate"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.block" var="block"/>
     <fmt:message bundle="${loc}" key="locale.button.unlock" var="unlock"/>
-    <title> ${users} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${users} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 
@@ -43,18 +42,17 @@
             <th>${status}</th>
             <th>${reason}</th>
             <th>${blockDate}</th>
-            <th>${unlockDate}</th>
             <th>${requests}</th>
             <th>${action}</th>
         </tr>
         <c:forEach items="${requestScope.users}" var="user">
             <tr>
                 <td><c:out value="${user.id}"/></td>
-                <td><c:out value="${user.username}"/></td>
-                <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.name}"/></td>
-                <td><c:out value="${user.surname}"/></td>
-                <td><c:out value="${user.lastname}"/></td>
+                <td><c:out value="${user.personalInfo.username}"/></td>
+                <td><c:out value="${user.personalInfo.email}"/></td>
+                <td><c:out value="${user.personalInfo.name}"/></td>
+                <td><c:out value="${user.personalInfo.surname}"/></td>
+                <td><c:out value="${user.personalInfo.lastname}"/></td>
                 <td>
                     <c:choose>
                         <c:when test="${user.discount ge 50}">
@@ -69,9 +67,8 @@
                     </c:choose>
                 </td>
                 <td><ahs:user-status userStatus="${user.status}"/></td>
-                <td><c:out value="${user.blockReason}"/></td>
-                <td><c:out value="${user.blockDate}"/></td>
-                <td><c:out value="${user.unlockDate}"/></td>
+                <td><c:out value="${user.blockInfo.blockReason}"/></td>
+                <td><c:out value="${user.blockInfo.blockDate}"/></td>
                 <td><c:out value="${user.requests}"/></td>
                 <td>
                     <c:choose>
@@ -80,7 +77,6 @@
                                 <input type="hidden" name="command" value="UNLOCK"/>
                                 <input type="hidden" name="number" value="${requestScope.page.current}"/>
                                 <input type="hidden" name="id" value="${user.id}"/>
-                                <input type="hidden" name="parameters" value="${user.id}"/>
                                 <input type="submit" value="${unlock}"/>
                             </form>
                         </c:when>

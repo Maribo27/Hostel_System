@@ -5,6 +5,7 @@ import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.DAOFactory;
 import by.tc.hostel_system.dao.connector.ConnectionPool;
 import by.tc.hostel_system.entity.User;
+import by.tc.hostel_system.entity.builder.UserBuilder;
 import by.tc.hostel_system.service.user.UserExistException;
 import org.junit.After;
 import org.junit.Before;
@@ -98,7 +99,7 @@ public class UserDAOImplTest {
 		String password = "checking";
 		String name = "Check";
 		String surname = "Test";
-		String lastname = null;
+		String lastname = "";
 		boolean expected = true;
 		boolean actual = true;
 		try {
@@ -116,7 +117,6 @@ public class UserDAOImplTest {
 		assertEquals(expected, actual);
 	}
 
-
 	@Test
 	public void getReasons() throws DAOException {
 		Map<Integer, String> expected = createReasons();
@@ -125,14 +125,13 @@ public class UserDAOImplTest {
 	}
 
 	@Test
-	public void blockUser() {
-		int idNumber = 8;
-		Date beginDate = Date.valueOf("2018-09-09");
+	public void userBlocking() {
+		int idNumber = 3;
 		int reasonNumber = 2;
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			userDAO.blockUser(idNumber, beginDate, reasonNumber);
+			userDAO.blockUser(idNumber, reasonNumber);
 		} catch (DAOException e) {
 			actual = false;
 		}
@@ -140,8 +139,8 @@ public class UserDAOImplTest {
 	}
 
 	@Test
-	public void unlockUser() {
-		int idNumber = 6;
+	public void userUnlocking() {
+		int idNumber = 3;
 		boolean expected = true;
 		boolean actual = true;
 		try {
@@ -186,7 +185,7 @@ public class UserDAOImplTest {
 
 	@Test
 	public void deleteUser() {
-		int id = 8;
+		int id = 17;
 		boolean expected = true;
 		boolean actual = true;
 		try {
@@ -198,84 +197,57 @@ public class UserDAOImplTest {
 	}
 
 	private User createUser() {
-		User user = new User();
-		user.setId(1);
-		user.setUsername("admin");
-		user.setEmail("admin@tut.by");
-		user.setPassword("21232f297a57a5a743894a0e4a801fc3");
-		user.setSurname("Иванов");
-		user.setName("Иван");
-		user.setLastname("Иванович");
-		user.setDiscount(50);
-		user.setBalance(7);
-		user.setAccount("c4ca4238a0b923820dcc509a6f75849b");
-		user.setStatus("admin");
-		return user;
+		UserBuilder builder = new UserBuilder();
+		builder.addId(1);
+		final String username = "admin";
+		final String email = "admin@tut.by";
+		final String pass = "21232f297a57a5a743894a0e4a801fc3";
+		final String surname = "Иванов";
+		final String name = "Иван";
+		final String lastname = "Иванович";
+		builder.addPersonalInfo(username, email, pass, name, surname, lastname);
+		builder.addDiscount(50);
+		builder.addBalance(7);
+		builder.addAccount("c4ca4238a0b923820dcc509a6f75849b");
+		builder.addStatus("admin");
+		return builder.buildUser();
 	}
 
 	private List<User> createUsers() {
 		List<User> users = new ArrayList<>();
-		User user = new User();
-		user.setId(1);
-		user.setUsername("admin");
-		user.setEmail("admin@tut.by");
-		user.setSurname("Иванов");
-		user.setName("Иван");
-		user.setLastname("Иванович");
-		user.setDiscount(50);
-		user.setBalance(7);
-		user.setStatus("admin");
-		users.add(user);
-		user = new User();
-		user.setId(2);
-		user.setUsername("alexx");
-		user.setEmail("alexander@mail.ru");
-		user.setSurname("Doe");
-		user.setName("Alex");
-		user.setDiscount(10);
-		user.setBalance(200);
-		user.setStatus("banned");
-		user.setBlockDate(Date.valueOf("2018-02-01"));
-		user.setUnlockDate(Date.valueOf("2018-02-04"));
-		user.setBlockReason("Insult");
-		user.setRequests(2);
-		users.add(user);
-		user = new User();
-		user.setId(3);
-		user.setUsername("ashotik");
-		user.setEmail("ashort@gogo.kz");
-		user.setSurname("Рахмед");
-		user.setName("Ашот");
-		user.setLastname("Мухаммедыч");
-		user.setDiscount(5);
-		user.setBalance(98);
-		user.setStatus("user");
-		users.add(user);
-		user = new User();
-		user.setId(4);
-		user.setUsername("kukareku");
-		user.setEmail("petuh@gmail.com");
-		user.setSurname("Синий");
-		user.setName("Павел");
-		user.setLastname("Михайлович");
-		user.setDiscount(25);
-		user.setBalance(254);
-		user.setStatus("banned");
-		user.setBlockDate(Date.valueOf("2017-02-08"));
-		user.setUnlockDate(Date.valueOf("2018-02-08"));
-		user.setBlockReason("Residence rules violation");
-		users.add(user);
-		user = new User();
-		user.setId(5);
-		user.setUsername("pierce.k");
-		user.setEmail("petrova.k@gmail.com");
-		user.setSurname("Петрова");
-		user.setName("Катерина");
-		user.setDiscount(30);
-		user.setBalance(2409);
-		user.setStatus("user");
-		user.setRequests(3);
-		users.add(user);
+		UserBuilder builder = new UserBuilder();
+		builder = new UserBuilder();
+		builder.addId(2);
+		builder.addPersonalInfo("alexx", "alexander@mail.ru", "", "Alex", "Doe", "");
+		builder.addDiscount(10);
+		builder.addBalance(200);
+		builder.addStatus("banned");
+		builder.addBlockInfo("Insult", Date.valueOf("2018-02-01"));
+		builder.addRequests(2);
+		users.add(builder.buildUser());
+		builder = new UserBuilder();
+		builder.addId(3);
+		builder.addPersonalInfo("ashotik", "ashort@gogo.kz", "", "Ашот", "Рахмед", "Мухаммедыч");
+		builder.addDiscount(5);
+		builder.addBalance(98);
+		builder.addStatus("user");
+		users.add(builder.buildUser());
+		builder = new UserBuilder();
+		builder.addId(4);
+		builder.addPersonalInfo("kukareku", "petuh@gmail.com", "", "Павел", "Синий", "Михайлович");
+		builder.addDiscount(25);
+		builder.addBalance(254);
+		builder.addStatus("banned");
+		builder.addBlockInfo("Residence rules violation", Date.valueOf("2017-02-08"));
+		users.add(builder.buildUser());
+		builder = new UserBuilder();
+		builder.addId(5);
+		builder.addPersonalInfo("pierce.k", "petrova.k@gmail.com", "", "Катерина", "Петрова", "");
+		builder.addDiscount(30);
+		builder.addBalance(2409);
+		builder.addStatus("user");
+		builder.addRequests(3);
+		users.add(builder.buildUser());
 		return users;
 	}
 

@@ -6,10 +6,8 @@ import java.util.Objects;
 public class Hostel implements Serializable {
     private static final long serialVersionUID = -7481188849152613348L;
     private String name;
-    private String city;
-    private String country;
-    private String address;
     private Booking booking;
+    private Address address;
     private String email;
     private int id;
     private int room;
@@ -30,30 +28,6 @@ public class Hostel implements Serializable {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Booking getBooking() {
         return booking;
     }
@@ -64,6 +38,14 @@ public class Hostel implements Serializable {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getEmail() {
@@ -107,8 +89,6 @@ public class Hostel implements Serializable {
                 room == hostel.room &&
                 cost == hostel.cost &&
                 Objects.equals(name, hostel.name) &&
-                Objects.equals(city, hostel.city) &&
-                Objects.equals(country, hostel.country) &&
                 Objects.equals(address, hostel.address) &&
                 booking == hostel.booking &&
                 Objects.equals(email, hostel.email);
@@ -116,15 +96,13 @@ public class Hostel implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, city, country, address, booking, email, id, room, cost);
+        return Objects.hash(name, address, booking, email, id, room, cost);
     }
 
     @Override
     public String toString() {
         return "Hostel{" +
                 "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
                 ", address='" + address + '\'' +
                 ", booking=" + booking +
                 ", email='" + email + '\'' +
@@ -132,5 +110,59 @@ public class Hostel implements Serializable {
                 ", room=" + room +
                 ", cost=" + cost +
                 '}';
+    }
+
+    public class Address {
+        private String city;
+        private String country;
+        private String address;
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Address address1 = (Address) o;
+            return Objects.equals(city, address1.city) &&
+                    Objects.equals(country, address1.country) &&
+                    Objects.equals(address, address1.address);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(city, country, address);
+        }
+
+        @Override
+        public String toString() {
+            return "Address{" +
+                    "city='" + city + '\'' +
+                    ", country='" + country + '\'' +
+                    ", address='" + address + '\'' +
+                    '}';
+        }
     }
 }

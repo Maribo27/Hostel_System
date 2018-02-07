@@ -3,9 +3,13 @@ package by.tc.hostel_system.util;
 import by.tc.hostel_system.entity.Hostel;
 import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.entity.User;
+import by.tc.hostel_system.entity.builder.HostelBuilder;
+import by.tc.hostel_system.entity.builder.RequestBuilder;
+import by.tc.hostel_system.entity.builder.UserBuilder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,25 +21,26 @@ public class DAOUtil {
 	private static final String MD_5 = "MD5";
 
 	public static User createUserFromDB(ResultSet resultSet) throws SQLException {
-	    User user = new User();
+	    UserBuilder builder = new UserBuilder();
 	    while (resultSet.next()){
 	        int column = 1;
-	        user.setId(resultSet.getInt(column++));
-	        user.setUsername(resultSet.getString(column++));
-	        user.setEmail(resultSet.getString(column++));
-	        user.setPassword(resultSet.getString(column++));
-	        user.setSurname(resultSet.getString(column++));
-	        user.setName(resultSet.getString(column++));
-	        user.setLastname(resultSet.getString(column++));
-	        user.setDiscount(resultSet.getInt(column++));
-	        user.setBalance(resultSet.getInt(column++));
-		    user.setAccount(resultSet.getString(column++));
-	        user.setStatus(resultSet.getString(column++));
-	        user.setBlockDate(resultSet.getDate(column++));
-	        user.setUnlockDate(resultSet.getDate(column++));
-	        user.setBlockReason(resultSet.getString(column));
+	        builder.addId(resultSet.getInt(column++));
+	        String username = resultSet.getString(column++);
+	        String email = resultSet.getString(column++);
+	        String password = resultSet.getString(column++);
+	        String surname = resultSet.getString(column++);
+	        String name = resultSet.getString(column++);
+	        String lastname = resultSet.getString(column++);
+	        builder.addPersonalInfo(username, email, password, name, surname, lastname);
+	        builder.addDiscount(resultSet.getInt(column++));
+	        builder.addBalance(resultSet.getInt(column++));
+		    builder.addAccount(resultSet.getString(column++));
+	        builder.addStatus(resultSet.getString(column++));
+	        Date blockDate = resultSet.getDate(column++);
+	        String blockReason = resultSet.getString(column);
+	        builder.addBlockInfo(blockReason, blockDate);
 	    }
-	    return user;
+	    return builder.buildUser();
 	}
 
 	public static String createPassword(String password) throws NoSuchAlgorithmException {
@@ -63,27 +68,34 @@ public class DAOUtil {
 	    return cities;
 	}
 
-	public static List<Hostel> createHostels(ResultSet resultSet, int room) throws SQLException {
+	public static List<Hostel> createHostels(ResultSet resultSet, Hostel.Booking type, int room) throws SQLException {
 	    List<Hostel> hostels = new ArrayList<>();
 	    while (resultSet.next()){
 	        int column = 1;
-	        Hostel hostel = new Hostel();
+	        HostelBuilder builder = new HostelBuilder();
 
-	        hostel.setId(resultSet.getInt(column++));
-	        hostel.setName(resultSet.getString(column++));
-	        hostel.setCountry(resultSet.getString(column++));
-	        hostel.setCity(resultSet.getString(column++));
-	        hostel.setAddress(resultSet.getString(column++));
-	        if (room == 0) {
-		        hostel.setBooking(resultSet.getString(column++));
-	        }
-	        hostel.setCost(resultSet.getInt(column++));
-	        hostel.setEmail(resultSet.getString(column++));
-		    hostel.setRoom(resultSet.getInt(column));
-		    if (hostel.getRoom() < room){
+	        builder.addId(resultSet.getInt(column++));
+	        builder.addName(resultSet.getString(column++));
+
+		    String country = resultSet.getString(column++);
+		    String city = resultSet.getString(column++);
+		    String address = resultSet.getString(column++);
+		    builder.addAddress(city, country, address);
+		    Hostel.Booking currentType = Hostel.Booking.valueOf(resultSet.getString(column++).toUpperCase());
+		    final boolean rightType = room == 0 || type == Hostel.Booking.PAYMENT || currentType == type;
+		    if (rightType) {
+		    	builder.addBooking(currentType);
+	        } else {
+		    	continue;
+		    }
+	        builder.addCost(resultSet.getInt(column++));
+	        builder.addEmail(resultSet.getString(column++));
+		    final int roomNumber = resultSet.getInt(column);
+		    if (roomNumber < room){
 			    continue;
 		    }
-	        hostels.add(hostel);
+		    builder.addRoom(roomNumber);
+		    hostels.add(builder.buildHostel());
 	    }
 	    return hostels;
 	}
@@ -92,50 +104,51 @@ public class DAOUtil {
 	    List<Request> requests = new ArrayList<>();
 	    while (resultSet.next()){
 	        int column = 1;
-	        Request req = new Request();
-	        req.setId(resultSet.getInt(column++));
-	        req.setUserId(resultSet.getInt(column++));
-	        req.setHostelId(resultSet.getInt(column++));
-	        req.setHostelInfo(resultSet.getString(column++));
-	        req.setType(resultSet.getString(column++));
-	        req.setRoom(resultSet.getInt(column++));
-	        req.setDays(resultSet.getInt(column++));
-	        req.setCost(resultSet.getInt(column++));
+	        RequestBuilder builder = new RequestBuilder();
+	        builder.addId(resultSet.getInt(column++));
+	        builder.addUserId(resultSet.getInt(column++));
+	        builder.addHostelId(resultSet.getInt(column++));
+	        builder.addHostelInfo(resultSet.getString(column++));
+	        builder.addType(resultSet.getString(column++));
+	        builder.addRoom(resultSet.getInt(column++));
+	        builder.addDays(resultSet.getInt(column++));
+	        builder.addCost(resultSet.getInt(column++));
 		    String status = resultSet.getString(column++);
-		    req.setStatus(status);
+		    builder.addStatus(status);
 		    String deleted = Request.Status.DELETED.name();
 		    if (status.equalsIgnoreCase(deleted)){
 		    	continue;
 		    }
-		    req.setDate(resultSet.getDate(column));
-	        requests.add(req);
+		    builder.addDate(resultSet.getDate(column));
+	        requests.add(builder.buildRequest());
 	    }
 	    return requests;
 	}
 
 	public static List<User> createUsers(ResultSet resultSet) throws SQLException {
 	    List<User> users = new ArrayList<>();
-	    while (resultSet.next()){
-	        User user = new User();
+		while (resultSet.next()){
+		    UserBuilder builder = new UserBuilder();
 	        int column = 1;
 	        int tempId = resultSet.getInt(column++);
 	        if (tempId == 1) {
 	        	continue;
 	        }
-	        user.setId(tempId);
-	        user.setUsername(resultSet.getString(column++));
-	        user.setEmail(resultSet.getString(column++));
-	        user.setSurname(resultSet.getString(column++));
-	        user.setName(resultSet.getString(column++));
-	        user.setLastname(resultSet.getString(column++));
-	        user.setDiscount(resultSet.getInt(column++));
-	        user.setBalance(resultSet.getInt(column++));
-	        user.setStatus(resultSet.getString(column++));
-	        user.setBlockDate(resultSet.getDate(column++));
-	        user.setUnlockDate(resultSet.getDate(column++));
-	        user.setBlockReason(resultSet.getString(column++));
-		    user.setRequests(resultSet.getInt(column));
-		    users.add(user);
+		    builder.addId(tempId);
+		    String username = resultSet.getString(column++);
+		    String email = resultSet.getString(column++);
+		    String surname = resultSet.getString(column++);
+		    String name = resultSet.getString(column++);
+		    String lastname = resultSet.getString(column++);
+		    builder.addPersonalInfo(username, email, "", name, surname, lastname);
+		    builder.addDiscount(resultSet.getInt(column++));
+		    builder.addBalance(resultSet.getInt(column++));
+		    builder.addStatus(resultSet.getString(column++));
+		    Date blockDate = resultSet.getDate(column++);
+		    String blockReason = resultSet.getString(column++);
+		    builder.addBlockInfo(blockReason, blockDate);
+		    builder.addRequests(resultSet.getInt(column));
+		    users.add(builder.buildUser());
 	    }
 	    return users;
 	}

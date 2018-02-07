@@ -16,14 +16,13 @@
     <fmt:message bundle="${loc}" key="locale.message.balance" var="balance"/>
     <fmt:message bundle="${loc}" key="locale.table.title.block.date" var="date"/>
     <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.unlock.date" var="end"/>
     <fmt:message bundle="${loc}" key="locale.message.account.number" var="account"/>
     <fmt:message bundle="${loc}" key="locale.button.logout" var="logout"/>
-    <title> ${home} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${home} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 <c:choose>
-    <c:when test = "${sessionScope.user == null}">
+    <c:when test = "${empty sessionScope.user}">
         <jsp:forward page="${pageContext.request.contextPath}/register" />
     </c:when>
 </c:choose>
@@ -34,14 +33,14 @@
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
-            <h3>${greetings}, ${sessionScope.user.name}!</h3>
+            <h3>${greetings}, ${sessionScope.user.personalInfo.name}!</h3>
             ${discount}: ${sessionScope.user.discount} <br>
             ${balance}: ${sessionScope.user.balance} <br>
             ${account}: ${sessionScope.user.account}
             <c:if test = "${sessionScope.user.status eq 'BANNED'}">
-                <br>${reason}: ${sessionScope.user.blockReason}
-                <br>${date}: ${sessionScope.user.blockDate}
-                <br>${end}: ${sessionScope.user.unlockDate}
+                <br>${message}
+                <br>${reason}: ${sessionScope.user.blockInfo.blockReason}
+                <br>${date}: ${sessionScope.user.blockInfo.blockDate}
             </c:if>
             <hr>
             <c:choose>

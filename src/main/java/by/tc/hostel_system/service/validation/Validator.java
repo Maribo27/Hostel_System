@@ -59,13 +59,6 @@ public class Validator {
 		return true;
 	}
 
-	static boolean isDigit(String number) throws NotNumberException {
-		if (!number.matches(DIGIT)){
-			throw new NotNumberException(String.format("%s - is not a number", number));
-		}
-		return true;
-	}
-
 	public static boolean isDate(String date) throws NotDateException {
 		if (!date.matches(DATE)){
 			throw new NotDateException(String.format("%s - is not a right date", date));

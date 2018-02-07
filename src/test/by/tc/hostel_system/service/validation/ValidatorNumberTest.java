@@ -83,30 +83,4 @@ public class ValidatorNumberTest {
 		}
 		assertEquals(expected, actual);
 	}
-
-	@Test
-	public void trueDigit() {
-		boolean expected = true;
-		final String digit = "-56";
-		boolean actual = true;
-		try {
-			Validator.isDigit(digit);
-		} catch (NotNumberException e) {
-			actual = false;
-		}
-		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void wrongDigit() {
-		boolean expected = false;
-		final String digit = "054";
-		boolean actual = true;
-		try {
-			Validator.isDigit(digit);
-		} catch (NotNumberException e) {
-			actual = false;
-		}
-		assertEquals(expected, actual);
-	}
 }

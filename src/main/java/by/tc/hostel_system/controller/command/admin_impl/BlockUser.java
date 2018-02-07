@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.NUMBER;
-import static by.tc.hostel_system.controller.constant.EntityAttributes.DATE;
 import static by.tc.hostel_system.controller.constant.EntityAttributes.ID;
 import static by.tc.hostel_system.controller.constant.PageUrl.ERROR_PAGE;
 import static by.tc.hostel_system.util.ControllerUtil.createAddressWithPaging;
@@ -27,14 +26,13 @@ public class BlockUser implements Command {
 
 	@Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String date = request.getParameter(DATE);
 	    String userId = request.getParameter(ID);
 	    String reason = request.getParameter(REASON);
 	    String page = request.getParameter(NUMBER);
 
 	    UserService service = factory.getUserService();
         try {
-	        service.blockUser(userId, date, reason, page);
+	        service.blockUser(userId, reason, page);
 	        String address = createAddressWithPaging(request, CommandType.SHOW_USERS.name(), page);
 	        response.sendRedirect(address);
         } catch (ServiceException e) {

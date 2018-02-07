@@ -23,7 +23,7 @@
 
 <body>
 <c:choose>
-    <c:when test = "${sessionScope.user != null}">
+    <c:when test = "${not empty sessionScope.user}">
         <jsp:forward page="/home" />
     </c:when>
 </c:choose>
@@ -36,7 +36,7 @@
             <form id="login" action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="LOGIN"/>
                 <label for="username">
-                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.username}" maxlength="20" minlength="5" required>
+                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" maxlength="20" minlength="5" required>
                     <ul class="input-requirements">
                         <li>At least 5 characters long (and less than 20 characters)</li>
                         <li>First symbol - letter</li>

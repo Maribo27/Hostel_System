@@ -4,8 +4,8 @@ import by.tc.hostel_system.controller.command.Command;
 import by.tc.hostel_system.entity.User;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.ServiceFactory;
-import by.tc.hostel_system.service.user.UserService;
 import by.tc.hostel_system.service.user.UserExistException;
+import by.tc.hostel_system.service.user.UserService;
 import by.tc.hostel_system.util.ControllerUtil;
 import org.apache.log4j.Logger;
 
@@ -43,9 +43,9 @@ public class Register implements Command {
 
         try {
             service.addUserInformation(username, password, name, lastname, surname, email);
-            User tempUser = new User();
-            tempUser.setUsername(username);
-            User user = service.getUserInformation(lang, tempUser, password);
+            User newUser = new User();
+            newUser.getPersonalInfo().setUsername(username);
+            User user = service.getUserInformation(lang, newUser, password);
             session = request.getSession(true);
             session.setAttribute(USER, user);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE);

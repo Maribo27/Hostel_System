@@ -68,7 +68,7 @@ var usernameValidityChecks = [
         isInvalid: function(input) {
             return !input.value.match(/^[a-z].*$/ig);
         },
-        invalidityMessage: 'This input needs to to have first symbol - letter',
+        invalidityMessage: 'This input needs to have first symbol - letter',
         element: document.querySelector('label[for="username"] .input-requirements li:nth-child(2)')
     },
     {
@@ -93,7 +93,7 @@ var nameValidityChecks = [
         isInvalid: function(input) {
             return !input.value.match(/^[A-ZА-Я].*$/g);
         },
-        invalidityMessage: 'This input needs to to have first symbol - uppercase letter',
+        invalidityMessage: 'This input needs to have first symbol - uppercase letter',
         element: document.querySelector('label[for="name"] .input-requirements li:nth-child(3)')
     },
     {
@@ -109,22 +109,22 @@ var nameValidityChecks = [
 var lastnameValidityChecks = [
     {
         isInvalid: function(input) {
-            return input.value.length < 2;
+            return input.value.length < 2 && input.value.length > 0;
         },
         invalidityMessage: 'This input needs to be at least 3 characters',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(1)')
     },
     {
         isInvalid: function(input) {
-            return !input.value.match(/^[A-ZА-Я].*$/g);
+            return !input.value.match(/^[A-ZА-Я].*$/g) && input.value.length > 0;
         },
-        invalidityMessage: 'This input needs to to have first symbol - uppercase letter',
+        invalidityMessage: 'This input needs to have first symbol - uppercase letter',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(3)')
     },
     {
         isInvalid: function(input) {
             var illegalCharacters = input.value.match(/^.*[^a-zа-я].*$/ig);
-            return !!illegalCharacters;
+            return illegalCharacters & input != null;
         },
         invalidityMessage: 'Only letters are allowed',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(2)')

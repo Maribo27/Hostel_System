@@ -9,6 +9,6 @@ import java.util.Map;
 
 public interface HostelDAO {
     List<Hostel> getHostels(String lang) throws DAOException;
-    List<Hostel> getHostels(String lang, int city, int room, Date start, Date end) throws DAOException;
+    List<Hostel> getHostels(String lang, Hostel.Booking type, int city, int room, Date start, Date end) throws DAOException;
     Map<Integer, String> getCities(String lang) throws DAOException;
 }

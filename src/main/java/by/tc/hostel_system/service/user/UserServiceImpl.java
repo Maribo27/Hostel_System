@@ -9,7 +9,6 @@ import by.tc.hostel_system.entity.User;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.validation.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class UserServiceImpl implements UserService {
             boolean langValid = Validator.isLanguage(lang);
             boolean inputDataValid = UserValidator.isLoginDataValid(user, password);
             User newUser = (User) user;
-            return userDAO.getUserInformation(lang, newUser.getUsername(), password);
+            return userDAO.getUserInformation(lang, newUser.getPersonalInfo().getUsername(), password);
         } catch (LangNotSupportedException | UserValidator.InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e) {
@@ -90,15 +89,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void blockUser(String id, String date, String reason, String page) throws ServiceException {
+    public void blockUser(String id, String reason, String page) throws ServiceException {
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
-            boolean inputDataValid = UserValidator.isBlockUserDataValid(id, date, reason, page);
+            boolean inputDataValid = UserValidator.isBlockUserDataValid(id, reason, page);
             int idNumber = Integer.parseInt(id);
-            Date beginDate = Date.valueOf(date);
             int reasonNumber = Integer.parseInt(reason);
-            userDAO.blockUser(idNumber, beginDate, reasonNumber);
+            userDAO.blockUser(idNumber, reasonNumber);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
@@ -125,9 +123,15 @@ public class UserServiceImpl implements UserService {
 
         try {
             boolean inputDataValid = UserValidator.isChangeDataValid(user, username, email, name, surname, lastname);
-            List<String> dataToUpdate = getDataToChange(user, username, email, name, surname, lastname);
-            userDAO.checkUser(username, USER_SEARCH_USERNAME);
-	        userDAO.checkUser(email, USER_SEARCH_EMAIL);
+            List<String> dataToUpdate = getDataToChange(user.getPersonalInfo(), username, email, name, surname, lastname);
+            final boolean usernameChanged = !user.getPersonalInfo().getUsername().equalsIgnoreCase(username);
+            if (usernameChanged) {
+                userDAO.checkUser(username, USER_SEARCH_USERNAME);
+            }
+            final boolean emailChanged = !user.getPersonalInfo().getEmail().equalsIgnoreCase(email);
+            if (emailChanged) {
+                userDAO.checkUser(email, USER_SEARCH_EMAIL);
+            }
             userDAO.changeUserData(user.getId(), dataToUpdate);
         } catch (CurrentEntityExist e) {
         	throw new UserExistException(e.getMessage());
@@ -173,8 +177,7 @@ public class UserServiceImpl implements UserService {
         try {
             boolean inputDataValid = Validator.isNumber(userId);
             int id = Integer.parseInt(userId);
-            int discount = userDAO.getUserDiscount(id);
-            return discount;
+            return userDAO.getUserDiscount(id);
         } catch (NotNumberException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
@@ -203,32 +206,32 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private List<String> getDataToChange(User newUser, String username, String email, String name, String surname, String lastname) {
+    private List<String> getDataToChange(User.PersonalInfo person, String username, String email, String name, String surname, String lastname) {
         List<String> data = new ArrayList<>();
 
-        if (!username.equalsIgnoreCase(newUser.getUsername())){
+        if (!username.equalsIgnoreCase(person.getUsername())){
             data.add(USERNAME + "='" + username + "'");
-            newUser.setUsername(username);
+            person.setUsername(username);
         }
 
-        if (!email.equalsIgnoreCase(newUser.getEmail())){
+        if (!email.equalsIgnoreCase(person.getEmail())){
             data.add(EMAIL + "='" + email + "'");
-            newUser.setEmail(email);
+            person.setEmail(email);
         }
 
-        if (!name.equalsIgnoreCase(newUser.getName())){
+        if (!name.equalsIgnoreCase(person.getName())){
             data.add(NAME + "='" + name + "'");
-            newUser.setName(name);
+            person.setName(name);
         }
 
-        if (!surname.equalsIgnoreCase(newUser.getSurname())){
+        if (!surname.equalsIgnoreCase(person.getSurname())){
             data.add(SURNAME + "='" + surname + "'");
-            newUser.setSurname(surname);
+            person.setSurname(surname);
         }
 
-        if (!lastname.equalsIgnoreCase(newUser.getLastname())){
+        if (!lastname.equalsIgnoreCase(person.getLastname())){
             data.add(LASTNAME + "='" + lastname + "'");
-            newUser.setLastname(lastname);
+            person.setLastname(lastname);
         }
         return data;
     }

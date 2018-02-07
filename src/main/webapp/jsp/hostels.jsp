@@ -24,7 +24,7 @@
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <fmt:message bundle="${loc}" key="locale.button.add.request" var="request"/>
-    <title> ${hostels} | ${sessionScope.user.username} | Hostel System</title>
+    <title> ${hostels} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 
@@ -48,9 +48,9 @@
             <tr>
                 <td><c:out value="${hostel.id}"/></td>
                 <td><c:out value="${hostel.name}"/></td>
-                <td><c:out value="${hostel.country}"/></td>
-                <td><c:out value="${hostel.city}"/></td>
-                <td><c:out value="${hostel.address}"/></td>
+                <td><c:out value="${hostel.address.country}"/></td>
+                <td><c:out value="${hostel.address.city}"/></td>
+                <td><c:out value="${hostel.address.address}"/></td>
                 <td><ahs:booking-type bookingType="${hostel.booking}"/></td>
                 <td><c:out value="${hostel.email}"/></td>
                 <td><c:out value="${hostel.cost}"/></td>

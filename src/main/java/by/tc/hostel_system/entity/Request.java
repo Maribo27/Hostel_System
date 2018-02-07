@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Request implements Serializable {
     private static final long serialVersionUID = 8261672134275753823L;
     private String hostelInfo;
-    private String type;
+    private Hostel.Booking type;
     private Status status;
     private Date date;
     private Date endDate;
@@ -19,6 +19,7 @@ public class Request implements Serializable {
     private int cost;
 
     public Request(){
+        status = Status.PROCESSING;
     }
 
     public enum Status {
@@ -33,11 +34,15 @@ public class Request implements Serializable {
         this.hostelInfo = hostelInfo;
     }
 
-    public String getType() {
+    public Hostel.Booking getType() {
         return type;
     }
 
     public void setType(String type) {
+        this.type = Hostel.Booking.valueOf(type.toUpperCase());
+    }
+
+    public void setType(Hostel.Booking type) {
         this.type = type;
     }
 
@@ -129,7 +134,7 @@ public class Request implements Serializable {
                 days == request.days &&
                 cost == request.cost &&
                 Objects.equals(hostelInfo, request.hostelInfo) &&
-                Objects.equals(type, request.type) &&
+                type == request.type &&
                 status == request.status &&
                 Objects.equals(date, request.date) &&
                 Objects.equals(endDate, request.endDate);
@@ -144,7 +149,7 @@ public class Request implements Serializable {
     public String toString() {
         return "Request{" +
                 "hostelInfo='" + hostelInfo + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", status=" + status +
                 ", date=" + date +
                 ", endDate=" + endDate +
