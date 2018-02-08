@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="locale.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="locale.message.error.access" var="error"/>
     <title>Hostel System | 403</title>
 </head>
 
@@ -17,7 +20,7 @@
 <div style="padding:20px;"></div>
 
 <p id="error">403</p>
-<p id="error-message">forbidden</p>
+<p id="error-message">${error}</p>
 
 
 <div style="padding:15px;"></div>

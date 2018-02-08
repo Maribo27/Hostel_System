@@ -25,25 +25,28 @@ import static by.tc.hostel_system.controller.constant.PageUrl.NOTHING_FOUND_PAGE
 
 public class ShowHostels implements Command {
 	private static final Logger logger = Logger.getLogger(ShowHostels.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
-	    HostelService service = factory.getHostelService();
+
 	    String lang = (String) session.getAttribute(LANG);
 	    String page = request.getParameter(NUMBER);
-	    RequestDispatcher requestDispatcher;
-        try {
+
+	    HostelService service = ServiceFactory.getInstance().getHostelService();
+	    try {
 	        List<Hostel> hostels = service.getHostels(lang, page);
 	        int currentPage = Integer.parseInt(page);
+
 	        String nextCommand = CommandType.SHOW_HOSTELS.name();
 	        PaginationHelper paginationHelper = ControllerUtil.createPagination(request, currentPage, hostels.size(), nextCommand);
 	        request.setAttribute(PAGE, paginationHelper);
+
 	        List<Hostel> hostelsOnPage = hostels.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
 	        request.setAttribute(HOSTELS, hostelsOnPage);
-	        requestDispatcher = request.getRequestDispatcher(HOSTELS_PAGE);
-	        requestDispatcher.forward(request, response);
+
+	        RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOSTELS_PAGE);
+		    requestDispatcher.forward(request, response);
         } catch (HostelNotFoundException e){
 	        logger.error(e.getMessage(), e);
 	        ControllerUtil.updateWithMessage(request, response, e.getMessage(), NOTHING_FOUND_PAGE);

@@ -82,6 +82,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>All_Hostels</servlet-name>
+    <jsp-file>/jsp/allHostels.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>All_Hostels</servlet-name>
+    <url-pattern>/all_hostels</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>Requests</servlet-name>
     <jsp-file>/jsp/requests.jsp</jsp-file>
   </servlet>
@@ -125,6 +134,19 @@
   <filter-mapping>
     <filter-name>NoCacheFilter</filter-name>
     <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>CharsetFilter</filter-name>
+    <filter-class>by.tc.hostel_system.filter.CharsetFilter</filter-class>
+    <init-param>
+      <param-name>pageEncoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharsetFilter</filter-name>
+    <url-pattern>/hostel_system</url-pattern>
   </filter-mapping>
 
   <filter>

@@ -18,21 +18,22 @@ import static by.tc.hostel_system.controller.constant.EntityAttributes.ID;
 
 public class CancelRequest implements Command {
 	private static final Logger logger = Logger.getLogger(CancelRequest.class);
-	private ServiceFactory factory = ServiceFactory.getInstance();
 	private static final String STATUS = "status";
 
 	@Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    HttpSession session = request.getSession();
-    	String requestId = request.getParameter(REQUEST);
+		Object user = session.getAttribute(USER);
+
+		String requestId = request.getParameter(REQUEST);
 	    String userId = request.getParameter(ID);
 	    String page = request.getParameter(NUMBER);
 	    String nextCommand = request.getParameter(NEXT_COMMAND);
 	    String status = request.getParameter(STATUS);
-	    Object user = session.getAttribute(USER);
-	    RequestService requestService = factory.getRequestService();
+
+	    RequestService service = ServiceFactory.getInstance().getRequestService();
 	    try {
-		    int balance = requestService.cancelRequest(requestId, userId, status, user, page);
+		    int balance = service.cancelRequest(requestId, userId, status, user, page);
 		    User newUser = (User) user;
 		    if (newUser.getStatus() != User.Status.ADMIN) {
 		    	newUser.setBalance(balance);

@@ -5,6 +5,8 @@ public enum CommandType {
     LOGOUT,
     REGISTER,
 
+    GET_CITIES,
+
     SHOW_USERS,
     SHOW_REQUESTS,
     SHOW_USER_REQUESTS,
@@ -22,5 +24,5 @@ public enum CommandType {
     CHANGE_PASSWORD,
     CHANGE_LOCALE,
     UNLOCK,
-    BLOCK,
+    BLOCK
 }

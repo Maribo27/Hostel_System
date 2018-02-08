@@ -1,4 +1,4 @@
-package by.tc.hostel_system.tag;
+package by.tc.hostel_system.tag.discount;
 
 import javax.servlet.jsp.JspException;
 

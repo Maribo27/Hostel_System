@@ -1,8 +1,8 @@
 package by.tc.hostel_system.dao.hostel;
 
 import by.tc.hostel_system.dao.DAOException;
-import by.tc.hostel_system.dao.connector.ConnectionPool;
 import by.tc.hostel_system.dao.EntityNotFoundException;
+import by.tc.hostel_system.dao.connector.ConnectionPool;
 import by.tc.hostel_system.entity.Hostel;
 import by.tc.hostel_system.util.DAOUtil;
 
@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.HOSTELS;
 import static by.tc.hostel_system.dao.SQLQuery.*;
 
 public class HostelDAOImpl implements HostelDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.hostel");
     private static final String SQL_ERROR_WHILE_SEARCHING_HOSTELS = "SQL error while searching hostels";
-    private static final String HOSTELS_NOT_FOUND = "Hostels not found";
 
     @Override
     public List<Hostel> getHostels(String lang) throws DAOException {
@@ -31,7 +31,7 @@ public class HostelDAOImpl implements HostelDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
+                throw new EntityNotFoundException(HOSTELS.getMessage(lang));
             }
 
             return DAOUtil.createHostels(resultSet, Hostel.Booking.PAYMENT, 0);
@@ -62,12 +62,12 @@ public class HostelDAOImpl implements HostelDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
+                throw new EntityNotFoundException(HOSTELS.getMessage(lang));
             }
 
             final List<Hostel> hostels = DAOUtil.createHostels(resultSet, type, room);
             if (hostels.size() == 0) {
-                throw new EntityNotFoundException(HOSTELS_NOT_FOUND);
+                throw new EntityNotFoundException(HOSTELS.getMessage(lang));
             }
             return hostels;
         } catch (SQLException e) {

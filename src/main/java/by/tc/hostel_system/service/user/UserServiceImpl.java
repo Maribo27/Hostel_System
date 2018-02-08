@@ -1,8 +1,8 @@
 package by.tc.hostel_system.service.user;
 
-import by.tc.hostel_system.dao.CurrentEntityExist;
 import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.DAOFactory;
+import by.tc.hostel_system.dao.EntityExistException;
 import by.tc.hostel_system.dao.EntityNotFoundException;
 import by.tc.hostel_system.dao.user.UserDAO;
 import by.tc.hostel_system.entity.User;
@@ -39,19 +39,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUserInformation(String username, String password, String name, String lastname, String surname, String email) throws ServiceException {
+    public void addUserInformation(String lang, String username, String password, String name, String lastname, String surname, String email) throws ServiceException {
 
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
         try {
+            boolean langValid = Validator.isLanguage(lang);
             boolean inputDataValid = UserValidator.isInputDataValid(username, password, name, lastname, surname, email);
-            userDAO.addUser(username, password, name, lastname, surname, email);
-        } catch (CurrentEntityExist e){
+            userDAO.addUser(lang, username, password, name, lastname, surname, email);
+        } catch (EntityExistException e){
             throw new UserExistException(e.getMessage());
         } catch (EntityNotFoundException e){
             throw new UserNotFoundException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
-        } catch (UserValidator.InputException e) {
+        } catch (LangNotSupportedException | UserValidator.InputException e) {
             throw new InvalidParametersException(e.getMessage());
         }
     }
@@ -81,8 +82,6 @@ public class UserServiceImpl implements UserService {
             return userDAO.getReasons(lang);
         } catch (LangNotSupportedException e) {
             throw new InvalidParametersException(e.getMessage());
-        } catch (EntityNotFoundException e){
-            throw new ReasonsNotFoundException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
@@ -118,24 +117,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeUserData(User user, String username, String email, String name, String surname, String lastname) throws ServiceException {
+    public void changeUserData(String lang, User user, String username, String email, String name, String surname, String lastname) throws ServiceException {
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
+            boolean langValid = Validator.isLanguage(lang);
             boolean inputDataValid = UserValidator.isChangeDataValid(user, username, email, name, surname, lastname);
             List<String> dataToUpdate = getDataToChange(user.getPersonalInfo(), username, email, name, surname, lastname);
             final boolean usernameChanged = !user.getPersonalInfo().getUsername().equalsIgnoreCase(username);
             if (usernameChanged) {
-                userDAO.checkUser(username, USER_SEARCH_USERNAME);
+                userDAO.checkUser(lang, username, USER_SEARCH_USERNAME);
             }
             final boolean emailChanged = !user.getPersonalInfo().getEmail().equalsIgnoreCase(email);
             if (emailChanged) {
-                userDAO.checkUser(email, USER_SEARCH_EMAIL);
+                userDAO.checkUser(lang, email, USER_SEARCH_EMAIL);
             }
             userDAO.changeUserData(user.getId(), dataToUpdate);
-        } catch (CurrentEntityExist e) {
+        } catch (EntityExistException e) {
         	throw new UserExistException(e.getMessage());
-        } catch (UserValidator.InputException e) {
+        } catch (LangNotSupportedException | UserValidator.InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
@@ -171,14 +171,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getUserDiscount(String userId) throws ServiceException {
+    public int getUserDiscount(String lang, String userId) throws ServiceException {
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
         try {
+            boolean langValid = Validator.isLanguage(lang);
             boolean inputDataValid = Validator.isNumber(userId);
             int id = Integer.parseInt(userId);
-            return userDAO.getUserDiscount(id);
-        } catch (NotNumberException e) {
+            return userDAO.getUserDiscount(lang, id);
+        } catch (LangNotSupportedException | NotNumberException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());

@@ -19,12 +19,9 @@
 <ul id="navigation_bar">
     <li><a href="${pageContext.request.contextPath}/hostel_system?command=LOGOUT">${logout}</a></li>
     <li><a href="#">${lang}</a>
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/home">${rus}</a></li>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/home">${eng}</a></li>
-        </ul>
+        <jsp:include page="/WEB-INF/jsp/switchLanguage.jsp"/>
     </li>
-    <li class="active"><a href="${pageContext.request.contextPath}/home">${home}</a></li>
+    <li class="active"><a>${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

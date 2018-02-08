@@ -15,6 +15,7 @@
     <fmt:message bundle="${loc}" key="locale.table.title.block.date" var="date"/>
     <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
     <fmt:message bundle="${loc}" key="locale.message.account.number" var="account"/>
+    <fmt:message bundle="${loc}" key="locale.message.error.blocked.account" var="message"/>
 
 </head>
 <body>

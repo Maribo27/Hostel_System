@@ -17,13 +17,13 @@ import static by.tc.hostel_system.controller.constant.EntityAttributes.ID;
 
 public class UnlockUser implements Command {
 	private static final Logger logger = Logger.getLogger(UnlockUser.class);
-	private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    String userId = request.getParameter(ID);
 	    String page = request.getParameter(NUMBER);
-	    UserService service = factory.getUserService();
+
+	    UserService service = ServiceFactory.getInstance().getUserService();
         try {
 	        service.unlockUser(userId, page);
 	        String address = ControllerUtil.createAddressWithPaging(request, CommandType.SHOW_USERS.name(), page);

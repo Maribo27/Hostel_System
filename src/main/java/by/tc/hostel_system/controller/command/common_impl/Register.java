@@ -9,7 +9,6 @@ import by.tc.hostel_system.service.user.UserService;
 import by.tc.hostel_system.util.ControllerUtil;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,6 @@ import static by.tc.hostel_system.controller.constant.PageUrl.INDEX_URL;
 
 public class Register implements Command {
     private static final Logger logger = Logger.getLogger(Register.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,27 +31,30 @@ public class Register implements Command {
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME);
+        name = ControllerUtil.decodeGetParameter(name);
         String surname = request.getParameter(SURNAME);
+        surname = ControllerUtil.decodeGetParameter(surname);
         String lastname = request.getParameter(LAST_NAME);
+        lastname = ControllerUtil.decodeGetParameter(lastname);
         String sessionLang = (String) session.getAttribute(LANG);
         String lang = sessionLang != null ? sessionLang : DEFAULT_LANG;
 
         session.setAttribute(LANG, lang);
 
-        UserService service = factory.getUserService();
-
+        UserService service = ServiceFactory.getInstance().getUserService();
         try {
-            service.addUserInformation(username, password, name, lastname, surname, email);
+            service.addUserInformation(lang, username, password, name, lastname, surname, email);
             User newUser = new User();
             newUser.getPersonalInfo().setUsername(username);
             User user = service.getUserInformation(lang, newUser, password);
             session = request.getSession(true);
             session.setAttribute(USER, user);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE);
-            requestDispatcher.forward(request, response);
+            response.sendRedirect(HOME_PAGE);
+            /*RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE);
+            requestDispatcher.forward(request, response);*/
         } catch (UserExistException e) {
             logger.error(e.getMessage(), e);
-            ControllerUtil.showUserExistError(request, response, username, email, name, surname, lastname, INDEX_URL);
+            ControllerUtil.showUserExistError(request, response, e.getMessage(), username, email, name, surname, lastname, INDEX_URL);
         } catch (ServiceException e) {
             logger.error(e.getMessage(), e);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

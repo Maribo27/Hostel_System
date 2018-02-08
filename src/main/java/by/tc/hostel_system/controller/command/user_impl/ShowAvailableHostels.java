@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
@@ -24,8 +25,8 @@ import static by.tc.hostel_system.controller.constant.PageUrl.*;
 
 public class ShowAvailableHostels implements Command {
 	private static final Logger logger = Logger.getLogger(ShowAvailableHostels.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 	private static final String CITY = "city";
+	private static final String CITIES = "cities";
 
 	@Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +40,7 @@ public class ShowAvailableHostels implements Command {
 	    String type = request.getParameter(TYPE);
 	    String date = request.getParameter(DATE);
 
-	    HostelService service = factory.getHostelService();
+	    HostelService service = ServiceFactory.getInstance().getHostelService();
 	    RequestDispatcher requestDispatcher;
 	    try {
 		    List<Hostel> hostels = service.getHostels(lang, city, rooms, date, days, page, type);
@@ -50,12 +51,15 @@ public class ShowAvailableHostels implements Command {
 		    List<Hostel> hostelsOnPage = hostels.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
 		    request.setAttribute(HOSTELS, hostelsOnPage);
 
+		    Map<Integer, String> cities = service.getCities(lang);
+		    request.setAttribute(CITIES, cities);
+
 		    request.setAttribute(TYPE, type);
 		    request.setAttribute(CITY, city);
 		    request.setAttribute(ROOMS, rooms);
 		    request.setAttribute(DAYS, days);
 		    request.setAttribute(DATE, date);
-		    requestDispatcher = request.getRequestDispatcher(CREATE_REQUEST_PAGE);
+		    requestDispatcher = request.getRequestDispatcher(AVAILABLE_HOSTELS_PAGE);
 		    requestDispatcher.forward(request, response);
 	    } catch (HostelNotFoundException e) {
 		    logger.error(e.getMessage(), e);

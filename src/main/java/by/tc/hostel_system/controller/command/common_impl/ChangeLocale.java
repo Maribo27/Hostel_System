@@ -1,55 +1,28 @@
 package by.tc.hostel_system.controller.command.common_impl;
 
 import by.tc.hostel_system.controller.command.Command;
-import by.tc.hostel_system.controller.command.CommandType;
+import by.tc.hostel_system.util.ControllerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
 
-import static by.tc.hostel_system.controller.constant.ControlConst.*;
+import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
+import static by.tc.hostel_system.controller.constant.ControlConst.PAGE;
 
 public class ChangeLocale implements Command {
+    private static final String PARAM = "param";
+    private static final String SERVLET = "/hostel_system";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String page = request.getParameter(PAGE);
         String lang = request.getParameter(LANG);
-
-        String params = getParams(request);
-        params = params.substring(0,params.length() - 1);
+        String parameters = request.getParameter(PARAM);
         session.setAttribute(LANG, lang);
-        String address = params.isEmpty() ? page : page + params;
+        String address = parameters.isEmpty() ? page : SERVLET + "?" + parameters;
         response.sendRedirect(address);
-    }
-
-    private String getParams(HttpServletRequest request) {
-        StringBuilder query = new StringBuilder("?");
-        Map<String, String[]> parameters = request.getParameterMap();
-        Set<String> keys = parameters.keySet();
-        for (String key : keys){
-            String values[] = parameters.get(key);
-            String value = values[0];
-            if (key.equals(LANG) || key.equals(PAGE)){
-                continue;
-            }
-            if (key.equals(COMMAND)){
-                String currentCommand = CommandType.CHANGE_LOCALE.toString();
-                if (values.length == 1){
-                    continue;
-                }
-                if (value.equals(currentCommand)){
-                    value = values[1];
-                }
-            }
-            query.append(key);
-            query.append("=");
-            query.append(value);
-            query.append("&");
-        }
-        return query.toString();
     }
 }

@@ -1,6 +1,6 @@
 package by.tc.hostel_system.dao.user;
 
-import by.tc.hostel_system.dao.CurrentEntityExist;
+import by.tc.hostel_system.dao.EntityExistException;
 import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.DAOFactory;
 import by.tc.hostel_system.dao.connector.ConnectionPool;
@@ -41,8 +41,8 @@ public class UserDAOImplTest {
 		boolean expected = true;
 		boolean actual = false;
 		try {
-			userDAO.checkUser("admin", USER_SEARCH_USERNAME);
-		} catch (CurrentEntityExist e) {
+			userDAO.checkUser(LANG_EN, "admin", USER_SEARCH_USERNAME);
+		} catch (EntityExistException e) {
 			actual = true;
 		}
 		assertEquals(expected, actual);
@@ -53,8 +53,8 @@ public class UserDAOImplTest {
 		boolean expected = false;
 		boolean actual = false;
 		try {
-			userDAO.checkUser("anastas", USER_SEARCH_USERNAME);
-		} catch (CurrentEntityExist e) {
+			userDAO.checkUser(LANG_EN, "anastas", USER_SEARCH_USERNAME);
+		} catch (EntityExistException e) {
 			actual = true;
 		}
 		assertEquals(expected, actual);
@@ -65,7 +65,7 @@ public class UserDAOImplTest {
 	public void getUserDiscount() throws DAOException {
 		int id = 3;
 		int expected = 5;
-		int actual = userDAO.getUserDiscount(id);
+		int actual = userDAO.getUserDiscount(LANG_EN, id);
 		assertEquals(expected, actual);
 	}
 
@@ -103,7 +103,7 @@ public class UserDAOImplTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			userDAO.addUser(username, password, name, lastname, surname, email);
+			userDAO.addUser(LANG_EN, username, password, name, lastname, surname, email);
 		} catch (DAOException e) {
 			actual = false;
 		}
@@ -216,7 +216,6 @@ public class UserDAOImplTest {
 	private List<User> createUsers() {
 		List<User> users = new ArrayList<>();
 		UserBuilder builder = new UserBuilder();
-		builder = new UserBuilder();
 		builder.addId(2);
 		builder.addPersonalInfo("alexx", "alexander@mail.ru", "", "Alex", "Doe", "");
 		builder.addDiscount(10);

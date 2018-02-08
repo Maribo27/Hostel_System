@@ -1,5 +1,6 @@
-package by.tc.hostel_system.tag;
+package by.tc.hostel_system.tag.discount;
 
+import by.tc.hostel_system.tag.TagWritingException;
 import by.tc.hostel_system.util.TagUtil;
 import org.apache.log4j.Logger;
 

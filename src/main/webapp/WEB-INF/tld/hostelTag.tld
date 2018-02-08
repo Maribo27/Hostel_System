@@ -44,7 +44,7 @@
 
     <tag>
         <name>plus</name>
-        <tag-class>by.tc.hostel_system.tag.IncreaseDiscountTag</tag-class>
+        <tag-class>by.tc.hostel_system.tag.discount.IncreaseDiscountTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>id</name>
@@ -59,7 +59,7 @@
     </tag>
     <tag>
         <name>minus</name>
-        <tag-class>by.tc.hostel_system.tag.ReduceDiscountTag</tag-class>
+        <tag-class>by.tc.hostel_system.tag.discount.ReduceDiscountTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>id</name>
@@ -88,6 +88,32 @@
         </attribute>
         <attribute>
             <name>surname</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>price</name>
+        <tag-class>by.tc.hostel_system.tag.PriceTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>rooms</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>days</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>cost</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>discount</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

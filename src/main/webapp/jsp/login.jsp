@@ -18,6 +18,11 @@
     <fmt:message bundle="${loc}" key="locale.message.enter.username.or.email" var="username"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.password" var="password"/>
     <fmt:message bundle="${loc}" key="locale.button.login" var="login"/>
+
+    <fmt:message bundle="${loc}" key="locale.input.message.user.content" var="userContent"/>
+    <fmt:message bundle="${loc}" key="locale.input.message.username.length" var="usernameLength"/>
+    <fmt:message bundle="${loc}" key="locale.input.message.password.length" var="passwordLength"/>
+
     <title>Hostel System</title>
 </head>
 
@@ -36,18 +41,17 @@
             <form id="login" action="${pageContext.request.contextPath}/hostel_system" method="post">
                 <input type="hidden" name="command" value="LOGIN"/>
                 <label for="username">
-                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" maxlength="20" minlength="5" required>
+                    <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.personalInfo.username}" maxlength="20" minlength="5" required>
                     <ul class="input-requirements">
-                        <li>At least 5 characters long (and less than 20 characters)</li>
-                        <li>First symbol - letter</li>
-                        <li>Must only contain latin letters, numbers, "." and "_"</li>
+                        <li>${usernameLength}</li>
+                        <li>${userContent}</li>
                     </ul>
                 </label>
                 <label for="password">
                     <input type="password" id="password" name="password" placeholder="${password}" pattern="^[\w\d\.\_]{5,12}$" maxlength="12" minlength="5" required/>
                     <ul class="input-requirements">
-                        <li>At least 5 characters long (and less than 12 characters)</li>
-                        <li>Must only contain latin letters, numbers, "_" and "."</li>
+                        <li>${passwordLength}</li>
+                        <li>${userContent}</li>
                     </ul>
                 </label>
                 <input type="submit" value="${login}"/>
@@ -59,7 +63,7 @@
         </div>
     </section>
 </div>
-<script src="${pageContext.request.contextPath}/assets/js/validation.js"></script>
+<script src="assets/js/validation/validation_${sessionScope.lang}.js"></script>
 
 
 

@@ -59,41 +59,34 @@ CustomValidation.prototype = {
 var usernameValidityChecks = [
     {
         isInvalid: function(input) {
-            return input.value.length < 5;
+            return input.value.length < 5 | input.value.length > 20;
         },
-        invalidityMessage: 'This input needs to be at least 3 characters',
+        invalidityMessage: 'Это поле должно быть от 5 до 20 символов в длину',
         element: document.querySelector('label[for="username"] .input-requirements li:nth-child(1)')
-    },
-    {
-        isInvalid: function(input) {
-            return !input.value.match(/^[a-z].*$/ig);
-        },
-        invalidityMessage: 'This input needs to have first symbol - letter',
-        element: document.querySelector('label[for="username"] .input-requirements li:nth-child(2)')
     },
     {
         isInvalid: function(input) {
             var illegalCharacters = input.value.match(/^.*[^\w\d._].*$/g);
             return !!illegalCharacters;
         },
-        invalidityMessage: 'Only letters, numbers, . and _ are allowed',
-        element: document.querySelector('label[for="username"] .input-requirements li:nth-child(3)')
+        invalidityMessage: 'Допускаются только латиница, цифры, "."" и "_"',
+        element: document.querySelector('label[for="username"] .input-requirements li:nth-child(2)')
     }
 ];
 
 var nameValidityChecks = [
     {
         isInvalid: function(input) {
-            return input.value.length < 2;
+            return input.value.length < 2 | input.value.length > 50;
         },
-        invalidityMessage: 'This input needs to be at least 3 characters',
+        invalidityMessage: 'Это поле должно быть от 2 до 50 символов в длину',
         element: document.querySelector('label[for="name"] .input-requirements li:nth-child(1)')
     },
     {
         isInvalid: function(input) {
-            return !input.value.match(/^[A-ZА-Я].*$/g);
+            return !input.value.match(/^[A-ZА-Я]/g);
         },
-        invalidityMessage: 'This input needs to have first symbol - uppercase letter',
+        invalidityMessage: 'Первый символ должен быть заглавной буквой',
         element: document.querySelector('label[for="name"] .input-requirements li:nth-child(3)')
     },
     {
@@ -101,7 +94,7 @@ var nameValidityChecks = [
             var illegalCharacters = input.value.match(/^.*[^a-zа-я].*$/ig);
             return !!illegalCharacters;
         },
-        invalidityMessage: 'Only letters are allowed',
+        invalidityMessage: 'Допускаются только буквы',
         element: document.querySelector('label[for="name"] .input-requirements li:nth-child(2)')
     }
 ];
@@ -109,16 +102,16 @@ var nameValidityChecks = [
 var lastnameValidityChecks = [
     {
         isInvalid: function(input) {
-            return input.value.length < 2 && input.value.length > 0;
+            return input.value.length < 2 && input.value.length > 0 || input.value.length > 50;
         },
-        invalidityMessage: 'This input needs to be at least 3 characters',
+        invalidityMessage: 'Это поле должно быть от 2 до 50 символов в длину',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(1)')
     },
     {
         isInvalid: function(input) {
-            return !input.value.match(/^[A-ZА-Я].*$/g) && input.value.length > 0;
+            return !input.value.match(/^[A-ZА-Я]/g) && input.value.length > 0;
         },
-        invalidityMessage: 'This input needs to have first symbol - uppercase letter',
+        invalidityMessage: 'Первый символ должен быть заглавной буквой',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(3)')
     },
     {
@@ -126,7 +119,7 @@ var lastnameValidityChecks = [
             var illegalCharacters = input.value.match(/^.*[^a-zа-я].*$/ig);
             return illegalCharacters & input != null;
         },
-        invalidityMessage: 'Only letters are allowed',
+        invalidityMessage: 'Допускаются только буквы',
         element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(2)')
     }
 ];
@@ -134,16 +127,16 @@ var lastnameValidityChecks = [
 var surnameValidityChecks = [
     {
         isInvalid: function(input) {
-            return input.value.length < 2;
+            return input.value.length < 2 | input.value.length > 50;
         },
-        invalidityMessage: 'This input needs to be at least 3 characters',
+        invalidityMessage: 'Это поле должно быть от 2 до 50 символов в длину',
         element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(1)')
     },
     {
         isInvalid: function(input) {
-            return !input.value.match(/^[A-ZА-Я].*$/g);
+            return !input.value.match(/^[A-ZА-Я]/g);
         },
-        invalidityMessage: 'This input needs to to have first symbol - uppercase letter',
+        invalidityMessage: 'Первый символ должен быть заглавной буквой',
         element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(3)')
     },
     {
@@ -151,7 +144,7 @@ var surnameValidityChecks = [
             var illegalCharacters = input.value.match(/^.*[^a-zа-я].*$/ig);
             return !!illegalCharacters;
         },
-        invalidityMessage: 'Only letters are allowed',
+        invalidityMessage: 'Допускаются только буквы',
         element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(2)')
     }
 ];
@@ -161,7 +154,7 @@ var emailValidityChecks = [
         isInvalid: function(input) {
             return !input.value.match(/^.*@.*$/g);
         },
-        invalidityMessage: 'This input needs to have @',
+        invalidityMessage: 'Поле должно содержать "@"',
         element: document.querySelector('label[for="email"] .input-requirements li:nth-child(2)')
     },
     {
@@ -169,7 +162,7 @@ var emailValidityChecks = [
             var illegalCharacters = input.value.match(/^[A-Za-z._\d\-]+@[A-Za-z]+\.[A-Za-z]{2,3}$/g);
             return !illegalCharacters;
         },
-        invalidityMessage: 'Only latin letters, numbers, _, - and . are allowed',
+        invalidityMessage: 'Допускаются только латиница, цифры, "_", "-" и "."',
         element: document.querySelector('label[for="email"] .input-requirements li:nth-child(1)')
     }
 ];
@@ -179,7 +172,7 @@ var passwordValidityChecks = [
         isInvalid: function(input) {
             return input.value.length < 5 | input.value.length > 12;
         },
-        invalidityMessage: 'This input needs to be between 5 and 12 characters',
+        invalidityMessage: 'Это поле должно быть от 5 до 12 символов в длину',
         element: document.querySelector('label[for="password"] .input-requirements li:nth-child(1)')
     },
 
@@ -187,7 +180,7 @@ var passwordValidityChecks = [
         isInvalid: function(input) {
             return !input.value.match(/^[\w\d._]{5,12}$/g);
         },
-        invalidityMessage: 'Only latin letters, numbers, _ and . are allowed',
+        invalidityMessage: 'Допускаются только латиница, цифры, "."" и "_"',
         element: document.querySelector('label[for="password"] .input-requirements li:nth-child(2)')
     }
 ];
@@ -197,7 +190,7 @@ var passwordRepeatValidityChecks = [
         isInvalid: function() {
             return passwordRepeatInput.value !== passwordInput.value;
         },
-        invalidityMessage: 'This password needs to match the first one'
+        invalidityMessage: 'Это поле должно совпадать с предыдущим'
     }
 ];
 
@@ -231,30 +224,56 @@ if (emailInput != null) {
     emailInput.CustomValidation.validityChecks = emailValidityChecks;
 }
 
-
 var passwordInput = document.getElementById('password');
 if (passwordInput != null) {
     passwordInput.CustomValidation = new CustomValidation(passwordInput);
     passwordInput.CustomValidation.validityChecks = passwordValidityChecks;
 }
 
-var passwordRepeatInput = document.getElementById('password_repeat');
+var passwordRepeatInput = document.getElementById('password-repeat');
 if (passwordRepeatInput != null) {
     passwordRepeatInput.CustomValidation = new CustomValidation(passwordRepeatInput);
     passwordRepeatInput.CustomValidation.validityChecks = passwordRepeatValidityChecks;
 }
 
-var inputs = document.querySelectorAll('input:not([type="submit"])');
-var submit = document.querySelector('input[type="submit"');
-var form = document.getElementById('registration');
-var login = document.getElementById('login');
+var newPasswordInput = document.getElementById('new-password');
+if (newPasswordInput != null) {
+    newPasswordInput.CustomValidation = new CustomValidation(newPasswordInput);
+    newPasswordInput.CustomValidation.validityChecks = passwordValidityChecks;
+}
 
+var changePasswordConfirmInput = document.getElementById('change-confirm-password');
+if (changePasswordConfirmInput != null) {
+    changePasswordConfirmInput.CustomValidation = new CustomValidation(changePasswordConfirmInput);
+    changePasswordConfirmInput.CustomValidation.validityChecks = passwordValidityChecks;
+}
+
+var deletePasswordConfirmInput = document.getElementById('delete-confirm-password');
+if (deletePasswordConfirmInput != null) {
+    deletePasswordConfirmInput.CustomValidation = new CustomValidation(deletePasswordConfirmInput);
+    deletePasswordConfirmInput.CustomValidation.validityChecks = passwordValidityChecks;
+}
+
+var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+var submit = document.querySelector('input[type="submit"');
+if (submit != null) {
+    submit.addEventListener('click', validate);
+}
+var registration = document.getElementById('registration');
+if (registration != null) {
+    registration.addEventListener('submit', validate);
+}
+var login = document.getElementById('login');
+if (login != null) {
+    login.addEventListener('submit', validate);
+}
+var preferences = document.getElementById('preferences');
+if (preferences != null) {
+    preferences.addEventListener('submit', validate);
+}
 function validate() {
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].CustomValidation.checkInput();
     }
 }
-
-submit.addEventListener('click', validate);
-form.addEventListener('submit', validate);
-login.addEventListener('submit', validate);

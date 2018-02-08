@@ -6,8 +6,12 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/table.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topButton.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/backToTop.js"></script>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.users" var="users"/>
@@ -22,6 +26,7 @@
     <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
     <fmt:message bundle="${loc}" key="locale.table.title.block.date" var="blockDate"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
+    <fmt:message bundle="${loc}" key="locale.table.title.requests" var="requests"/>
     <fmt:message bundle="${loc}" key="locale.button.block" var="block"/>
     <fmt:message bundle="${loc}" key="locale.button.unlock" var="unlock"/>
     <title> ${users} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
@@ -105,6 +110,6 @@
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
 <jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
+<div id="toTop">^ ${toTop}</div>
 </body>
 </html>

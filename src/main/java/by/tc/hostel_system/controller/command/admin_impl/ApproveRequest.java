@@ -15,15 +15,14 @@ import static by.tc.hostel_system.controller.constant.ControlConst.*;
 
 public class ApproveRequest implements Command {
 	private static final Logger logger = Logger.getLogger(ApproveRequest.class);
-	private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    String id = request.getParameter(REQUEST);
 	    String page = request.getParameter(NUMBER);
 	    String command = request.getParameter(NEXT_COMMAND);
-	    RequestService service = factory.getRequestService();
 
+	    RequestService service = ServiceFactory.getInstance().getRequestService();
         try {
 	        service.approveRequest(id, page);
 	        String address = ControllerUtil.createAddressWithPaging(request, command, page);

@@ -25,24 +25,27 @@ import static by.tc.hostel_system.controller.constant.PageUrl.REQUESTS_PAGE;
 
 public class ShowRequests implements Command {
     private static final Logger logger = Logger.getLogger(ShowRequests.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+
         String lang = (String) session.getAttribute(LANG);
-        RequestService service = factory.getRequestService();
         String page = request.getParameter(NUMBER);
-        RequestDispatcher requestDispatcher;
+
+        RequestService service = ServiceFactory.getInstance().getRequestService();
         try {
             List<Request> requests = service.getRequests(lang, page);
             int currentPage = Integer.parseInt(page);
+
             String command = CommandType.SHOW_REQUESTS.name();
             PaginationHelper paginationHelper = ControllerUtil.createPagination(request, currentPage, requests.size(), command);
             request.setAttribute(PAGE, paginationHelper);
+
             List<Request> requestsOnPage = requests.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
             request.setAttribute(REQUESTS, requestsOnPage);
-            requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
+
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
             requestDispatcher.forward(request, response);
         } catch (RequestNotFoundException e) {
             logger.error(e.getMessage(), e);

@@ -17,7 +17,6 @@ import static by.tc.hostel_system.util.ControllerUtil.createAddressWithPaging;
 
 public class BlockUser implements Command {
 	private static final Logger logger = Logger.getLogger(BlockUser.class);
-	private ServiceFactory factory = ServiceFactory.getInstance();
 	private static final String REASON = "reason";
 
 	@Override
@@ -26,7 +25,7 @@ public class BlockUser implements Command {
 	    String reason = request.getParameter(REASON);
 	    String page = request.getParameter(NUMBER);
 
-	    UserService service = factory.getUserService();
+	    UserService service = ServiceFactory.getInstance().getUserService();
         try {
 	        service.blockUser(userId, reason, page);
 	        String address = createAddressWithPaging(request, CommandType.SHOW_USERS.name(), page);

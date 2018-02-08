@@ -49,6 +49,7 @@ public class CommandDirector {
         rights.add(User.Status.USER);
         commands.put(CommandType.ADD_REQUEST, new CommandRights(rights, new AddRequest()));
         commands.put(CommandType.SHOW_AVAILABLE_HOSTELS, new CommandRights(rights, new ShowAvailableHostels()));
+        commands.put(CommandType.GET_CITIES, new CommandRights(rights, new CreateCitiesField()));
 
         commonCommands.put(CommandType.LOGIN, new LogIn());
         commonCommands.put(CommandType.REGISTER, new Register());

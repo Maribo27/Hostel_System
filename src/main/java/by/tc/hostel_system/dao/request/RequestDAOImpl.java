@@ -11,13 +11,13 @@ import java.sql.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.REQUESTS;
 import static by.tc.hostel_system.dao.SQLQuery.*;
 
 public class RequestDAOImpl implements RequestDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.request");
     private static final String SQL_ERROR_WHILE_SEARCHING_REQUESTS = "SQL error while searching requests";
-    private static final String REQUESTS_NOT_FOUND = "Requests not found";
 
     @Override
     public List<Request> getRequests(String lang) throws DAOException {
@@ -32,7 +32,7 @@ public class RequestDAOImpl implements RequestDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(REQUESTS_NOT_FOUND);
+                throw new EntityNotFoundException(REQUESTS.getMessage(lang));
             }
 
             return DAOUtil.createRequests(resultSet);
@@ -57,13 +57,13 @@ public class RequestDAOImpl implements RequestDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(REQUESTS_NOT_FOUND);
+                throw new EntityNotFoundException(REQUESTS.getMessage(lang));
             }
 
             final List<Request> requests = DAOUtil.createRequests(resultSet);
 
             if (requests.size() == 0) {
-                throw new EntityNotFoundException(REQUESTS_NOT_FOUND);
+                throw new EntityNotFoundException(REQUESTS.getMessage(lang));
             }
             return requests;
         } catch (SQLException e) {

@@ -10,10 +10,10 @@
     <fmt:message bundle="${loc}" key="locale.button.show.hostels" var="hostels"/>
     <fmt:message bundle="${loc}" key="locale.button.show.requests" var="requests"/>
     <fmt:message bundle="${loc}" key="locale.message.greetings" var="greetings"/>
-    <fmt:message bundle="${loc}" key="locale.message.account.number" var="account"/>
+    <fmt:message bundle="${loc}" key="locale.name.administrator" var="name"/>
 </head>
 <body>
-<h3>${greetings}, ${sessionScope.user.personalInfo.name}!</h3>
+<h3>${greetings}, ${name}!</h3>
 <hr>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
     <input type="hidden" name="number" value="1"/>

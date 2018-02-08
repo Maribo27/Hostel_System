@@ -17,18 +17,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
+import static by.tc.hostel_system.controller.constant.ControlConst.Message.DATA_CHANGED;
 import static by.tc.hostel_system.controller.constant.ControlConst.USER;
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
 import static by.tc.hostel_system.controller.constant.PageUrl.PREFERENCES_PAGE;
 
 public class ChangeUserData implements Command {
 	private static final Logger logger = Logger.getLogger(ChangeUserData.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
-	    UserService service = factory.getUserService();
+	    UserService service = ServiceFactory.getInstance().getUserService();
 
 	    String lang = (String) session.getAttribute(LANG);
 	    String password = request.getParameter(PASSWORD);
@@ -42,12 +42,12 @@ public class ChangeUserData implements Command {
 
 	    try {
 		    User newUser = service.getUserInformation(lang, user, password);
-		    service.changeUserData(newUser, username, email, name, surname, lastname);
+		    service.changeUserData(lang, newUser, username, email, name, surname, lastname);
 		    session.setAttribute(USER, newUser);
-		    ControllerUtil.updateWithMessage(request, response, "Your data changed", PREFERENCES_PAGE);
+		    ControllerUtil.updateWithMessage(request, response, DATA_CHANGED.getMessage(lang), PREFERENCES_PAGE);
 	    } catch (UserExistException e) {
 		    logger.error(e.getMessage(), e);
-		    ControllerUtil.showUserExistError(request, response, username, email, name, surname, lastname, PREFERENCES_PAGE);
+		    ControllerUtil.showUserExistError(request, response, e.getMessage(), username, email, name, surname, lastname, PREFERENCES_PAGE);
 	    } catch (UserNotFoundException e) {
 		    logger.error(e.getMessage(), e);
 		    ControllerUtil.updateWithMessage(request, response, e.getMessage(), PREFERENCES_PAGE);

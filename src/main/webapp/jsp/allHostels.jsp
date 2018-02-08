@@ -24,7 +24,7 @@
     <fmt:message bundle="${loc}" key="locale.table.title.booking" var="booking"/>
     <fmt:message bundle="${loc}" key="locale.table.title.email" var="email"/>
     <fmt:message bundle="${loc}" key="locale.table.title.rooms" var="count"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.cost" var="cost"/>
+    <fmt:message bundle="${loc}" key="locale.table.title.room.cost" var="cost"/>
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <fmt:message bundle="${loc}" key="locale.button.add.request" var="request"/>
@@ -37,55 +37,32 @@
     <c:if test="${fn:length(requestScope.hostels) gt 0}">
         <table>
             <tr>
+                <th>${id}</th>
                 <th>${name}</th>
+                <th>${country}</th>
                 <th>${city}</th>
                 <th>${address}</th>
                 <th>${booking}</th>
                 <th>${email}</th>
                 <th>${cost}</th>
-                <th>${action}</th>
             </tr>
             <c:forEach items="${requestScope.hostels}" var="hostel">
-                <c:set var="_cost" scope="request" value="${hostel.cost}"/>
-                <c:set var="_rooms" scope="request" value="${requestScope.rooms}"/>
-                <c:set var="_days" scope="request" value="${requestScope.days}"/>
-                <c:set var="_discount" scope="request" value="${sessionScope.user.discount}"/>
-                <c:set var="balance" scope="request" value="${sessionScope.user.balance}"/>
                 <tr>
+                    <td><c:out value="${hostel.id}"/></td>
                     <td><c:out value="${hostel.name}"/></td>
+                    <td><c:out value="${hostel.address.country}"/></td>
                     <td><c:out value="${hostel.address.city}"/></td>
                     <td><c:out value="${hostel.address.address}"/></td>
                     <td><ahs:booking-type bookingType="${hostel.booking}"/></td>
                     <td><c:out value="${hostel.email}"/></td>
-                    <td><ahs:price cost="${_cost}" discount="${_discount}" days="${_days}" rooms="${_rooms}"/></td>
-                    <td>
-                        <c:set var="price" scope="request" value="${_cost * _days * _rooms * (1 - _discount / 100)}"/>
-                        <c:if test="${price < balance}">
-                        <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                            <input type="hidden" name="command" value="ADD_REQUEST"/>
-                            <input type="hidden" name="number" value="1"/>
-                            <input type="hidden" name="type" value="${requestScope.type}"/>
-                            <input type="hidden" name="cost" value="${_cost}"/>
-                            <input type="hidden" name="rooms" value="${_rooms}"/>
-                            <input type="hidden" name="days" value="${_days}"/>
-                            <input type="hidden" name="date" value="${requestScope.date}"/>
-                            <input type="hidden" name="hostel" value="${hostel.id}"/>
-                            <input type="submit" value="${request}"/>
-                        </form>
-                        </c:if>
-                    </td>
+                    <td><c:out value="${hostel.cost}"/></td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 </div>
-<c:if test = "${sessionScope.user.status eq 'USER'}">
-    <jsp:include page="/WEB-INF/jsp/chooseParameters.jsp"/>
-</c:if>
-
 <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
 <jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-<div id="toTop">^ ${toTop}</div>
 </body>
 </html>

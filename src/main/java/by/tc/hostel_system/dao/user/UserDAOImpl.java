@@ -1,6 +1,6 @@
 package by.tc.hostel_system.dao.user;
 
-import by.tc.hostel_system.dao.CurrentEntityExist;
+import by.tc.hostel_system.dao.EntityExistException;
 import by.tc.hostel_system.dao.DAOException;
 import by.tc.hostel_system.dao.EntityNotFoundException;
 import by.tc.hostel_system.dao.connector.ConnectionPool;
@@ -14,19 +14,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.USERS;
+import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.USER_EXIST;
 import static by.tc.hostel_system.dao.SQLQuery.*;
 
 public class UserDAOImpl implements UserDAO {
     private static final String CONVERT_PASSWORD_ERROR_MESSAGE = "Can't convert password";
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.user");
-
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private static final String SQL_ERROR_WHILE_SEARCHING_USER = "SQL error while searching user";
     private static final String SQL_ERROR_WHILE_UPDATING_USER_DATA = "SQL error while updating user data";
-    private static final String USER_NOT_FOUND = "User not found";
+
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.user");
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void checkUser(String data, String bundle) throws DAOException {
+    public void checkUser(String lang, String data, String bundle) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(1, data);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.isBeforeFirst()) {
-                throw new CurrentEntityExist("Current user exist in database");
+                throw new EntityExistException(USER_EXIST.getMessage(lang));
             }
         } catch (SQLException e) {
             throw new DAOException("SQL error while searching user");
@@ -45,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int getUserDiscount(int id) throws DAOException {
+    public int getUserDiscount(String lang, int id) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(USER_NOT_FOUND);
+                throw new EntityNotFoundException(USERS.getMessage(lang));
             }
             int discount = 0;
             while (resultSet.next()) {
@@ -101,12 +101,12 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(USER_NOT_FOUND);
+                throw new EntityNotFoundException(USERS.getMessage(lang));
             }
 
             return DAOUtil.createUserFromDB(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(SQL_ERROR_WHILE_SEARCHING_USER);
+            throw new DAOException("SQL error while searching user");
         } catch (NoSuchAlgorithmException e) {
             throw new DAOException(CONVERT_PASSWORD_ERROR_MESSAGE);
         } finally {
@@ -115,7 +115,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void addUser(String username, String password, String name, String lastname, String surname, String email) throws DAOException, UserExistException {
+    public void addUser(String lang, String username, String password, String name, String lastname, String surname, String email) throws DAOException, UserExistException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -125,12 +125,12 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(2, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.isBeforeFirst()) {
-                throw new UserExistException("Current user exist in database");
+                throw new UserExistException(USER_EXIST.getMessage(lang));
             }
             password = DAOUtil.createPassword(password);
             connection.setAutoCommit(false);
             addUserToDB(username, password, email, name, surname, lastname, connection);
-            createAccount(username, connection);
+            createAccount(lang, username, connection);
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
@@ -182,7 +182,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                throw new EntityNotFoundException(USER_NOT_FOUND);
+                throw new EntityNotFoundException(USERS.getMessage(lang));
             }
 
             Map<Integer, String> reasons = DAOUtil.translateToMap(resultSet);
@@ -344,13 +344,13 @@ public class UserDAOImpl implements UserDAO {
         statement.executeUpdate();
     }
 
-    private void createAccount(String username, Connection connection) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
+    private void createAccount(String lang, String username, Connection connection) throws SQLException, NoSuchAlgorithmException, EntityNotFoundException {
         String searchUser = resourceBundle.getString(USER_SEARCH_ACCOUNT);
         PreparedStatement statement = connection.prepareStatement(searchUser);
         statement.setString(1, username);
         ResultSet resultSet = statement.executeQuery();
         if (!resultSet.isBeforeFirst()) {
-            throw new EntityNotFoundException(USER_NOT_FOUND);
+            throw new EntityNotFoundException(USERS.getMessage(lang));
         }
         while (resultSet.next()) {
             int id = resultSet.getInt(1);

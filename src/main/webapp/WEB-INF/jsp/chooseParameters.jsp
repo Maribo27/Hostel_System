@@ -5,9 +5,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/chosen.css">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.booking" var="bookingPage"/>
@@ -22,7 +20,6 @@
 </head>
 
 <body>
-<div style="padding:20px;"></div>
 <div id="sidebar">
     <section class="container">
         <div class="input-data-form">
@@ -36,25 +33,24 @@
                     </select>
                 </label>
                 <label>
-                    <select name="city">
+                    <select name="city" data-placeholder="${city}" class="chosen-select" tabindex="2">
                         <c:forEach items="${requestScope.cities}" var="city">
                             <option value="${city.key}">${city.value}</option>
                         </c:forEach>
                     </select>
                 </label>
-                <input type="number" name="rooms" placeholder="${rooms}" value="${sessionScope.username}"/>
-                <input type="number" name="days" placeholder="${days}" value="${sessionScope.name}"/>
+                <input type="number" name="rooms" placeholder="${rooms}" value="${requestScope.rooms}"/>
+                <input type="number" name="days" placeholder="${days}" value="${requestScope.days}"/>
                 <label>
-                    <input type="date" name="date"/>
+                    <input type="date" name="date" value="${requestScope.date}"/>
                 </label>
                 <input type="submit" value="${search}"/>
+                <script src="${pageContext.request.contextPath}/assets/js/support/jquery-3.2.1.min.js" type="text/javascript"></script>
+                <script src="${pageContext.request.contextPath}/assets/js/support/chosen.jquery.js" type="text/javascript"></script>
+                <script src="${pageContext.request.contextPath}/assets/js/support/init.js" type="text/javascript" charset="utf-8"></script>
             </form>
         </div>
     </section>
 </div>
-
-
-<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

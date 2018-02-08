@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
@@ -59,13 +60,13 @@ public class ControllerUtil {
 		requestDispatcher.forward(request, response);
 	}
 
-	public static void showUserExistError(HttpServletRequest request, HttpServletResponse response, String username, String email, String name, String surname, String lastname, String url) throws ServletException, IOException {
+	public static void showUserExistError(HttpServletRequest request, HttpServletResponse response, String message, String username, String email, String name, String surname, String lastname, String url) throws ServletException, IOException {
 		request.setAttribute(USERNAME, username);
 		request.setAttribute(NAME, name);
 		request.setAttribute(SURNAME, surname);
 		request.setAttribute(LAST_NAME, lastname);
 		request.setAttribute(EMAIL, email);
-		ControllerUtil.updateWithMessage(request, response, "This user exist", url);
+		ControllerUtil.updateWithMessage(request, response, message, url);
 	}
 
 	public static Date getEndDate(int days, Date date) {
@@ -82,5 +83,9 @@ public class ControllerUtil {
 		RequestDispatcher requestDispatcher;
 		requestDispatcher = request.getRequestDispatcher(PREFERENCES_PAGE);
 		requestDispatcher.forward(request, response);
+	}
+
+	public static String decodeGetParameter(String parameter) throws UnsupportedEncodingException {
+		return new String(parameter.getBytes("ISO-8859-1"),"UTF8");
 	}
 }

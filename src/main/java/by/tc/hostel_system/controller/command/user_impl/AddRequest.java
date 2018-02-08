@@ -19,7 +19,6 @@ import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
 
 public class AddRequest implements Command {
 	private static final Logger logger = Logger.getLogger(AddRequest.class);
-	private ServiceFactory factory = ServiceFactory.getInstance();
 	private static final String HOSTEL = "hostel";
 	private static final String COST = "cost";
 
@@ -36,12 +35,12 @@ public class AddRequest implements Command {
 
 	    Object user = session.getAttribute(USER);
 
-	    RequestService service = factory.getRequestService();
+	    RequestService service = ServiceFactory.getInstance().getRequestService();
 	    try {
-	    	int balance = service.addRequest(user, hostelId, type, rooms, days, date, cost);
-	    	User newUser = (User) user;
-	    	newUser.setBalance(balance);
-	    	session.setAttribute(USER, newUser);
+		    int balance = service.addRequest(user, hostelId, type, rooms, days, date, cost);
+		    User newUser = (User) user;
+		    newUser.setBalance(balance);
+		    session.setAttribute(USER, newUser);
 
 		    String address = ControllerUtil.createAddressWithPaging(request, CommandType.SHOW_USER_REQUESTS.name(), "1");
 		    response.sendRedirect(address);

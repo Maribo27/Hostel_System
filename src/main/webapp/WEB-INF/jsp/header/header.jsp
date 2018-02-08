@@ -11,24 +11,14 @@
 
     <fmt:message bundle="${loc}" key="locale.message.balance" var="balance"/>
     <fmt:message bundle="${loc}" key="locale.nav.lang" var="lang"/>
-    <fmt:message bundle="${loc}" key="locale.nav.lang.ru" var="rus"/>
-    <fmt:message bundle="${loc}" key="locale.nav.lang.en" var="eng"/>
     <fmt:message bundle="${loc}" key="locale.nav.home" var="home"/>
     <fmt:message bundle="${loc}" key="locale.button.logout" var="logout"/>
-
 </head>
 <body>
 <ul id="navigation_bar">
     <li><a href="${pageContext.request.contextPath}/hostel_system?command=LOGOUT">${logout}</a></li>
     <li><a href="#">${lang}</a>
-        <ul>
-            <c:set var="params" scope="request"/>
-            <c:if test="${fn:length(pageContext.request.queryString) gt 0}">
-                <c:set var="params" value="&${pageContext.request.queryString}"/>
-            </c:if>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=ru&page=/hostel_system${params}">${rus}</a></li>
-            <li><a href="${pageContext.request.contextPath}/hostel_system?command=CHANGE_LOCALE&lang=en&page=/hostel_system${params}">${eng}</a></li>
-        </ul>
+        <jsp:include page="/WEB-INF/jsp/switchLanguage.jsp"/>
     </li>
     <li><a href="${pageContext.request.contextPath}/home">${home}</a></li>
     <c:if test="${not empty sessionScope.user.balance}">

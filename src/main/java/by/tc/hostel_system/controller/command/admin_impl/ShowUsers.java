@@ -32,22 +32,25 @@ public class ShowUsers implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String lang = (String) session.getAttribute(LANG);
-        UserService service = ServiceFactory.getInstance().getUserService();
-        String page = request.getParameter(NUMBER);
-        RequestDispatcher requestDispatcher;
 
+        String lang = (String) session.getAttribute(LANG);
+        String page = request.getParameter(NUMBER);
+
+        UserService service = ServiceFactory.getInstance().getUserService();
         try {
             List<User> users = service.getUsers(lang);
             int currentPage = Integer.parseInt(page);
+
             String command = CommandType.SHOW_USERS.name();
             PaginationHelper paginationHelper = ControllerUtil.createPagination(request, currentPage, users.size(), command);
             request.setAttribute(PAGE, paginationHelper);
+
             List<User> usersOnPage = users.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
             request.setAttribute(USERS, usersOnPage);
+
             Map<Integer, String> reasons = service.getReasons(lang);
             request.setAttribute(REASONS, reasons);
-            requestDispatcher = request.getRequestDispatcher(USERS_PAGE);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(USERS_PAGE);
             requestDispatcher.forward(request, response);
         } catch (UserNotFoundException e) {
             logger.error(e.getMessage(), e);

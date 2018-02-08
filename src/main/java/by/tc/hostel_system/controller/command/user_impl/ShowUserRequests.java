@@ -1,6 +1,7 @@
 package by.tc.hostel_system.controller.command.user_impl;
 
 import by.tc.hostel_system.controller.command.Command;
+import by.tc.hostel_system.controller.command.CommandType;
 import by.tc.hostel_system.entity.PaginationHelper;
 import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.service.ServiceException;
@@ -24,19 +25,16 @@ import static by.tc.hostel_system.controller.constant.PageUrl.REQUESTS_PAGE;
 
 public class ShowUserRequests implements Command {
     private static final Logger logger = Logger.getLogger(ShowUserRequests.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestService service = factory.getRequestService();
-
         HttpSession session = request.getSession();
-        String lang = (String) session.getAttribute(LANG);
-        String page = request.getParameter(NUMBER);
         Object user = session.getAttribute(USER);
 
-        RequestDispatcher requestDispatcher;
+        String lang = (String) session.getAttribute(LANG);
+        String page = request.getParameter(NUMBER);
 
+        RequestService service = ServiceFactory.getInstance().getRequestService();
         try {
             List<Request> requests = service.getRequests(lang, user, page);
             int currentPage = Integer.parseInt(page);
@@ -45,7 +43,7 @@ public class ShowUserRequests implements Command {
 
             List<Request> requestsOnPage = requests.subList(paginationHelper.getBegin(), paginationHelper.getEnd());
             request.setAttribute(REQUESTS, requestsOnPage);
-            requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(REQUESTS_PAGE);
             requestDispatcher.forward(request, response);
         } catch (RequestNotFoundException e) {
             logger.error(e.getMessage(), e);

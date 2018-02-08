@@ -26,10 +26,12 @@ public class LogIn implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         String username = request.getParameter(USERNAME);
         String password = request.getParameter(PASSWORD);
-        HttpSession session = request.getSession();
         String sessionLang = (String) session.getAttribute(LANG);
+
         String lang = sessionLang != null ? sessionLang : DEFAULT_LANG;
         session.setAttribute(LANG, lang);
 
@@ -37,7 +39,9 @@ public class LogIn implements Command {
         try {
             User tempUser = new User();
             tempUser.getPersonalInfo().setUsername(username);
+
             User user = service.getUserInformation(lang, tempUser, password);
+
             session = request.getSession(true);
             session.setAttribute(USER, user);
             response.sendRedirect(HOME_PAGE);

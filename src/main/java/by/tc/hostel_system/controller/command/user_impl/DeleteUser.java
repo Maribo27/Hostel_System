@@ -15,18 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.tc.hostel_system.controller.constant.ControlConst.*;
+import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
+import static by.tc.hostel_system.controller.constant.ControlConst.Message.PASSWORD_INCORRECT;
+import static by.tc.hostel_system.controller.constant.ControlConst.USER;
 import static by.tc.hostel_system.controller.constant.PageUrl.PREFERENCES_PAGE;
 
 public class DeleteUser implements Command {
 	private static final Logger logger = Logger.getLogger(DeleteUser.class);
-    private ServiceFactory factory = ServiceFactory.getInstance();
     private static final String DELETE = "delete";
 	private static final String CONFIRM_PASSWORD = "delete-confirm-password";
 	@Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
-	    UserService service = factory.getUserService();
+	    UserService service = ServiceFactory.getInstance().getUserService();
 
 	    String lang = (String) session.getAttribute(LANG);
 	    String password = request.getParameter(CONFIRM_PASSWORD);
@@ -45,9 +46,9 @@ public class DeleteUser implements Command {
 		    String address = request.getContextPath() + "/hostel_system?command=LOGOUT";
 		    response.sendRedirect(address);
 	    } catch (UserNotFoundException e) {
-		    logger.error(INVALID_PASSWORD_MESSAGE, e);
+		    logger.error(e.getMessage(), e);
 		    request.setAttribute(DELETE, true);
-		    ControllerUtil.updateWithMessage(request, response, INVALID_PASSWORD_MESSAGE, PREFERENCES_PAGE);
+		    ControllerUtil.updateWithMessage(request, response, PASSWORD_INCORRECT.getMessage(lang), PREFERENCES_PAGE);
 	    } catch (ServiceException e) {
 		    logger.error(e.getMessage(), e);
 		    response.sendError(HttpServletResponse.SC_NOT_FOUND);
