@@ -55,10 +55,6 @@
     cursor: default;
 }
 
-.active:hover{
-    /*! background-color: #3C3C3C; */
-}
-
 .system-name {
     float: left;
     padding-left: 25px;

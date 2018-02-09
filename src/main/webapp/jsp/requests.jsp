@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/table.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topButton.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/backToTop.js"></script>

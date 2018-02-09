@@ -19,11 +19,6 @@
   background-color:  white;
 }
 
-.chosen-container a {
-  /* cursor: text; */
-  /* height:  calc(3vw + 3vh); */
-}
-
 .chosen-container-single .chosen-single {
   display: block;
   padding: calc(0.8vw + 0.8vh) 0 0 calc(0.8vw + 0.8vh);
@@ -65,9 +60,8 @@
   height: auto;
   outline: 0;
   border: 1px solid #aaa;
-  background: url("../images/chosen-sprite.png") no-repeat 100% -20px;
   border-radius: 0;
-  background-color: white;
+  background: white url("../images/chosen-sprite.png") no-repeat 100% -20px;
 }
 
 .chosen-container .chosen-results {

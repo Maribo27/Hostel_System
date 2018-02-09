@@ -1,5 +1,4 @@
 .table-container {
-    /*! padding: 16px; */
     text-align: center;
     margin: auto 10px;
 }
@@ -9,7 +8,6 @@ table {
 }
 
 th {
-    /*! font-size: 13px; */
     font-weight: normal;
     background: #7a7a7a;
     border-top: 4px solid #a9a9a9;

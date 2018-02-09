@@ -22,7 +22,6 @@
 ul.pagination2 li a.active{
     background-color: #1AAEB9;
     color: white;
-    /*! border:1px solid #218FA4; */
 }
 
 ul.pagination2 li a:hover{
