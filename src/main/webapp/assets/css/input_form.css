@@ -1,10 +1,9 @@
 .input-data-form {
     position: relative;
     margin: 0 auto;
-    padding: 20px 20px 20px;
+    padding: 20px;
     background: white;
     border-radius: 3px;
-    -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -68,14 +67,12 @@ input[type="submit"],
 input[type="reset"] {
     box-sizing: border-box;
     color: #fff;
-    text-shadow: 0 1px #E3F1F1;
     background-color: #3C3C3C;
-    padding: 0 18px;
-    position: center;
     height: 29px;
     width: 100%;
     border: 2px solid;
-    border-radius: 1px;
+    font-family: Raleway, sans-serif;
+    font-size:15px;
 }
 
 input[type="submit"]:hover,
@@ -94,6 +91,8 @@ input[type="password"],
 input[type="email"],
 input[type="date"],
 input[type="number"] {
+    font-family: 'Raleway', sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
@@ -106,18 +105,34 @@ input[type="number"] {
     border: 1px solid lightgrey;
     padding: 3%;
     color: #555;
+    height: calc(3vw + 3vh);
 }
 
-input:focus,
-select:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="date"]:focus,
-input[type="number"]:focus {
+input:not([type="submit"], [type="reset"]):focus {
     box-shadow: 0 0 5px #1AAEB9;
     padding: 3%;
     border: 1px solid #AABCFE;
+}
+
+input:not(:focus),
+select:not(:focus),
+input[type="text"]:not(:focus),
+input[type="password"]:not(:focus),
+input[type="email"]:not(:focus),
+input[type="date"]:not(:focus),
+input[type="number"]:not(:focus) {
+    box-shadow: none;
+}
+
+input:invalid,
+select:invalid,
+input[type="text"]:invalid,
+input[type="password"]:invalid,
+input[type="email"]:invalid,
+input[type="date"]:invalid,
+input[type="number"]:invalid {
+    padding: 3%;
+    border: 1px solid #e74c3c;
 }
 
 input:not([type="submit"]):valid {

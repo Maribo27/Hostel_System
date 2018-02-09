@@ -1,6 +1,5 @@
 .table-container {
-    font: 95% Arial, Helvetica, sans-serif;
-    padding: 16px;
+    /*! padding: 16px; */
     text-align: center;
     margin: auto 10px;
 }
@@ -10,20 +9,58 @@ table {
 }
 
 th {
-    font-size: 13px;
+    /*! font-size: 13px; */
     font-weight: normal;
-    background: #b9c9fe;
-    border-top: 4px solid #aabcfe;
+    background: #7a7a7a;
+    border-top: 4px solid #a9a9a9;
     border-bottom: 1px solid #fff;
-    color: #039;
-    padding: 8px;
+    color: #fff;
+    padding: 5px;
+    font-family: "Raleway",sans-serif;
 }
 td {
-    background: #e8edff;
+    background: rgba(163, 183, 191, 0.7);
     border-bottom: 1px solid #fff;
-    color: #669;
-    opacity: 0.5; /* Полупрозрачность таблицы */
+    color: #000;
     border-top: 1px solid transparent;
     padding: 8px;
+    text-align: center;
 }
-tr:hover td {background: #ccddff;}
+
+td .block input[type="submit"]{
+    border: none;
+    background-color: #a73434;
+}
+
+td .block input[type=submit]:hover{
+    background-color: #571313;
+    cursor: pointer;
+}
+
+td .unlock input[type="submit"]{
+    border: none;
+    background-color: #34a750;
+}
+
+td .unlock input[type=submit]:hover{
+    background-color: #237838;
+    cursor: pointer;
+}
+
+td select{
+    border: none;
+    cursor: pointer;
+}
+
+td a {
+    text-decoration: none;
+    color: #34a750;
+    font-size: 30px;
+}
+
+td a p {
+    color: black;
+    font-size: 30px;
+}
+
+tr:hover td {background: rgba(203, 203, 203, 0.7);}

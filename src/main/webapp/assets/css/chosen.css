@@ -16,25 +16,30 @@
 
 .chosen-container.chosen-with-drop .chosen-drop {
   display: block;
+  background-color:  white;
 }
 
 .chosen-container a {
-  cursor: pointer;
+  /* cursor: text; */
+  /* height:  calc(3vw + 3vh); */
 }
 
 .chosen-container-single .chosen-single {
   display: block;
-  padding: 0 0 0 8px;
-  height: 50px;
+  padding: calc(0.8vw + 0.8vh) 0 0 calc(0.8vw + 0.8vh);
+  height: calc(3vw + 3vh);
   border: 1px solid #aaa;
   color: #444;
   line-height: 24px;
+  font-size:  calc(0.8vw + 0.8vh);
 }
 
 .chosen-container-single .chosen-single input[type="text"] {
-  cursor: pointer;
+  cursor: text;
   opacity: 0;
   position: absolute;
+  height: calc(2.5vw + 2.5vh);
+  width: calc(16vw + 16vh);
 }
 
 .chosen-container-single .chosen-single div {
@@ -62,17 +67,20 @@
   border: 1px solid #aaa;
   background: url("../images/chosen-sprite.png") no-repeat 100% -20px;
   border-radius: 0;
+  background-color: white;
 }
 
 .chosen-container .chosen-results {
   color: #444;
-  position: relative;
+  position: absolute;
   overflow-x: hidden;
   overflow-y: auto;
   margin: 0 4px 4px 0;
   padding: 0 0 0 4px;
-  max-height: 240px;
+  max-height: calc(11vw + 11vh);
   -webkit-overflow-scrolling: touch;
+  background-color:  white;
+  width:  100%;
 }
 
 .chosen-container .chosen-results li.active-result {
@@ -94,4 +102,9 @@
 .chosen-container .chosen-results li em {
   font-style: normal;
   text-decoration: underline;
+}
+
+.chosen-container .chosen-container-single {
+  width: 100%;
+  height: 100%;
 }

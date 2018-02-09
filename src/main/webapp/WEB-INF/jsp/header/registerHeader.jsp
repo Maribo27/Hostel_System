@@ -21,7 +21,6 @@
     <li><a href="#">${lang}</a>
         <jsp:include page="/WEB-INF/jsp/switchLanguage.jsp"/>
     </li>
-    <li class="active"><a href="${pageContext.request.contextPath}/register">${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

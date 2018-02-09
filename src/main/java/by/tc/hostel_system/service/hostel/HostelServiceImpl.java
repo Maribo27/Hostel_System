@@ -31,10 +31,9 @@ public class HostelServiceImpl implements HostelService {
         }
     }
 
-    @Override
-    public List<Hostel> getHostels(String lang, String city, String room, String start, String days, String page, String type) throws ServiceException {
-        HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
-
+	@Override
+	public List<Hostel> getHostels(String lang, String city, String room, String start, String days, String page, String type) throws ServiceException {
+		HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
         try {
             boolean langValid = Validator.isLanguage(lang);
             boolean inputDataValid = HostelValidator.isSearchDataValid(city, room, start, days, page, type);

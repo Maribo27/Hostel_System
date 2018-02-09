@@ -87,7 +87,7 @@ var nameValidityChecks = [
             return !input.value.match(/^[A-ZА-Я]/g);
         },
         invalidityMessage: 'This input needs to have first symbol - uppercase letter',
-        element: document.querySelector('label[for="name"] .input-requirements li:nth-child(3)')
+        element: document.querySelector('label[for="name"] .input-requirements li:nth-child(2)')
     },
     {
         isInvalid: function(input) {
@@ -95,7 +95,7 @@ var nameValidityChecks = [
             return !!illegalCharacters;
         },
         invalidityMessage: 'Only letters are allowed',
-        element: document.querySelector('label[for="name"] .input-requirements li:nth-child(2)')
+        element: document.querySelector('label[for="name"] .input-requirements li:nth-child(3)')
     }
 ];
 
@@ -137,7 +137,7 @@ var surnameValidityChecks = [
             return !input.value.match(/^[A-ZА-Я]/g);
         },
         invalidityMessage: 'This input needs to to have first symbol - uppercase letter',
-        element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(3)')
+        element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(2)')
     },
     {
         isInvalid: function(input) {
@@ -145,7 +145,7 @@ var surnameValidityChecks = [
             return !!illegalCharacters;
         },
         invalidityMessage: 'Only letters are allowed',
-        element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(2)')
+        element: document.querySelector('label[for="surname"] .input-requirements li:nth-child(3)')
     }
 ];
 

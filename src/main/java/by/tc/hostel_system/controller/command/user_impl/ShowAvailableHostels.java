@@ -3,10 +3,10 @@ package by.tc.hostel_system.controller.command.user_impl;
 import by.tc.hostel_system.controller.command.Command;
 import by.tc.hostel_system.entity.Hostel;
 import by.tc.hostel_system.entity.PaginationHelper;
-import by.tc.hostel_system.service.hostel.HostelService;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.ServiceFactory;
 import by.tc.hostel_system.service.hostel.HostelNotFoundException;
+import by.tc.hostel_system.service.hostel.HostelService;
 import by.tc.hostel_system.util.ControllerUtil;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,8 @@ import java.util.Map;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
 import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
-import static by.tc.hostel_system.controller.constant.PageUrl.*;
+import static by.tc.hostel_system.controller.constant.PageUrl.AVAILABLE_HOSTELS_PAGE;
+import static by.tc.hostel_system.controller.constant.PageUrl.NOTHING_FOUND_PAGE;
 
 public class ShowAvailableHostels implements Command {
 	private static final Logger logger = Logger.getLogger(ShowAvailableHostels.class);

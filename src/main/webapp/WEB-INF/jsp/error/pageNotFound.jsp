@@ -8,7 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
@@ -18,14 +18,9 @@
 
 <body>
 <div style="padding:20px;"></div>
-
 <p id="error">404</p>
 <p id="error-message">${error}</p>
-
 <div style="padding:15px;"></div>
-
-<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
 </body>
 </html>

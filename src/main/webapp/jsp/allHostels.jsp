@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/table.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topButton.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/backToTop.js"></script>
@@ -28,13 +28,14 @@
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <fmt:message bundle="${loc}" key="locale.button.add.request" var="request"/>
+    <fmt:message bundle="${loc}" key="locale.button.top" var="toTop"/>
     <title> ${hostels} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 
 <div style="padding:20px;"></div>
-<div class="table-container">
-    <c:if test="${fn:length(requestScope.hostels) gt 0}">
+<c:if test="${fn:length(requestScope.hostels) gt 0}">
+    <div class="table-container">
         <table>
             <tr>
                 <th>${id}</th>
@@ -59,9 +60,9 @@
                 </tr>
             </c:forEach>
         </table>
-    </c:if>
-</div>
-<jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
+    </div>
+    <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
+</c:if>
 <jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>

@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/table.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topButton.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/backToTop.js"></script>
     <fmt:setLocale value="${sessionScope.lang}"/>
@@ -28,13 +28,15 @@
     <fmt:message bundle="${loc}" key="locale.table.title.action" var="action"/>
     <fmt:message bundle="${loc}" key="locale.button.delete" var="delete"/>
     <fmt:message bundle="${loc}" key="locale.button.add.request" var="request"/>
+    <fmt:message bundle="${loc}" key="locale.button.top" var="toTop"/>
     <title> ${hostels} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
 
 <div style="padding:20px;"></div>
-<div class="table-container">
-    <c:if test="${fn:length(requestScope.hostels) gt 0}">
+<jsp:include page="/WEB-INF/jsp/chooseParameters.jsp"/>
+<c:if test="${fn:length(requestScope.hostels) gt 0}">
+    <div class="table-container">
         <table>
             <tr>
                 <th>${name}</th>
@@ -61,29 +63,25 @@
                     <td>
                         <c:set var="price" scope="request" value="${_cost * _days * _rooms * (1 - _discount / 100)}"/>
                         <c:if test="${price < balance}">
-                        <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                            <input type="hidden" name="command" value="ADD_REQUEST"/>
-                            <input type="hidden" name="number" value="1"/>
-                            <input type="hidden" name="type" value="${requestScope.type}"/>
-                            <input type="hidden" name="cost" value="${_cost}"/>
-                            <input type="hidden" name="rooms" value="${_rooms}"/>
-                            <input type="hidden" name="days" value="${_days}"/>
-                            <input type="hidden" name="date" value="${requestScope.date}"/>
-                            <input type="hidden" name="hostel" value="${hostel.id}"/>
-                            <input type="submit" value="${request}"/>
-                        </form>
+                            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
+                                <input type="hidden" name="command" value="ADD_REQUEST"/>
+                                <input type="hidden" name="number" value="1"/>
+                                <input type="hidden" name="type" value="${requestScope.type}"/>
+                                <input type="hidden" name="cost" value="${_cost}"/>
+                                <input type="hidden" name="rooms" value="${_rooms}"/>
+                                <input type="hidden" name="days" value="${_days}"/>
+                                <input type="hidden" name="date" value="${requestScope.date}"/>
+                                <input type="hidden" name="hostel" value="${hostel.id}"/>
+                                <input type="submit" value="${request}"/>
+                            </form>
                         </c:if>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-    </c:if>
-</div>
-<c:if test = "${sessionScope.user.status eq 'USER'}">
-    <jsp:include page="/WEB-INF/jsp/chooseParameters.jsp"/>
+    </div>
+    <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
 </c:if>
-
-<jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
 <jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 <div id="toTop">^ ${toTop}</div>

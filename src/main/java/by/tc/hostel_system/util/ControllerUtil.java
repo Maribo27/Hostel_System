@@ -14,7 +14,7 @@ import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
 import static by.tc.hostel_system.controller.constant.PageUrl.PREFERENCES_PAGE;
 
 public class ControllerUtil {
-	private static final int ROWS_ON_PAGE = 5;
+	private static final int ROWS_ON_PAGE = 15;
 	private static final String ERROR = "error";
 	private static final String CONTROLLER_COMMAND = "/hostel_system?command=";
 	private static final String PAGE = "&number=";

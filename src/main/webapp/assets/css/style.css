@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Raleway',sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size:15px;
   line-height:1.5;
   padding: 0;
@@ -18,7 +18,7 @@ html {
 
 #sidebar {
   float: right;
-  width: 30%;
+  width: calc(20vw + 20vh);
   padding: 0;
   margin: 10px 10px 20px 5px;
 }

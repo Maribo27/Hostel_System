@@ -16,6 +16,7 @@
     <fmt:message bundle="${loc}" key="locale.button.search" var="search"/>
     <fmt:message bundle="${loc}" key="locale.list.booking" var="booking"/>
     <fmt:message bundle="${loc}" key="locale.list.payment" var="payment"/>
+    <fmt:message bundle="${loc}" key="locale.message.choose.city" var="chooseCity"/>
     <title> ${bookingPage} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 
@@ -33,14 +34,14 @@
                     </select>
                 </label>
                 <label>
-                    <select name="city" data-placeholder="${city}" class="chosen-select" tabindex="2">
+                    <select name="city" data-placeholder="${chooseCity}" class="chosen-select" tabindex="2">
                         <c:forEach items="${requestScope.cities}" var="city">
                             <option value="${city.key}">${city.value}</option>
                         </c:forEach>
                     </select>
                 </label>
-                <input type="number" name="rooms" placeholder="${rooms}" value="${requestScope.rooms}"/>
-                <input type="number" name="days" placeholder="${days}" value="${requestScope.days}"/>
+                <input type="number" name="rooms" placeholder="${rooms}" value="${requestScope.rooms}" min="1"/>
+                <input type="number" name="days" placeholder="${days}" value="${requestScope.days}" min="1"/>
                 <label>
                     <input type="date" name="date" value="${requestScope.date}"/>
                 </label>

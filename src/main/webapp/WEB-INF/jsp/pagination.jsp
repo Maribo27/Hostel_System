@@ -26,35 +26,35 @@
             <p><a href="${requestScope.page.firstPage}">1</a> <a href="${requestScope.page.prevPage}"><c:out value="${prev}"/></a> <c:out value="${current}"/>/<c:out value="${last}"/> <a href="${requestScope.page.nextPage}"><c:out value="${next}"/></a> <a href="${requestScope.page.lastPage}"><c:out value="${last}"/></a></p>
         </c:otherwise>
     </c:choose>--%>
-</div>
 <ul class="pagination2 border notranslate">
     <c:choose>
         <c:when test = "${first == last}">
-            <li> <a>&laquo;</a> </li>
+            <li> <a class="not-active">&laquo;</a> </li>
             <li> <a class="active">${current}</a> </li>
-            <li> <a>&raquo;</a> </li>
+            <li> <a class="not-active">&raquo;</a> </li>
         </c:when>
         <c:when test = "${current == first}">
-            <li> <a>&laquo;</a> </li>
+            <li> <a class="not-active">&laquo;</a> </li>
             <li> <a class="active">${current}</a> </li>
             <li> <a href="${requestScope.page.nextPage}">${next}</a> </li>
-            <li> <a href="#${requestScope.page.lastPage}">&raquo;</a> </li>
+            <li> <a href="${requestScope.page.lastPage}">&raquo;</a> </li>
         </c:when>
         <c:when test = "${current == last}">
             <li> <a href="${requestScope.page.firstPage}">&laquo;</a> </li>
             <li> <a href="${requestScope.page.prevPage}">${prev}</a> </li>
             <li> <a class="active">${current}</a> </li>
-            <li> <a>&raquo;</a> </li>
+            <li> <a class="not-active">&raquo;</a> </li>
         </c:when>
         <c:otherwise>
             <li> <a href="${requestScope.page.firstPage}">&laquo;</a> </li>
             <li> <a href="${requestScope.page.prevPage}">${prev}</a> </li>
             <li> <a class="active">${current}</a> </li>
             <li> <a href="${requestScope.page.nextPage}">${next}</a> </li>
-            <li> <a href="#${requestScope.page.lastPage}">&raquo;</a> </li>
+            <li> <a href="${requestScope.page.lastPage}">&raquo;</a> </li>
         </c:otherwise>
     </c:choose>
 </ul>
 
+</div>
 </body>
 </html>

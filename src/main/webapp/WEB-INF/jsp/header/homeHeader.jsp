@@ -21,7 +21,7 @@
     <li><a href="#">${lang}</a>
         <jsp:include page="/WEB-INF/jsp/switchLanguage.jsp"/>
     </li>
-    <li class="active"><a>${home}</a></li>
+    <li><a class="active">${home}</a></li>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
 </body>

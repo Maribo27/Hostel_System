@@ -2,7 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/carousel.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
 </head>
 <body>
 <div class="slideshow-carousel-wrapper">

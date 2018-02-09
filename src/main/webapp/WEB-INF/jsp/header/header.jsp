@@ -22,7 +22,7 @@
     </li>
     <li><a href="${pageContext.request.contextPath}/home">${home}</a></li>
     <c:if test="${not empty sessionScope.user.balance}">
-        <li class="balance"><a>${balance} : ${sessionScope.user.balance}</a></li>
+        <li><a style="width: auto;background-color: #3C3C3C;">${balance} : ${sessionScope.user.balance}</a></li>
     </c:if>
     <li class="system-name"><a>Hostel System</a></li>
 </ul>
