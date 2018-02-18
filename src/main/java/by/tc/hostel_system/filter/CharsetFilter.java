@@ -3,6 +3,9 @@ package by.tc.hostel_system.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Filter fixes page encoding.
+ */
 public class CharsetFilter implements Filter {
 
 	private String encoding;

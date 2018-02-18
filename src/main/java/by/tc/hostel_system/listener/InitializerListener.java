@@ -25,6 +25,9 @@ public class InitializerListener implements ServletContextListener{
 		destroyConnectionPool();
 	}
 
+	/**
+	 * Creates connection pool.
+	 */
 	private void createConnectionPool() {
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		try {
@@ -36,6 +39,11 @@ public class InitializerListener implements ServletContextListener{
 		}
 	}
 
+	/**
+	 * Creates logger.
+	 *
+	 * @param servletContextEvent servlet context event
+	 */
 	private void createLogger(ServletContextEvent servletContextEvent) {
 		ServletContext context = servletContextEvent.getServletContext();
 		String location = "log4j-config-location";
@@ -45,6 +53,9 @@ public class InitializerListener implements ServletContextListener{
 		PropertyConfigurator.configure(fullPath);
 	}
 
+	/**
+	 * Destroys connection pool.
+	 */
 	private void destroyConnectionPool() {
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		connectionPool.dispose();

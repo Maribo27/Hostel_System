@@ -16,6 +16,9 @@ import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
 public class HostelBookingTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(HostelBookingTag.class);
 	private static final long serialVersionUID = 6259324892174710379L;
+	/**
+	 * Type of payment in hostel ("booking" or "payment").
+	 */
 	private Hostel.Booking bookingType;
 
 	public void setBookingType(Hostel.Booking bookingType) {

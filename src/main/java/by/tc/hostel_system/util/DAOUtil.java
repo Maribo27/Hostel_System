@@ -20,6 +20,15 @@ import java.util.Map;
 public class DAOUtil {
 	private static final String MD_5 = "MD5";
 
+	/**
+	 * Creates {@link User} from the database result set.
+	 *
+	 * @param resultSet results set from database
+	 *
+	 * @return new user
+	 *
+	 * @throws SQLException if error in database occurred
+	 */
 	public static User createUserFromDB(ResultSet resultSet) throws SQLException {
 	    UserBuilder builder = new UserBuilder();
 	    while (resultSet.next()){
@@ -29,8 +38,8 @@ public class DAOUtil {
 	        String email = resultSet.getString(column++);
 	        String surname = resultSet.getString(column++);
 	        String name = resultSet.getString(column++);
-	        String lastname = resultSet.getString(column++);
-	        builder.addPersonalInfo(username, email, "", name, surname, lastname);
+	        String lastName = resultSet.getString(column++);
+	        builder.addPersonalInfo(username, email, name, surname, lastName);
 	        builder.addDiscount(resultSet.getInt(column++));
 	        builder.addBalance(resultSet.getInt(column++));
 		    builder.addAccount(resultSet.getString(column++));
@@ -42,6 +51,15 @@ public class DAOUtil {
 	    return builder.buildUser();
 	}
 
+	/**
+	 * Creates hashed password.
+	 *
+	 * @param password  normal password
+	 *
+	 * @return hashed password
+	 *
+	 * @throws NoSuchAlgorithmException if cannot find md5 algorithm
+	 */
 	public static String createPassword(String password) throws NoSuchAlgorithmException {
 	    StringBuilder code = new StringBuilder();
 	    MessageDigest messageDigest;
@@ -56,17 +74,37 @@ public class DAOUtil {
 	    return password;
 	}
 
+	/**
+	 * Creates {@link Map} from result set from database.
+	 *
+	 * @param resultSet result set from database
+	 *
+	 * @return map that contains id and name of entity
+	 *
+	 * @throws SQLException if error in database occurred
+	 */
 	public static Map<Integer, String> translateToMap(ResultSet resultSet) throws SQLException {
-		Map<Integer, String> cities = new HashMap<>();
+		Map<Integer, String> entities = new HashMap<>();
 	    while (resultSet.next()){
 	        int column = 1;
 	        Integer number = resultSet.getInt(column++);
-	        String reason = resultSet.getString(column);
-	        cities.put(number, reason);
+	        String value = resultSet.getString(column);
+	        entities.put(number, value);
 	    }
-	    return cities;
+	    return entities;
 	}
 
+	/**
+	 * Creates {@link List} of {@link Hostel} from database result set.
+	 *
+	 * @param resultSet result set from database
+	 * @param type      hostel payment type ("payment", "booking")
+	 * @param room      number of rooms
+	 *
+	 * @return list of hostels
+	 *
+	 * @throws SQLException if error in database occurred
+	 */
 	public static List<Hostel> createHostels(ResultSet resultSet, Hostel.Booking type, int room) throws SQLException {
 	    List<Hostel> hostels = new ArrayList<>();
 	    while (resultSet.next()){
@@ -99,6 +137,16 @@ public class DAOUtil {
 	    return hostels;
 	}
 
+	/**
+	 * Creates {@link List} of {@link Request} from database result set.
+	 *
+	 * @param resultSet result set from database
+	 *
+	 * @return list of requests
+	 *
+	 * @throws SQLException if error in database occurred
+
+	 */
 	public static List<Request> createRequests(ResultSet resultSet) throws SQLException {
 	    List<Request> requests = new ArrayList<>();
 	    while (resultSet.next()){
@@ -124,6 +172,15 @@ public class DAOUtil {
 	    return requests;
 	}
 
+	/**
+	 * Creates {@link List} of {@link User} from database result set.
+	 *
+	 * @param resultSet result set from database
+	 *
+	 * @return list of users
+	 *
+	 * @throws SQLException if error in database occurred
+	 */
 	public static List<User> createUsers(ResultSet resultSet) throws SQLException {
 	    List<User> users = new ArrayList<>();
 		while (resultSet.next()){
@@ -138,8 +195,8 @@ public class DAOUtil {
 		    String email = resultSet.getString(column++);
 		    String surname = resultSet.getString(column++);
 		    String name = resultSet.getString(column++);
-		    String lastname = resultSet.getString(column++);
-		    builder.addPersonalInfo(username, email, "", name, surname, lastname);
+		    String lastName = resultSet.getString(column++);
+		    builder.addPersonalInfo(username, email, name, surname, lastName);
 		    builder.addDiscount(resultSet.getInt(column++));
 		    builder.addBalance(resultSet.getInt(column++));
 		    builder.addStatus(resultSet.getString(column++));

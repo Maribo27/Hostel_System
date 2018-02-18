@@ -18,16 +18,9 @@ html {
 
 #sidebar {
   float: right;
-  width: calc(20vw + 20vh);
+  width: 26vw;
   padding: 0;
-  margin: 10px 10px 20px 5px;
-}
-
-#error {
-  display: flex;
-  align-items: center;
-  font-size: calc(8vw + 8vh);
-  justify-content: center
+  margin: 10px 10px 0 0;
 }
 
 .footer {
@@ -37,4 +30,133 @@ html {
   width: 100%;
   height: 25px;
   color: lightgray;
+  font-size: 1em;
+  line-height: 20px;
+}
+
+.system-information {
+  width: 60vw;
+  float: left;
+  padding-left: 1%;
+}
+
+.system-information h2 {
+  font-size: calc(15px + 0.8vw);
+}
+
+.system-information p {
+  font-size: calc(12px + 0.5vw);
+}
+
+.preferences-table {
+  border: 2px solid white;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preferences-table td, th {
+  padding: 3px 3%;
+  border-left: 1px dotted #3c3c3c;
+}
+
+.preferences-table th {
+  text-align: left;
+  background: #f1e92a66;
+}
+
+.sidebar-index {
+  float: right;
+  width: 33vw;
+  padding: 0;
+  margin: 10px 10px 20px 2vw;
+}
+
+.selection-form {
+  display: table;
+  width: 100%;
+  padding-bottom: calc(10px + 0.5vh);
+}
+
+article {
+  column-count: 3;
+  padding-bottom: calc(10px + 1vh);
+}
+
+
+@media only screen
+and (min-width: 700px)
+and (max-width: 1100px)
+and (orientation: landscape){
+  .footer {
+    font-size: 1em;
+    line-height: 20px;
+  }
+
+  #sidebar{
+    min-width: 95vw;
+  }
+}
+
+@media only screen and (max-width: 700px)
+and (orientation: landscape){
+  #sidebar {
+    min-width: 95vw;
+    position: relative;
+  }
+
+  .footer {
+    font-size: calc(8px + 0.5vw);
+  }
+
+  .system-information {
+    float: none;
+    width: 95vw;
+    position: relative;
+  }
+
+  .system-information h2{
+    font-size: 1.1em;
+  }
+
+  .sidebar-index{
+    min-width: 95vw;
+    position: relative;
+    float: none;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .footer {
+    font-size: calc(7px + 0.3vw);
+  }
+
+  article {
+    column-count: 1;
+    padding-bottom: calc(10px + 1vh);
+  }
+
+  #sidebar {
+    min-width: 95vw;
+    position: relative;
+  }
+
+  .system-information {
+    float: none;
+    width: 95vw;
+    position: relative;
+  }
+
+  .system-information h2{
+    font-size: 1.1em;
+  }
+
+  .sidebar-index{
+    min-width: 95vw;
+    position: relative;
+    float: none;
+  }
+
+  body {
+    background-image: url(../images/portrait.jpg);
+  }
 }

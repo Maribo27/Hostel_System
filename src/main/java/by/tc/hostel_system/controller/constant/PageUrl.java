@@ -6,7 +6,7 @@ public final class PageUrl {
     public static final String LOGIN_PAGE = "/login";
     public static final String HOME_PAGE = "/home";
     public static final String PREFERENCES_PAGE = "/preferences";
-    public static final String HOSTELS_PAGE = "/all_hostels";
+    public static final String HOSTELS_PAGE = "/hostels";
     public static final String AVAILABLE_HOSTELS_PAGE = "/hostels";
     public static final String REQUESTS_PAGE = "/requests";
     public static final String USERS_PAGE = "/users";

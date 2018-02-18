@@ -4,6 +4,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Filter forbids cache for current page.
+ */
 public class NoCacheFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) {

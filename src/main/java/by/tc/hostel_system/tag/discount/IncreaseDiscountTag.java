@@ -7,10 +7,12 @@ public class IncreaseDiscountTag extends DiscountTag {
 	private static final String CURRENT_SIGN = "plus";
 	private static final String PLUS = "+";
 
+	@Override
 	public void setId(String id) {
 		this.id = Integer.parseInt(id);
 	}
 
+	@Override
 	public void setPage(int page) {
 		this.page = page;
 	}

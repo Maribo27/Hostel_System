@@ -7,10 +7,12 @@ public class ReduceDiscountTag extends DiscountTag {
 	private static final String CURRENT_SIGN = "minus";
 	private static final String MINUS = "-";
 
+	@Override
 	public void setId(String id) {
 		this.id = Integer.parseInt(id);
 	}
 
+	@Override
 	public void setPage(int page) {
 		this.page = page;
 	}

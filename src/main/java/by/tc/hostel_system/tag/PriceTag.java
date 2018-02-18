@@ -10,9 +10,21 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class PriceTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(PriceTag.class);
 	private static final long serialVersionUID = 4639722300961774680L;
+	/**
+	 * Number of rooms to book.
+	 */
 	private int rooms;
+	/**
+	 * Number of days.
+	 */
 	private int days;
+	/**
+	 * Cost of request.
+	 */
 	private int cost;
+	/**
+	 * User discount.
+	 */
 	private int discount;
 
 	public void setRooms(int rooms) {
@@ -40,6 +52,7 @@ public class PriceTag extends TagSupport {
 		int price = rooms * days * cost - rooms * days * cost * discount / 100;
 		String tag = price + "$";
 		JspWriter out = pageContext.getOut();
+		pageContext.setAttribute("price", price);
 		return TagUtil.writeTag(out, tag, "Cannot write user status tag to page", logger);
 	}
 }

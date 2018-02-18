@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.REQUESTS;
+import static by.tc.hostel_system.dao.EntityMessageLocale.REQUESTS;
 import static by.tc.hostel_system.dao.SQLQuery.*;
 
 public class RequestDAOImpl implements RequestDAO {
@@ -19,13 +19,17 @@ public class RequestDAOImpl implements RequestDAO {
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.request");
     private static final String SQL_ERROR_WHILE_SEARCHING_REQUESTS = "SQL error while searching requests";
 
+    /**
+     * @see RequestDAO#getRequests(String, String)
+     * @throws DAOException if nothing found or catch {@link SQLException}
+     */
     @Override
-    public List<Request> getRequests(String lang) throws DAOException {
+    public List<Request> getRequests(String lang, String bundle) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
 
-            String query = resourceBundle.getString(REQUEST_SEARCH_ALL_REQUESTS);
+            String query = resourceBundle.getString(bundle);
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, lang);
             statement.setString(2, lang);
@@ -43,13 +47,17 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    /**
+     * @see RequestDAO#getRequests(String, int, String)
+     * @throws DAOException if nothing found or catch {@link SQLException}
+     */
     @Override
-    public List<Request> getRequests(String lang, int id) throws DAOException {
+    public List<Request> getRequests(String lang, int id, String bundle) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
 
-            String query = resourceBundle.getString(REQUEST_SEARCH_USER_REQUESTS);
+            String query = resourceBundle.getString(bundle);
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, lang);
             statement.setString(2, lang);
@@ -73,6 +81,10 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    /**
+     * @see RequestDAO#addRequest(Request, int)
+     * @throws DAOException if catch {@link SQLException}
+     */
     @Override
     public int addRequest(Request request, int balance) throws DAOException {
         Connection connection = null;
@@ -105,6 +117,10 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    /**
+     * @see RequestDAO#cancelRequest(int, int, String, int)
+     * @throws DAOException if catch {@link SQLException}
+     */
     @Override
     public int cancelRequest(int requestId, int userId, String status, int balance) throws DAOException {
         Connection connection = null;
@@ -128,6 +144,10 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    /**
+     * @see RequestDAO#approveRequest(int)
+     * @throws DAOException if catch {@link SQLException}
+     */
     @Override
     public void approveRequest(int id) throws DAOException {
         Connection connection = null;
@@ -141,7 +161,19 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
-    private int updateBalance(int balance, Connection connection, int userId, int cost) throws SQLException {
+    /**
+     * Updates {@link by.tc.hostel_system.entity.User#balance} in database.
+     *
+     * @param balance new user balance
+     * @param connection current connection to database
+     * @param userId user id
+     * @param cost request cost
+     *
+     * @return new {@link by.tc.hostel_system.entity.User#balance}
+     *
+     * @throws SQLException if error in database occurred
+     */
+	private int updateBalance(int balance, Connection connection, int userId, int cost) throws SQLException {
         String query = resourceBundle.getString(REQUEST_UPDATE_BALANCE);
         PreparedStatement statement = connection.prepareStatement(query);
         balance -= cost;
@@ -151,6 +183,18 @@ public class RequestDAOImpl implements RequestDAO {
         return balance;
     }
 
+    /**
+     * Searches for free room in current {@link Hostel}.
+     *
+     * @param connection current connection
+     * @param hostelId hostel id
+     * @param numberOfRooms number of rooms
+     * @param requestDate date of booking start
+     * @param endDate date of booking end
+     *
+     * @throws SQLException if error in database occurred
+     * @throws EntityNotFoundException if nothing found
+     */
     private void searchFreeRoom(Connection connection, int hostelId, int numberOfRooms, Date requestDate, Date endDate) throws SQLException, EntityNotFoundException {
         String query = resourceBundle.getString(REQUEST_SEARCH_ROOMS);
         PreparedStatement statement = connection.prepareStatement(query);
@@ -173,6 +217,17 @@ public class RequestDAOImpl implements RequestDAO {
         }
     }
 
+    /**
+     * Adds request to free room in {@link Hostel}.
+     *
+     * @param connection current connection
+     * @param hostelId hostel id
+     * @param requestDate date of booking start
+     * @param endDate date of booking end
+     * @param resultSet result set from database
+     *
+     * @throws SQLException if error in database occurred
+     */
     private void createRoomRequest(Connection connection, int hostelId, Date requestDate, Date endDate, ResultSet resultSet) throws SQLException {
         int room = resultSet.getInt(1);
         String query = resourceBundle.getString(REQUEST_ADD_ROOM_REQUEST);
@@ -184,6 +239,20 @@ public class RequestDAOImpl implements RequestDAO {
         statement.executeUpdate();
     }
 
+    /**
+     * Updates {@link Request} in database.
+     *
+     * @param connection current connection
+     * @param userId user id
+     * @param hostelId hostel id
+     * @param numberOfRooms number of rooms to book
+     * @param days number of days
+     * @param cost request cost
+     * @param type of request ("booking" or "payment")
+     * @param requestDate date of booking start
+     *
+     * @throws SQLException if error in database occurred
+     */
     private void updateRequests(Connection connection, int userId, int hostelId, int numberOfRooms, int days, int cost, Hostel.Booking type, Date requestDate) throws SQLException {
         String query = resourceBundle.getString(REQUEST_ADD_REQUEST);
         PreparedStatement statement = connection.prepareStatement(query);
@@ -197,6 +266,19 @@ public class RequestDAOImpl implements RequestDAO {
         statement.executeUpdate();
     }
 
+    /**
+     * Calculates new {@link by.tc.hostel_system.entity.User#balance}.
+     *
+     * @param requestId request id
+     * @param userId user id
+     * @param balance user current balance
+     * @param connection current connection
+     *
+     * @return new {@link by.tc.hostel_system.entity.User#balance}
+     *
+     * @throws SQLException if error in database occurred
+     * @throws EntityNotFoundException if nothing found
+     */
     private int getNewBalance(int requestId, int userId, int balance, Connection connection) throws SQLException, EntityNotFoundException {
         String query = resourceBundle.getString(REQUEST_SEARCH_COST);
         PreparedStatement statement = connection.prepareStatement(query);
@@ -219,6 +301,15 @@ public class RequestDAOImpl implements RequestDAO {
         return balance;
     }
 
+    /**
+     * Updates {@link Request} status in database.
+     *
+     * @param requestId request id
+     * @param status new request status
+     * @param connection current connection
+     *
+     * @throws SQLException if error in database occurred
+     */
     private void updateRequestStatus(int requestId, String status, Connection connection) throws SQLException {
         String query = resourceBundle.getString(REQUEST_UPDATE_STATUS);
         PreparedStatement statement = connection.prepareStatement(query);

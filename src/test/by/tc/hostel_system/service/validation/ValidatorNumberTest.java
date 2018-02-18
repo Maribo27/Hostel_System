@@ -1,5 +1,6 @@
 package by.tc.hostel_system.service.validation;
 
+import by.tc.hostel_system.entity.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +13,7 @@ public class ValidatorNumberTest {
 		final int positiveNumber = 56;
 		boolean actual = true;
 		try {
-			Validator.checkPositiveNumber(positiveNumber);
+			UserValidator.checkPositiveNumber(positiveNumber);
 		} catch (NotNumberException e) {
 			actual = false;
 		}
@@ -25,7 +26,7 @@ public class ValidatorNumberTest {
 		final int positiveNumber = -54;
 		boolean actual = true;
 		try {
-			Validator.checkPositiveNumber(positiveNumber);
+			UserValidator.checkPositiveNumber(positiveNumber);
 		} catch (NotNumberException e) {
 			actual = false;
 		}
@@ -38,7 +39,7 @@ public class ValidatorNumberTest {
 		final int id = 256;
 		boolean actual = true;
 		try {
-			Validator.checkNumber(id);
+			UserValidator.checkNumber(id);
 		} catch (NotNumberException e) {
 			actual = false;
 		}
@@ -51,7 +52,7 @@ public class ValidatorNumberTest {
 		final int id = -9;
 		boolean actual = true;
 		try {
-			Validator.checkNumber(id);
+			UserValidator.checkNumber(id);
 		} catch (NotNumberException e) {
 			actual = false;
 		}

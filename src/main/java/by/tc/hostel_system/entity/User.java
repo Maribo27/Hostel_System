@@ -24,6 +24,123 @@ public class User implements Serializable {
         this.balance = 0;
     }
 
+    public class PersonalInfo {
+        private String username;
+        private String email;
+        private String name;
+        private String surname;
+        private String lastName;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PersonalInfo that = (PersonalInfo) o;
+            return Objects.equals(username, that.username) &&
+                    Objects.equals(email, that.email) &&
+                    Objects.equals(name, that.name) &&
+                    Objects.equals(surname, that.surname) &&
+                    Objects.equals(lastName, that.lastName);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(username, email, name, surname, lastName);
+        }
+
+        @Override
+        public String toString() {
+            return "PersonalInfo : " +
+                    "username=\"" + username + '\"' +
+                    ", email=\"" + email + '\"' +
+                    ", name=\"" + name + '\"' +
+                    ", surname=\"" + surname + '\"' +
+                    ", lastName=\"" + lastName + '\"';
+        }
+    }
+
+    public class BlockInfo {
+        private String reason;
+        private Date date;
+
+        public String getReason() {
+            return reason;
+        }
+
+        public void setReason(String reason) {
+            this.reason = reason;
+        }
+
+        public Date getDate() {
+            return date;
+        }
+
+        public void setDate(Date date) {
+            this.date = date;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            BlockInfo blockInfo = (BlockInfo) o;
+            return Objects.equals(reason, blockInfo.reason) &&
+                    Objects.equals(date, blockInfo.date);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(reason, date);
+        }
+
+        @Override
+        public String toString() {
+            return "BlockInfo : " +
+                    "reason=\"" + reason + '\"' +
+                    ", date=" + date;
+        }
+    }
+
     public enum Status {
         BANNED, USER, ADMIN
     }
@@ -113,150 +230,22 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(personalInfo, status, account, blockInfo, id, discount, balance, requests);
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "personalInfo=" + personalInfo +
-                ", status=" + status +
-                ", account='" + account + '\'' +
-                ", blockInfo=" + blockInfo +
-                ", id=" + id +
+        return "User : " +
+                "id=" + id +
+                ", personalInfo=" + personalInfo +
                 ", discount=" + discount +
                 ", balance=" + balance +
                 ", requests=" + requests +
-                '}';
+                ", account='" + account + '\'' +
+                ", status=" + status +
+                ", blockInfo=" + blockInfo;
     }
 
-    public class PersonalInfo {
-        private String username;
-        private String email;
-        private String password;
-        private String name;
-        private String surname;
-        private String lastname;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getSurname() {
-            return surname;
-        }
-
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
-
-        public String getLastname() {
-            return lastname;
-        }
-
-        public void setLastname(String lastname) {
-            this.lastname = lastname;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            PersonalInfo that = (PersonalInfo) o;
-            return Objects.equals(username, that.username) &&
-                    Objects.equals(email, that.email) &&
-                    Objects.equals(password, that.password) &&
-                    Objects.equals(name, that.name) &&
-                    Objects.equals(surname, that.surname) &&
-                    Objects.equals(lastname, that.lastname);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(username, email, password, name, surname, lastname);
-        }
-
-        @Override
-        public String toString() {
-            return "PersonalInfo{" +
-                    "username='" + username + '\'' +
-                    ", email='" + email + '\'' +
-                    ", password='" + password + '\'' +
-                    ", name='" + name + '\'' +
-                    ", surname='" + surname + '\'' +
-                    ", lastname='" + lastname + '\'' +
-                    '}';
-        }
-    }
-
-    public class BlockInfo {
-        private String blockReason;
-        private Date blockDate;
-
-        public String getBlockReason() {
-            return blockReason;
-        }
-
-        public void setBlockReason(String blockReason) {
-            this.blockReason = blockReason;
-        }
-
-        public Date getBlockDate() {
-            return blockDate;
-        }
-
-        public void setBlockDate(Date blockDate) {
-            this.blockDate = blockDate;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            BlockInfo blockInfo = (BlockInfo) o;
-            return Objects.equals(blockReason, blockInfo.blockReason) &&
-                    Objects.equals(blockDate, blockInfo.blockDate);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(blockReason, blockDate);
-        }
-
-        @Override
-        public String toString() {
-            return "BlockInfo{" +
-                    "blockReason='" + blockReason + '\'' +
-                    ", blockDate=" + blockDate +
-                    '}';
-        }
-    }
+    
 }

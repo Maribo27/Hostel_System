@@ -9,8 +9,8 @@
 
 .input-data-form h1 {
     margin: -20px -20px 21px;
-    line-height: 40px;
-    font-size: 15px;
+    line-height: calc(40px + 0.5vw);
+    font-size: calc(15px + 0.5vw);
     font-weight: bold;
     color: #5C5C5C;
     text-align: center;
@@ -21,6 +21,17 @@
     -webkit-box-shadow: 0 1px whitesmoke;
     box-shadow: 0 1px whitesmoke;
 }
+
+.input-data-form h2 {
+    font-size: calc(15px + 0.5vw);
+    color: #5C5C5C;
+    text-align: center;
+}
+
+.input-data-form label {
+    font-size: calc(10px + 0.5vw);
+}
+
 .input-data-form p {
     margin: 20px 0 0;
 }
@@ -32,11 +43,10 @@
 }
 
 .input-data-form-help {
-    margin: 20px 0;
-    font-size: 14px;
+    font-size: calc(12px + 0.3vw);
     color: black;
-    text-align: center;
     text-shadow: 0 1px #2A85A1;
+    text-align: center;
 }
 
 .input-data-form-help a {
@@ -49,7 +59,7 @@
 }
 
 .input-requirements {
-    font-size: 0.6rem;
+    font-size: calc(10px + 0.2vw);
     text-align: left;
     list-style: none;
     color: rgb(150,150,150);
@@ -68,11 +78,11 @@ input[type="reset"] {
     box-sizing: border-box;
     color: #fff;
     background-color: #3C3C3C;
-    height: 29px;
+    height: calc(30px + 1vw);
     width: 100%;
-    border: 2px solid;
+    border: 2px solid #686868;
     font-family: Raleway, sans-serif;
-    font-size:15px;
+    font-size:calc(12px + 0.5vw);
 }
 
 input[type="submit"]:hover,
@@ -92,7 +102,7 @@ input[type="email"],
 input[type="date"],
 input[type="number"] {
     font-family: 'Raleway', sans-serif;
-    font-size: calc(0.8vw + 0.8vh);
+    font-size: calc(12px + 0.3vw);
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
@@ -103,14 +113,14 @@ input[type="number"] {
     width: 100%;
     background: white;
     border: 1px solid lightgrey;
-    padding: 3%;
+    padding-left: 3%;
     color: #555;
-    height: calc(3vw + 3vh);
+    height: calc(2.5vw + 2.5vh);
+    min-height: 30px;
 }
 
 input:not([type="submit"], [type="reset"]):focus {
     box-shadow: 0 0 5px #1AAEB9;
-    padding: 3%;
     border: 1px solid #AABCFE;
 }
 
@@ -131,8 +141,9 @@ input[type="password"]:invalid,
 input[type="email"]:invalid,
 input[type="date"]:invalid,
 input[type="number"]:invalid {
-    padding: 3%;
+    padding-left: 3%;
     border: 1px solid #e74c3c;
+    min-height: 30px;
 }
 
 input:not([type="submit"]):valid {
@@ -150,4 +161,54 @@ input:not([type="submit"]):focus + .input-requirements,
 input:not([type="submit"]):active + .input-requirements {
     max-height: 1000px;
     transition: max-height 1s ease-in;
+}
+
+.only-mobile {
+        display: none;
+    }
+
+@media only screen 
+    and (min-width: 700px) 
+    and (max-width: 1100px) 
+    and (orientation: landscape){
+    .only-mobile {
+        display: none;
+    }
+    
+    .input-data-form h2 {
+        font-size: 1.1em;
+    }
+}
+
+@media only screen and (max-width: 700px)
+    and (orientation: landscape){
+    
+    .input-data-form h2 {
+        font-size: calc(1.3vw + 1.3vh);
+    }
+    
+    .sidebar-index .input-data-form-help {
+        display: block;
+        padding-bottom: 1%;
+    }
+
+    .only-mobile {
+        display: block;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    
+    .input-data-form h2 {
+        font-size: calc(1.3vw + 1.3vh);
+    }
+    
+    .sidebar-index .input-data-form-help {
+        display: block;
+        padding-bottom: 1%;
+    }
+
+    .only-mobile {
+        display: block;
+    }
 }

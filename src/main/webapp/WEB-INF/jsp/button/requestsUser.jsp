@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
@@ -11,7 +10,7 @@
 <body>
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
     <input type="hidden" name="command" value="CANCEL_REQUEST"/>
-    <input type="hidden" name="next-command" value="SHOW_USER_REQUESTS"/>
+    <input type="hidden" name="next-command" value="${param.nextCommand}"/>
     <input type="hidden" name="number" value="${param.page}"/>
     <input type="hidden" name="request" value="${param.requestId}"/>
     <input type="hidden" name="id" value="${param.userId}"/>

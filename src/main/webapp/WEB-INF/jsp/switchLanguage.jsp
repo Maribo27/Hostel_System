@@ -9,7 +9,7 @@
 </head>
 <body>
 <ul>
-    <li>
+    <li class="">
         <form action="${pageContext.request.contextPath}/hostel_system" method="post">
             <input type="hidden" name="command" value="CHANGE_LOCALE"/>
             <input type="hidden" name="page" value="${pageContext.request.requestURL}"/>
@@ -18,7 +18,7 @@
             <input type="submit" value="${rus}"/>
         </form>
     </li>
-    <li>
+    <li class="">
         <form action="${pageContext.request.contextPath}/hostel_system" method="post">
             <input type="hidden" name="command" value="CHANGE_LOCALE"/>
             <input type="hidden" name="page" value="${pageContext.request.requestURL}"/>

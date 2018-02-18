@@ -14,6 +14,9 @@ import java.io.IOException;
 import static by.tc.hostel_system.controller.constant.ControlConst.COMMAND;
 import static by.tc.hostel_system.controller.constant.ControlConst.USER;
 
+/**
+ * Filter checks user access rights.
+ */
 public class Access implements Filter {
 	private static final Logger logger = Logger.getLogger(Access.class);
 	@Override

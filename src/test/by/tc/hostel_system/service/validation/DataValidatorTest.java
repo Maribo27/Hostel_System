@@ -12,8 +12,8 @@ public class DataValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isPassword(password);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isPassword(password);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -25,8 +25,8 @@ public class DataValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isPassword(password);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isPassword(password);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -38,8 +38,8 @@ public class DataValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isEmail(email);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isEmail(email);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -51,8 +51,8 @@ public class DataValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isEmail(email);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isEmail(email);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -64,8 +64,8 @@ public class DataValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isName(name, NAME);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isName(name, NAME);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -77,8 +77,8 @@ public class DataValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isName(name, NAME);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isName(name, NAME);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -90,8 +90,8 @@ public class DataValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isUsername(username);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isUsername(username);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -103,8 +103,8 @@ public class DataValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isUsername(username);
-		} catch (UserValidator.InputException e) {
+			UserValidator.isUsername(username);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -117,7 +117,7 @@ public class DataValidatorTest {
 		boolean actual = true;
 		try {
 			Validator.isRequestType(requestType);
-		} catch (UserValidator.InputException e) {
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -130,7 +130,7 @@ public class DataValidatorTest {
 		boolean actual = true;
 		try {
 			Validator.isRequestType(requestType);
-		} catch (UserValidator.InputException e) {
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -142,8 +142,8 @@ public class DataValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isRequestStatus(requestStatus);
-		} catch (UserValidator.InputException e) {
+			RequestValidator.isRequestStatus(requestStatus);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -155,8 +155,8 @@ public class DataValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isRequestStatus(requestStatus);
-		} catch (UserValidator.InputException e) {
+			RequestValidator.isRequestStatus(requestStatus);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);

@@ -128,17 +128,16 @@ public class PaginationHelper implements Serializable{
 
 	@Override
 	public String toString() {
-		return "PaginationHelper{" +
+		return "PaginationHelper : " +
 				"prev=" + prev +
 				", current=" + current +
 				", next=" + next +
 				", last=" + last +
 				", begin=" + begin +
 				", end=" + end +
-				", firstPage='" + firstPage + '\'' +
-				", prevPage='" + prevPage + '\'' +
-				", nextPage='" + nextPage + '\'' +
-				", lastPage='" + lastPage + '\'' +
-				'}';
+				", firstPage=\"" + firstPage + '\"' +
+				", prevPage=\"" + prevPage + '\"' +
+				", nextPage=\"" + nextPage + '\"' +
+				", lastPage=\"" + lastPage + '\"';
 	}
 }

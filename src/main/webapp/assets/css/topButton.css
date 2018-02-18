@@ -1,7 +1,7 @@
 #toTop {
     width:100px;
     border:1px solid #ccc;
-    background:#f7f7f7;
+    background:#1c1c1c;
     text-align:center;
     padding:5px;
     position:fixed;
@@ -9,6 +9,6 @@
     right:10px;
     cursor:pointer;
     display:none;
-    color:#333;
-    font-size:11px;
+    color:#fff;
+    font-size:12px;
 }

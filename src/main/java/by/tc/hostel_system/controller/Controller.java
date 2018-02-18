@@ -15,9 +15,8 @@ import static by.tc.hostel_system.controller.constant.ControlConst.COMMAND;
 
 public class Controller extends HttpServlet {
     private static final String CONTENT_TYPE = "text/html";
-
+    private static final long serialVersionUID = 8665632140511532655L;
     private final CommandDirector director = CommandDirector.getInstance();
-    private static final long serialVersionUID = 1L;
 
     public Controller() {
         super();

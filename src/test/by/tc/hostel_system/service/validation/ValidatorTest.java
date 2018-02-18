@@ -46,8 +46,8 @@ public class ValidatorTest {
 		boolean expected = true;
 		boolean actual = true;
 		try {
-			Validator.isSign(password);
-		} catch (NotNumberException e) {
+			UserValidator.isSign(password);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);
@@ -59,8 +59,8 @@ public class ValidatorTest {
 		boolean expected = false;
 		boolean actual = true;
 		try {
-			Validator.isSign(password);
-		} catch (NotNumberException e) {
+			UserValidator.isSign(password);
+		} catch (InputException e) {
 			actual = false;
 		}
 		assertEquals(expected, actual);

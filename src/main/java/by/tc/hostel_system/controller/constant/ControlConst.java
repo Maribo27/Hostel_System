@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 public final class ControlConst {
     public static final String DEFAULT_LANG = "ru";
-
     public static final String COMMAND = "command";
     public static final String USER = "user";
     public static final String HOSTELS = "hostels";
@@ -29,6 +28,13 @@ public final class ControlConst {
 
         private String res;
 
+        /**
+         * Creates information message.
+         *
+         * @param lang  current lang
+         *
+         * @return message
+         */
         public String getMessage(String lang) {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(BASE_NAME, Locale.forLanguageTag(lang));
             return resourceBundle.getString(res);

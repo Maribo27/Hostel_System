@@ -16,18 +16,38 @@ public final class DAOFactory {
 
     private DAOFactory() {}
 
+    /**
+     * Returns User DAO implementations.
+     *
+     * @return User DAO
+     */
     public UserDAO getUserDAO() {
         return userDAO;
     }
 
+    /**
+     * Returns Hostel DAO implementations.
+     *
+     * @return Hostel DAO
+     */
     public HostelDAO getHostelDAO() {
         return hostelDAO;
     }
 
+    /**
+     * Returns Request DAO implementations.
+     *
+     * @return Request DAO
+     */
     public RequestDAO getRequestDAO() {
         return requestDAO;
     }
 
+    /**
+     * Returns DAO Factory instance.
+     *
+     * @return instance of DAOFactory
+     */
     public static DAOFactory getInstance() {
         return instance;
     }

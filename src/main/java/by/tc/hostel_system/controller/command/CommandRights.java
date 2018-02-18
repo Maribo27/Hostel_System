@@ -13,19 +13,31 @@ public class CommandRights {
 		this.rights = rights;
 	}
 
+	/**
+	 * Returns current {@link Command}.
+	 *
+	 * @return command
+	 */
 	public Command getCommand() {
 		return command;
 	}
 
+	/**
+	 * Change current {@link Command}.
+	 *
+	 * @param command
+	 * new command
+	 */
 	public void setCommand(Command command) {
 		this.command = command;
 	}
 
+	/**
+	 * Returns {@link User} rights.
+	 *
+	 * @return users rights {@link List}
+	 */
 	public List<User.Status> getRights() {
 		return rights;
-	}
-
-	public void setRights(List<User.Status> rights) {
-		this.rights = rights;
 	}
 }

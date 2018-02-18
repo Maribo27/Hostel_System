@@ -45,7 +45,7 @@ public class HostelDAOImplTest {
 		int room = 1;
 		Date start = Date.valueOf("2018-07-09");
 		Date end = Date.valueOf("2018-07-19");
-		Hostel.Booking type = Hostel.Booking.valueOf("BOOKING");
+		Hostel.Booking type = Hostel.Booking.valueOf("PAYMENT");
 		List<Hostel> actual = hostelDAO.getHostels(LANG_EN, type, city, room, start, end);
 		assertEquals(expected, actual);
 	}
@@ -62,7 +62,7 @@ public class HostelDAOImplTest {
 		HostelBuilder builder = new HostelBuilder();
 		builder.addName("Oladushka");
 		builder.addAddress("Minsk", "Belarus", "Gorkogo st., 24");
-		builder.addBooking("booking");
+		builder.addBooking("payment");
 		builder.addEmail("oladushka@gmail.com");
 		builder.addId(1);
 		builder.addCost(10);
@@ -71,7 +71,7 @@ public class HostelDAOImplTest {
 		builder = new HostelBuilder();
 		builder.addName("Moj kraj");
 		builder.addAddress("Minsk", "Belarus", "Minskaya st., 7");
-		builder.addBooking("payment");
+		builder.addBooking("booking");
 		builder.addEmail("moj_kraj@gmail.com");
 		builder.addId(2);
 		builder.addCost(20);
@@ -113,9 +113,18 @@ public class HostelDAOImplTest {
 		builder.addName("Oladushka");
 		builder.addAddress("Minsk", "Belarus", "Gorkogo st., 24");
 		builder.addEmail("oladushka@gmail.com");
-		builder.addBooking("booking");
+		builder.addBooking("payment");
 		builder.addId(1);
 		builder.addCost(10);
+		builder.addRoom(5);
+		hostels.add(builder.buildHostel());
+		builder = new HostelBuilder();
+		builder.addName("Moj kraj");
+		builder.addAddress("Minsk", "Belarus", "Minskaya st., 7");
+		builder.addEmail("moj_kraj@gmail.com");
+		builder.addBooking("booking");
+		builder.addId(2);
+		builder.addCost(20);
 		builder.addRoom(5);
 		hostels.add(builder.buildHostel());
 		return hostels;
@@ -123,11 +132,11 @@ public class HostelDAOImplTest {
 
 	private Map<Integer, String> createCitiesMap() {
 		Map<Integer, String> cities = new HashMap<>();
-		cities.put(1, "Minsk");
-		cities.put(2, "Grodno");
-		cities.put(3, "Moscow");
-		cities.put(4, "St. Petersburg");
-		cities.put(5, "Kiev");
+		cities.put(1, "Belarus, Minsk");
+		cities.put(2, "Belarus, Grodno");
+		cities.put(3, "Russia, Moscow");
+		cities.put(4, "Russia, St. Petersburg");
+		cities.put(5, "Ukraine, Kiev");
 		return cities;
 	}
 }

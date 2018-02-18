@@ -82,7 +82,7 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>lastname</name>
+            <name>lastName</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

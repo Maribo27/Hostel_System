@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
@@ -24,16 +25,15 @@
 
     <title>Hostel System</title>
 </head>
-
 <body>
 <c:choose>
     <c:when test = "${not empty sessionScope.user}">
         <jsp:forward page="/home" />
     </c:when>
 </c:choose>
-<div style="padding:20px;"></div>
-
-<div id="sidebar">
+<jsp:include page="/WEB-INF/jsp/header/logInHeader.jsp"/>
+<jsp:include page="/WEB-INF/jsp/information.jsp"/>
+<div class="sidebar-index">
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
@@ -63,12 +63,7 @@
     </section>
 </div>
 <script src="assets/js/validation/validation_${sessionScope.lang}.js"></script>
-
-
-
-<jsp:include page="/WEB-INF/jsp/carousel.jsp"/>
-<jsp:include page="/WEB-INF/jsp/header/logInHeader.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
+<jsp:include page="/WEB-INF/jsp/topButton.jsp"/>
 </body>
 </html>

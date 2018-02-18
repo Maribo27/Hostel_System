@@ -7,7 +7,7 @@ public class Hostel implements Serializable {
     private static final long serialVersionUID = -7481188849152613348L;
     private String name;
     private Booking booking;
-    private Address address;
+    private FullAddress fullAddress;
     private String email;
     private int id;
     private int room;
@@ -40,12 +40,12 @@ public class Hostel implements Serializable {
         this.booking = booking;
     }
 
-    public Address getAddress() {
-        return address;
+    public FullAddress getFullAddress() {
+        return fullAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setFullAddress(FullAddress fullAddress) {
+        this.fullAddress = fullAddress;
     }
 
     public String getEmail() {
@@ -89,30 +89,29 @@ public class Hostel implements Serializable {
                 room == hostel.room &&
                 cost == hostel.cost &&
                 Objects.equals(name, hostel.name) &&
-                Objects.equals(address, hostel.address) &&
                 booking == hostel.booking &&
+                Objects.equals(fullAddress, hostel.fullAddress) &&
                 Objects.equals(email, hostel.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address, booking, email, id, room, cost);
+        return Objects.hash(name, booking, fullAddress, email, id, room, cost);
     }
 
     @Override
     public String toString() {
-        return "Hostel{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
+        return "Hostel : " +
+                "id=" + id +
+                ", name=\"" + name + '\"' +
+                ", fullAddress=" + fullAddress +
                 ", booking=" + booking +
-                ", email='" + email + '\'' +
-                ", id=" + id +
-                ", room=" + room +
-                ", cost=" + cost +
-                '}';
+                ", email=" + email +
+                ", rooms=" + room +
+                ", cost=" + cost;
     }
 
-    public class Address {
+    public class FullAddress {
         private String city;
         private String country;
         private String address;
@@ -145,10 +144,10 @@ public class Hostel implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Address address1 = (Address) o;
-            return Objects.equals(city, address1.city) &&
-                    Objects.equals(country, address1.country) &&
-                    Objects.equals(address, address1.address);
+            FullAddress fullAddress1 = (FullAddress) o;
+            return Objects.equals(city, fullAddress1.city) &&
+                    Objects.equals(country, fullAddress1.country) &&
+                    Objects.equals(address, fullAddress1.address);
         }
 
         @Override
@@ -158,11 +157,10 @@ public class Hostel implements Serializable {
 
         @Override
         public String toString() {
-            return "Address{" +
-                    "city='" + city + '\'' +
-                    ", country='" + country + '\'' +
-                    ", address='" + address + '\'' +
-                    '}';
+            return "FullAddress : " +
+                    "country=" + country +
+                    ", city=" + city +
+                    ", street=" + address;
         }
     }
 }

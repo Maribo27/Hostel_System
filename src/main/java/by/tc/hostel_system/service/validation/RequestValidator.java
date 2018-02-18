@@ -1,51 +1,89 @@
 package by.tc.hostel_system.service.validation;
 
+import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.entity.User;
 
 public class RequestValidator {
-	public static boolean isRequestDataValid(Object user, String hostelId, String type, String rooms, String days, String start, String cost)
-			throws NotNumberException, NotDateException, UserValidator.InputException {
-		if (user == null) {
-			throw new UserValidator.InputException("User is null");
-		}
-		if (!(user instanceof User)) {
-			throw new UserValidator.InputException("User is invalid");
-		}
+	/**
+	 * Validates input request data for validity.
+	 *
+	 * @param user      current user
+	 * @param hostelId  hostel id
+	 * @param type      request type
+	 * @param rooms     number of rooms
+	 * @param days      number of days
+	 * @param start     date of booking start
+	 * @param cost      room cost
+	 *
+	 * @throws InputException if input data is incorrect
+	 */
+	public static void isRequestDataValid(Object user, String hostelId, String type, String rooms, String days, String start, String cost)
+			throws InputException {
+		Validator.isUser(user);
 		User currentUser = (User) user;
 		if (currentUser.getId() == 0) {
-			throw new UserValidator.InputException("User ID is null");
+			throw new InputException("User ID is null");
 		}
-		boolean hostelIdIsNumber = Validator.isNumber(hostelId);
-		boolean roomsIsNumber = Validator.isNumber(rooms);
-		boolean daysIsNumber = Validator.isNumber(days);
-		boolean startIsDate = Validator.isDate(start);
-		boolean costIsNumber = Validator.isNumber(cost);
-		boolean validType = Validator.isRequestType(type);
-		return hostelIdIsNumber && roomsIsNumber && daysIsNumber && startIsDate && costIsNumber && validType;
+		Validator.isNumber(hostelId);
+		Validator.isNumber(rooms);
+		Validator.isNumber(days);
+		Validator.isDate(start);
+		Validator.isNumber(cost);
+		Validator.isRequestType(type);
 	}
 
-	public static boolean isCancelDataValid(String requestId, String userId, String status, Object user, String page) throws NotNumberException, UserValidator.InputException {
-		if (user == null) {
-			throw new UserValidator.InputException("User is null");
-		}
-		if (!(user instanceof User)) {
-			throw new UserValidator.InputException("User is invalid");
-		}
+	/**
+	 * Validates input data for request canceling for validity.
+	 *
+	 * @param requestId request id
+	 * @param userId    user id
+	 * @param status    new request status
+	 * @param user      current user
+	 * @param page      page number
+	 *
+	 * @throws InputException if input data is incorrect
+	 */
+	public static void isCancelDataValid(String requestId, String userId, String status, Object user, String page) throws InputException {
+		Validator.isUser(user);
 		User currentUser = (User) user;
 		if (currentUser.getBalance() < 0) {
-			throw new UserValidator.InputException("User balance is invalid");
+			throw new InputException("User balance is invalid");
 		}
-		boolean userIdIsNumber = Validator.isNumber(userId);
-		boolean requestIdIsNumber = Validator.isNumber(requestId);
-		boolean validStatus = Validator.isRequestStatus(status);
-		boolean pageIsNumber = Validator.isNumber(page);
-		return userIdIsNumber && requestIdIsNumber && validStatus && pageIsNumber;
+		Validator.isNumber(userId);
+		Validator.isNumber(requestId);
+		Validator.isNumber(page);
+		isRequestStatus(status);
 	}
 
-	public static boolean isMoneyEnough(String type, int balance, int cost) throws NotEnoughMoneyException {
+	/**
+	 * Compares current {@link User#balance} and the full cost from request.
+	 *
+	 * @param type      request type
+	 * @param balance   user balance
+	 * @param cost      request cost
+	 *
+	 * @throws NotEnoughMoneyException if user has not enough money
+	 */
+	public static void isMoneyEnough(String type, int balance, int cost) throws NotEnoughMoneyException {
 		if (type.equals("payment") && balance < cost) {
 			throw new NotEnoughMoneyException("Not enough money");
 		}
-		return true;
+	}
+
+	/**
+	 * Validates input status for validity.
+	 *
+	 * @param status    request type
+	 *
+	 * @throws InputException if input status is not valid status
+	 */
+	static void isRequestStatus(String status) throws InputException {
+		for (Request.Status currentStatus : Request.Status.values()) {
+			String statusName = currentStatus.name();
+			if (status.equalsIgnoreCase(statusName)){
+				return;
+			}
+		}
+		throw new InputException("Invalid status");
 	}
 }

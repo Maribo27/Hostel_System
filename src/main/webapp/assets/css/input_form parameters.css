@@ -1,0 +1,129 @@
+.parameters-form {
+    position: absolute;
+    top: 10vh;
+    width: 85vw;
+    padding: 2%;
+    padding-bottom: 5vh;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+    float: none;
+}
+
+.parameters-form h2 {
+    font-size: calc(15px + 0.5vw);
+    color: #5C5C5C;
+    text-align: center;
+}
+
+.parameters-form label {
+    font-size: calc(10px + 0.5vw);
+}
+
+input[type="submit"],
+input[type="reset"] {
+    box-sizing: border-box;
+    color: #fff;
+    background-color: #3C3C3C;
+    height: calc(30px + 1vw);
+    width: 100%;
+    border: 2px solid #686868;
+    font-family: Raleway, sans-serif;
+    font-size:calc(15px + 0.5vw); 
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover{
+    background: #1C1C1C;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active {
+    background: #1AAEB9;
+}
+
+select,
+input[type="date"],
+input[type="number"] {
+    font-family: 'Raleway', sans-serif;
+    font-size: calc(12px + 0.3vw);
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: white;
+    border: 1px solid lightgrey;
+    padding-left: 3%;
+    color: #555;
+    height: calc(2.5vw + 2.5vh);
+    min-height: 30px;
+}
+
+input:not([type="submit"], [type="reset"]):focus {
+    box-shadow: 0 0 5px #1AAEB9;
+    border: 1px solid #AABCFE;
+}
+
+input:not(:focus),
+select:not(:focus),
+input[type="text"]:not(:focus),
+input[type="password"]:not(:focus),
+input[type="email"]:not(:focus),
+input[type="date"]:not(:focus),
+input[type="number"]:not(:focus) {
+    box-shadow: none;
+}
+
+input:invalid,
+select:invalid,
+input[type="text"]:invalid,
+input[type="password"]:invalid,
+input[type="email"]:invalid,
+input[type="date"]:invalid,
+input[type="number"]:invalid {
+    padding-left: 3%;
+    border: 1px solid #e74c3c;
+    min-height: 30px;
+}
+
+input:not([type="submit"]):valid {
+    border-color: #2ecc71;
+}
+
+
+@media only screen and (max-width: 700px)
+    and (orientation: landscape){
+    
+    .input-data-form h2 {
+        font-size: calc(1.3vw + 1.3vh);
+    }
+    
+    .sidebar-index .input-data-form-help {
+        display: block;
+        padding-bottom: 1%;
+    }
+
+    .only-mobile {
+        display: block;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    
+    .input-data-form h2 {
+        font-size: calc(1.3vw + 1.3vh);
+    }
+    
+    .sidebar-index .input-data-form-help {
+        display: block;
+        padding-bottom: 1%;
+    }
+
+    .only-mobile {
+        display: block;
+    }
+}

@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-public abstract class DiscountTag extends TagSupport {
+public class DiscountTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(DiscountTag.class);
 	private static final long serialVersionUID = 1636675895743519719L;
 	private static final String A_HREF = "<a href=\"";
@@ -16,7 +16,13 @@ public abstract class DiscountTag extends TagSupport {
 	private static final String SIGN = "&sign=";
 	private static final String HREF_END = "\">";
 	private static final String A = "</a>";
+	/**
+	 * Current user id.
+	 */
 	public int id;
+	/**
+	 * current page number.
+	 */
 	public int page;
 
 	public void setId(String id) {
@@ -27,13 +33,34 @@ public abstract class DiscountTag extends TagSupport {
 		this.page = page;
 	}
 
+	/**
+	 * Creates discount tag.
+	 *
+	 * @param commandSign   sign of coefficient ("plus" if increasing, "minus" - otherwise) for command
+	 * @param tagSign       sign of coefficient ("+" if increasing, "-" - otherwise) for showing on page
+	 *
+	 * @return tag body result
+	 *
+	 * @throws TagWritingException if error occurred while writing tag
+	 */
 	int createTag(String commandSign, String tagSign) throws TagWritingException {
 		if (id == 0 || page == 0) {
 			return SKIP_BODY;
 		}
 		String context = pageContext.getServletContext().getContextPath();
-		String tag = String.format("%s%s%s%d%s%d%s%s%s%s%s", A_HREF, context, HOSTEL_SYSTEM, page, ID, id, SIGN, commandSign, HREF_END, tagSign, A);
+		StringBuilder tagBuilder = new StringBuilder();
+		tagBuilder.append(A_HREF);
+		tagBuilder.append(context);
+		tagBuilder.append(HOSTEL_SYSTEM);
+		tagBuilder.append(page);
+		tagBuilder.append(ID);
+		tagBuilder.append(id);
+		tagBuilder.append(SIGN);
+		tagBuilder.append(commandSign);
+		tagBuilder.append(HREF_END);
+		tagBuilder.append(tagSign);
+		tagBuilder.append(A);
 		JspWriter out = pageContext.getOut();
-		return TagUtil.writeTag(out, tag, "Cannot write request status tag to page", logger);
+		return TagUtil.writeTag(out, tagBuilder.toString(), "Cannot write request status tag to page", logger);
 	}
 }

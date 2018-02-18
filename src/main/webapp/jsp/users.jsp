@@ -8,19 +8,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/table.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topButton.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/backToTop.js"></script>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.users" var="users"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.user.id" var="id"/>
+    <fmt:message bundle="${loc}" key="locale.table.title.id" var="id"/>
     <fmt:message bundle="${loc}" key="locale.table.title.username" var="username"/>
     <fmt:message bundle="${loc}" key="locale.table.title.email" var="email"/>
     <fmt:message bundle="${loc}" key="locale.table.title.name" var="name"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.surname" var="surname"/>
-    <fmt:message bundle="${loc}" key="locale.table.title.lastname" var="lastname"/>
     <fmt:message bundle="${loc}" key="locale.table.title.discount" var="discount"/>
     <fmt:message bundle="${loc}" key="locale.table.title.status" var="status"/>
     <fmt:message bundle="${loc}" key="locale.table.title.reason" var="reason"/>
@@ -29,23 +24,18 @@
     <fmt:message bundle="${loc}" key="locale.table.title.requests" var="requests"/>
     <fmt:message bundle="${loc}" key="locale.button.block" var="block"/>
     <fmt:message bundle="${loc}" key="locale.button.unlock" var="unlock"/>
-    <fmt:message bundle="${loc}" key="locale.button.top" var="toTop"/>
     <title> ${users} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
-
-<div style="padding:20px;"></div>
-
+<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <c:if test="${fn:length(requestScope.users) gt 0}">
-    <div class="table-container">
+    <div class="full-table-container">
         <table>
             <tr>
                 <th>${id}</th>
                 <th>${username}</th>
                 <th>${email}</th>
                 <th>${name}</th>
-                <th>${surname}</th>
-                <th>${lastname}</th>
                 <th>${discount}</th>
                 <th>${status}</th>
                 <th>${reason}</th>
@@ -55,13 +45,11 @@
             </tr>
             <c:forEach items="${requestScope.users}" var="user">
                 <tr>
-                    <td><c:out value="${user.id}"/></td>
-                    <td><c:out value="${user.personalInfo.username}"/></td>
-                    <td><c:out value="${user.personalInfo.email}"/></td>
-                    <td><c:out value="${user.personalInfo.name}"/></td>
-                    <td><c:out value="${user.personalInfo.surname}"/></td>
-                    <td><c:out value="${user.personalInfo.lastname}"/></td>
-                    <td>
+                    <td data-label="${id}"><c:out value="${user.id}"/></td>
+                    <td data-label="${username}"><c:out value="${user.personalInfo.username}"/></td>
+                    <td data-label="${email}"><c:out value="${user.personalInfo.email}"/></td>
+                    <td data-label="${name}"><ahs:full-name name="${user.personalInfo.name}" lastName="${user.personalInfo.lastName}" surname="${user.personalInfo.surname}"/></td>
+                    <td data-label="${discount}">
                         <c:choose>
                             <c:when test="${user.discount ge 50}">
                                 <ahs:minus id="${user.id}" page="${requestScope.page.current}"/>${user.discount}
@@ -74,11 +62,11 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td><ahs:user-status userStatus="${user.status}"/></td>
-                    <td><c:out value="${user.blockInfo.blockReason}"/></td>
-                    <td><c:out value="${user.blockInfo.blockDate}"/></td>
-                    <td><c:out value="${user.requests}"/></td>
-                    <td>
+                    <td data-label="${status}"><ahs:user-status userStatus="${user.status}"/></td>
+                    <td data-label="${reason}"><c:out value="${user.blockInfo.reason}"/></td>
+                    <td data-label="${blockDate}"><c:out value="${user.blockInfo.date}"/></td>
+                    <td data-label="${requests}"><c:out value="${user.requests}"/></td>
+                    <td data-label="${action}">
                         <c:choose>
                             <c:when test = "${user.status eq 'BANNED'}">
                                 <form class="unlock" action="${pageContext.request.contextPath}/hostel_system" method="get">
@@ -108,11 +96,10 @@
                 </tr>
             </c:forEach>
         </table>
+        <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
     </div>
-    <jsp:include page="/WEB-INF/jsp/pagination.jsp"/>
 </c:if>
-<jsp:include page="/WEB-INF/jsp/header/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-<div id="toTop">^ ${toTop}</div>
+<jsp:include page="/WEB-INF/jsp/topButton.jsp"/>
 </body>
 </html>

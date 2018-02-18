@@ -15,14 +15,20 @@ import java.util.Map;
 
 public class HostelServiceImpl implements HostelService {
 
+    /**
+     * @see HostelService#getHostels(String, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public List<Hostel> getHostels(String lang, String page) throws ServiceException {
         HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
         try {
-            boolean langValid = Validator.isLanguage(lang);
-            boolean pageValid = Validator.isNumber(page);
+            Validator.isLanguage(lang);
+            Validator.isNumber(page);
             return hostelDAO.getHostels(lang);
-        } catch (LangNotSupportedException | NotNumberException e){
+        } catch (InputException e){
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e){
             throw new HostelNotFoundException(e.getMessage());
@@ -31,12 +37,18 @@ public class HostelServiceImpl implements HostelService {
         }
     }
 
+    /**
+     * @see HostelService#getHostels(String, String, String, String, String, String, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
 	@Override
 	public List<Hostel> getHostels(String lang, String city, String room, String start, String days, String page, String type) throws ServiceException {
 		HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
         try {
-            boolean langValid = Validator.isLanguage(lang);
-            boolean inputDataValid = HostelValidator.isSearchDataValid(city, room, start, days, page, type);
+            Validator.isLanguage(lang);
+            HostelValidator.isSearchDataValid(city, room, start, days, page, type);
             int cityId = Integer.parseInt(city);
             int roomId = Integer.parseInt(room);
             int daysNumber = Integer.parseInt(days);
@@ -44,7 +56,7 @@ public class HostelServiceImpl implements HostelService {
             Hostel.Booking bookingType = Hostel.Booking.valueOf(type.toUpperCase());
             Date endDate = ControllerUtil.getEndDate(daysNumber, startDate);
             return hostelDAO.getHostels(lang, bookingType, cityId, roomId, startDate, endDate);
-        } catch (LangNotSupportedException | NotDateException | NotNumberException | UserValidator.InputException e) {
+        } catch (InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e){
             throw new HostelNotFoundException(e.getMessage());
@@ -53,12 +65,18 @@ public class HostelServiceImpl implements HostelService {
         }
     }
 
+    /**
+     * @see HostelService#getCities(String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link LangNotSupportedException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public Map<Integer, String> getCities(String lang) throws ServiceException {
         HostelDAO hostelDAO = DAOFactory.getInstance().getHostelDAO();
 
         try {
-            boolean langValid = Validator.isLanguage(lang);
+            Validator.isLanguage(lang);
             return hostelDAO.getCities(lang);
         } catch (LangNotSupportedException e) {
             throw new InvalidParametersException(e.getMessage());

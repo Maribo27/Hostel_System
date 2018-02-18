@@ -147,15 +147,15 @@ public class Request implements Serializable {
 
     @Override
     public String toString() {
-        return "Request{" +
-                "hostelInfo='" + hostelInfo + '\'' +
+        return "Request : " +
+                "id=" + id +
+                ", userId=" + userId +
+                ", hostelId=" + hostelId +
+                ", hostelInfo=\"" + hostelInfo + '\"' +
                 ", type=" + type +
                 ", status=" + status +
                 ", date=" + date +
                 ", endDate=" + endDate +
-                ", id=" + id +
-                ", userId=" + userId +
-                ", hostelId=" + hostelId +
                 ", room=" + room +
                 ", days=" + days +
                 ", cost=" + cost +

@@ -16,6 +16,9 @@ import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
 public class RequestStatusTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(RequestStatusTag.class);
 	private static final long serialVersionUID = 6259324892174710379L;
+	/**
+	 * Request status ("processing", "approved", "denied" or "deleted").
+	 */
 	private Request.Status requestStatus;
 
 	public void setRequestStatus(Request.Status requestStatus) {

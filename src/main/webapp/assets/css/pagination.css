@@ -1,8 +1,10 @@
 .pagination2 {
     display: inline-block;
-    /*! padding: 0; */
-    margin: 8px 0;
-    text-align: center;
+    margin-top: 0;
+    font-size: calc(0.7vw + 0.7vh);
+    
+    padding-left: 0;
+    padding-bottom: 20px;
 }
 .pagination2 li {
     display: inline;
@@ -40,4 +42,18 @@ ul.pagination2 li a.active:hover {
 ul.pagination2 li a.not-active {
     background-color: rgba(163, 183, 191, 0.7);
     color: white;
+}
+
+
+@media only screen 
+    and (min-width: 700px) 
+    and (max-width: 1100px) 
+    and (orientation: landscape) {
+    
+        .pagination2 {
+    /*! display: inline-block; */
+    /*! margin-top: 0; */
+            font-size: calc(10px + 0.5vw);
+    padding-left: 33%;
+    }
 }

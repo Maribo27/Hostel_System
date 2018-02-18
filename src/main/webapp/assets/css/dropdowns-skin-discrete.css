@@ -1,0 +1,81 @@
+/* colors */
+/* ------ */
+/* togle menu button for narrow screens */
+.toggleMenu {
+	background: #3c3c3c;
+	color: #fff;
+}
+
+/* general navigation background colors */
+.nav {
+	background: #3c3c3c;
+}
+
+/* general navigation link font color */
+.nav a {
+	color:#fff;
+}
+
+/* navigation hover colors */
+.nav li:not(.system-name):not(.balance):not(.active) a:hover{
+	background-color: #1c1c1c;
+}
+
+.nav .system-name a:hover,
+.nav .balance a:hover,
+.nav .active a:hover {
+	cursor: text;
+}
+
+/* second level navigation colors */
+.nav li li{
+	background: #686868;
+	border-bottom: 1px solid #c0c0c0;
+}
+.nav li li input{
+	background: #686868;
+	border: none;
+}
+
+/* ---------------- */
+/*      layout      */
+/* -----------------*/
+
+/* main div */
+.dropdowns {
+	width:100vw;
+	position: fixed;
+	z-index: 1;
+}
+
+/* small screens menu button */
+a.toggleMenu {
+	padding: 10px 0;
+	width:100%;
+	text-align: center;
+}
+
+/* second and third level menus */
+.nav ul {
+	width:8em;
+}
+
+/* general paddings and other stuff */
+.nav a {
+	padding: 5px 10px;
+}
+
+.nav > li a {
+	text-align: center;
+}
+
+.nav li.active {
+	background-color: #1AAEB9;
+}
+
+/* small screen adjustments*/
+@media only screen and (max-width: 1100px) {
+	.nav ul {
+		width: 100%;
+	}
+}

@@ -99,20 +99,20 @@ var nameValidityChecks = [
     }
 ];
 
-var lastnameValidityChecks = [
+var lastNameValidityChecks = [
     {
         isInvalid: function(input) {
             return input.value.length < 2 && input.value.length > 0 || input.value.length > 50;
         },
         invalidityMessage: 'Это поле должно быть от 2 до 50 символов в длину',
-        element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(1)')
+        element: document.querySelector('label[for="last-name"] .input-requirements li:nth-child(1)')
     },
     {
         isInvalid: function(input) {
             return !input.value.match(/^[A-ZА-Я]/g) && input.value.length > 0;
         },
         invalidityMessage: 'Первый символ должен быть заглавной буквой',
-        element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(3)')
+        element: document.querySelector('label[for="last-name"] .input-requirements li:nth-child(3)')
     },
     {
         isInvalid: function(input) {
@@ -120,7 +120,7 @@ var lastnameValidityChecks = [
             return illegalCharacters & input != null;
         },
         invalidityMessage: 'Допускаются только буквы',
-        element: document.querySelector('label[for="lastname"] .input-requirements li:nth-child(2)')
+        element: document.querySelector('label[for="last-name"] .input-requirements li:nth-child(2)')
     }
 ];
 
@@ -206,10 +206,10 @@ if (nameInput != null) {
     nameInput.CustomValidation.validityChecks = nameValidityChecks;
 }
 
-var lastnameInput = document.getElementById('lastname');
-if (lastnameInput != null) {
-    lastnameInput.CustomValidation = new CustomValidation(lastnameInput);
-    lastnameInput.CustomValidation.validityChecks = lastnameValidityChecks;
+var lastNameInput = document.getElementById('last-name');
+if (lastNameInput != null) {
+    lastNameInput.CustomValidation = new CustomValidation(lastNameInput);
+    lastNameInput.CustomValidation.validityChecks = lastNameValidityChecks;
 }
 
 var surnameInput = document.getElementById('surname');

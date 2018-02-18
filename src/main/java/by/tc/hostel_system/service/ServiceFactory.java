@@ -16,18 +16,38 @@ public final class ServiceFactory {
 
     private ServiceFactory() {}
 
+    /**
+     * Returns Hostel Service implementations.
+     *
+     * @return Hostel Service
+     */
     public HostelService getHostelService() {
         return hostelService;
     }
 
+    /**
+     * Returns Request Service implementations.
+     *
+     * @return Request Service
+     */
     public RequestService getRequestService() {
         return requestService;
     }
 
+    /**
+     * Returns User Service implementations.
+     *
+     * @return User Service
+     */
     public UserService getUserService() {
         return userService;
     }
 
+    /**
+     * Returns Service Factory instance.
+     *
+     * @return instance of ServiceFactory
+     */
     public static ServiceFactory getInstance() {
         return instance;
     }

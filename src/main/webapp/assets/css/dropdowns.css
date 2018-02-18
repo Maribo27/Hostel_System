@@ -1,0 +1,93 @@
+.dropdowns nav, .dropdowns ul, .dropdowns li, .dropdowns a  {margin: 0; padding: 0;}
+
+.dropdowns a {text-decoration: none;}
+
+.toggleMenu {
+    display:  none;
+    font-size: calc(12px + 0.5vw);
+}
+.nav {
+    list-style: none;
+     *zoom: 1;
+}
+.nav:before,
+.nav:after {
+    content: " "; 
+    display: table; 
+}
+.nav:after {
+    clear: both;
+}
+.nav ul {
+    list-style: none;
+}
+.nav a {
+    padding: 10px 15px;
+    font-size: calc(12px + 0.5vw);
+}
+.nav li {
+    position: relative;
+    min-width: 8em;
+}
+.nav > li {
+    float: right;
+}
+.nav > .system-name {
+    float: left;
+}
+.nav > li > a {
+    display: block;
+}
+.nav li  ul {
+    position: absolute;
+    left: -9999px;
+}
+.nav > li.hover > ul {
+    left: 0;
+}
+.nav li li.hover ul {
+    left: 100%;
+    top: 0;
+}
+.nav li li li a {
+    z-index:200;
+}
+
+.nav li form{
+    width: calc(10rem + 1vw);
+}
+
+.nav li input{
+    height: 35px;
+    font-size: calc(12px + 0.5vw);
+    cursor: pointer;
+}
+
+.nav li li {
+    height: 35px;
+}
+
+@media only screen and (max-width: 1100px){
+    .active {
+        display: block;
+    }
+    .nav > li {
+        float: none;
+    }
+    .nav > li > .parent {
+        background-position: 95% 50%;
+    }
+    .nav ul {
+        display: block;
+        width: 100%;
+    }
+   .nav > li.hover > ul , .nav li li.hover ul {
+        position: static;
+    }
+    .nav > .system-name, .balance {
+        display: none;
+    }
+    .nav li form {
+        width: auto;
+    }
+}

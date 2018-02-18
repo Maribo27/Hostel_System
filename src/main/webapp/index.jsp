@@ -3,27 +3,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="assets/css/input_form.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/raleway_font.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/input_form.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/style.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}assets/images/favicon.png">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
 
     <fmt:message bundle="${loc}" key="locale.message.account" var="account"/>
+
     <fmt:message bundle="${loc}" key="locale.message.click.login" var="click"/>
+
     <fmt:message bundle="${loc}" key="locale.message.enter.registration.data" var="data"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.username" var="username"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.name" var="name"/>
-    <fmt:message bundle="${loc}" key="locale.message.enter.lastname" var="lastname"/>
+    <fmt:message bundle="${loc}" key="locale.message.enter.last.name" var="lastName"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.surname" var="surname"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.email" var="email"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.password" var="password"/>
     <fmt:message bundle="${loc}" key="locale.message.enter.repeat.password" var="repeat"/>
-    <fmt:message bundle="${loc}" key="locale.button.register" var="register"/>
 
     <fmt:message bundle="${loc}" key="locale.input.message.user.content" var="userContent"/>
     <fmt:message bundle="${loc}" key="locale.input.message.username.length" var="usernameLength"/>
@@ -34,26 +35,25 @@
     <fmt:message bundle="${loc}" key="locale.input.message.email.content" var="emailContent"/>
     <fmt:message bundle="${loc}" key="locale.input.message.email.symbol" var="emailSymbol"/>
 
+    <fmt:message bundle="${loc}" key="locale.button.register" var="register"/>
     <title>Hostel System</title>
 </head>
-
 <body>
 <c:choose>
     <c:when test = "${not empty sessionScope.user}">
         <jsp:forward page="${pageContext.request.contextPath}/home" />
     </c:when>
 </c:choose>
-<div style="padding:20px;"></div>
-
-
-<div id="sidebar">
+<jsp:include page="/WEB-INF/jsp/header/registerHeader.jsp"/>
+<jsp:include page="/WEB-INF/jsp/information.jsp"/>
+<div class="sidebar-index">
     <section class="container">
         <div class="input-data-form">
             <h1>${data}</h1>
             <c:if test="${empty sessionScope.lang}">
                 <c:set var="lang" scope="session" value="ru"/>
             </c:if>
-            <form id="registration" accept-charset="UTF-8" action="${pageContext.request.contextPath}/hostel_system" method="post">
+            <form id="registration" accept-charset="UTF-8" action="hostel_system" method="post">
                 <label for="username">
                     <input type="text" id="username" name="username" placeholder="${username}" pattern="^[\w][\w\.\_\d]{4,20}$" value="${sessionScope.user.personalInfo.username}" maxlength="20" minlength="5" required>
                     <ul class="input-requirements">
@@ -71,8 +71,8 @@
                     </ul>
                 </label>
 
-                <label for="lastname">
-                    <input type="text" id="lastname" name="lastname" placeholder="${lastname}" maxlength="50" value="${sessionScope.user.personalInfo.lastname}"/>
+                <label for="last-name">
+                    <input type="text" id="last-name" name="last-name" placeholder="${lastName}" maxlength="50" value="${sessionScope.user.personalInfo.lastName}"/>
                     <ul class="input-requirements">
                         <li>${nameLength}</li>
                         <li>${nameFirst}</li>
@@ -120,12 +120,7 @@
         </div>
     </section>
 </div>
-
-<div style="padding:15px;"></div>
-
-<jsp:include page="/WEB-INF/jsp/carousel.jsp"/>
-<jsp:include page="/WEB-INF/jsp/header/registerHeader.jsp"/>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
+<jsp:include page="/WEB-INF/jsp/topButton.jsp"/>
 </body>
 </html>

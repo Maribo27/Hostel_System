@@ -13,17 +13,25 @@ import by.tc.hostel_system.util.ServiceUtil;
 import java.sql.Date;
 import java.util.List;
 
+import static by.tc.hostel_system.dao.SQLQuery.*;
+
 public class RequestServiceImpl implements RequestService {
 
+    /**
+     * @see RequestService#getRequests(String, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public List<Request> getRequests(String lang, String page) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            boolean langValid = Validator.isLanguage(lang);
-            boolean pageValid = Validator.isNumber(page);
-            return requestDAO.getRequests(lang);
-        } catch (LangNotSupportedException | NotNumberException e) {
+            Validator.isLanguage(lang);
+            Validator.isNumber(page);
+            return requestDAO.getRequests(lang, REQUEST_SEARCH_ALL_REQUESTS);
+        } catch (InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
@@ -32,30 +40,70 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
+    /**
+     * @see RequestService#getRequests(String, Object, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public List<Request> getRequests(String lang, Object user, String page) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            boolean langValid = Validator.isLanguage(lang);
-            boolean inputDataValid = UserValidator.isUserRequestData(user, page);
+            Validator.isLanguage(lang);
+            UserValidator.isUserRequestData(user, page);
             User newUser = (User) user;
-            return requestDAO.getRequests(lang, newUser.getId());
+            return requestDAO.getRequests(lang, newUser.getId(), REQUEST_SEARCH_USER_REQUESTS);
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
-        } catch (LangNotSupportedException | UserValidator.InputException e) {
+        } catch (InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
     }
 
+    /**
+     * @see RequestService#getRequests(String, Object)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
+    @Override
+    public List<Request> getRequests(String lang, Object objUser) throws ServiceException {
+        RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
+
+        try {
+            Validator.isLanguage(lang);
+            Validator.isUser(objUser);
+            User user = (User) objUser;
+            if (user.getStatus() == User.Status.ADMIN) {
+                return requestDAO.getRequests(lang, REQUEST_SEARCH_NEW_REQUESTS);
+            } else {
+                return requestDAO.getRequests(lang, user.getId(), REQUEST_SEARCH_USER_FUTURE_REQUESTS);
+            }
+        } catch (EntityNotFoundException e){
+            throw new RequestNotFoundException(e.getMessage());
+        } catch (InputException e) {
+            throw new InvalidParametersException(e.getMessage());
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    /**
+     * @see RequestService#addRequest(Object, String, String, String, String, String, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public int addRequest(Object user, String hostelId, String type, String rooms, String days, String date, String cost) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            boolean inputDataValid = RequestValidator.isRequestDataValid(user, hostelId, type, rooms, days, date, cost);
+            RequestValidator.isRequestDataValid(user, hostelId, type, rooms, days, date, cost);
             User newUser = (User) user;
             int hostelIdNumber = Integer.parseInt(hostelId);
             int roomsCount = Integer.parseInt(rooms);
@@ -64,12 +112,12 @@ public class RequestServiceImpl implements RequestService {
             Date beginDate = Date.valueOf(date);
             Request userRequest = ServiceUtil.createRequest(newUser.getId(), hostelIdNumber, type, roomsCount, daysCount, newUser.getDiscount(), beginDate, costNumber);
             int balance = newUser.getBalance();
-            boolean moneyEnough = RequestValidator.isMoneyEnough(type, balance, userRequest.getCost());
+            RequestValidator.isMoneyEnough(type, balance, userRequest.getCost());
             if (type.equals("booking")) {
                 balance += userRequest.getCost();
             }
             return requestDAO.addRequest(userRequest, balance);
-        } catch (NotNumberException | NotDateException | UserValidator.InputException e) {
+        } catch (InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
@@ -78,32 +126,43 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
+    /**
+     * @see RequestService#cancelRequest(String, String, String, Object, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link InputException}),
+     * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
+     */
     @Override
     public int cancelRequest(String requestId, String userId, String status, Object user, String page) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            boolean inputDataValid = RequestValidator.isCancelDataValid(requestId, userId, status, user, page);
+            RequestValidator.isCancelDataValid(requestId, userId, status, user, page);
             User newUser = (User) user;
             int requestIdNumber = Integer.parseInt(requestId);
             int userIdNumber = Integer.parseInt(userId);
             return requestDAO.cancelRequest(requestIdNumber, userIdNumber, status, newUser.getBalance());
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
-        } catch (NotNumberException | UserValidator.InputException e) {
+        } catch (InputException e) {
             throw new InvalidParametersException(e.getMessage());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
     }
 
+    /**
+     * @see RequestService#approveRequest(String, String)
+     *
+     * @throws ServiceException if input data is incorrect (catch {@link NotNumberException}) or catch {@link DAOException}
+     */
     @Override
     public void approveRequest(String id, String page) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            boolean inputDataValid = Validator.isNumber(id);
-            boolean pageValid = Validator.isNumber(page);
+            Validator.isNumber(id);
+            Validator.isNumber(page);
             int idNumber = Integer.parseInt(id);
             requestDAO.approveRequest(idNumber);
         } catch (NotNumberException e) {

@@ -1,0 +1,27 @@
+.error {
+  text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.error .code{
+  font-size: calc(8vw + 8vh);
+  margin: 0;
+}
+
+.error .message{
+  margin: 25px 0 25px 0;
+  font-size: calc(5vw + 5vh);
+}
+
+.error a{
+  font-size: calc(2vw + 2vh);
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  padding: 0 20px 0 20px;
+  background-color: #3c3c3c;
+}

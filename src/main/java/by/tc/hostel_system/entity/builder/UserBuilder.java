@@ -25,48 +25,97 @@ public class UserBuilder implements Serializable {
         balance = 0;
     }
 
-    public void addPersonalInfo(String username, String email, String password, String name, String surname, String lastname) {
+    /**
+     * Adds personal info to {@link User}.
+     *
+     * @param username user username
+     * @param email user email
+     * @param name user name
+     * @param surname user surname
+     * @param lastName user last name
+     */
+    public void addPersonalInfo(String username, String email, String name, String surname, String lastName) {
         User.PersonalInfo personalInfo = new User().new PersonalInfo();
         personalInfo.setUsername(username);
         personalInfo.setEmail(email);
-        personalInfo.setPassword(password);
         personalInfo.setName(name);
         personalInfo.setSurname(surname);
-        personalInfo.setLastname(lastname);
+        personalInfo.setLastName(lastName);
         this.personalInfo = personalInfo;
     }
 
+    /**
+     * Adds information about blocking to {@link User}.
+     *
+     * @param blockReason reason of blocking
+     * @param blockDate date of blocking
+     */
     public void addBlockInfo(String blockReason, Date blockDate) {
         User.BlockInfo blockInfo = new User().new BlockInfo();
-        blockInfo.setBlockDate(blockDate);
-        blockInfo.setBlockReason(blockReason);
+        blockInfo.setDate(blockDate);
+        blockInfo.setReason(blockReason);
         this.blockInfo = blockInfo;
     }
 
+    /**
+     * Adds status to {@link User}.
+     *
+     * @param status user status
+     */
     public void addStatus(String status) {
         this.status = User.Status.valueOf(status.toUpperCase());
     }
 
+    /**
+     * Adds account number to {@link User}.
+     *
+     * @param account account number
+     */
     public void addAccount(String account) {
         this.account = account;
     }
 
+    /**
+     * Adds id to {@link User}.
+     *
+     * @param id user id
+     */
     public void addId(int id) {
         this.id = id;
     }
 
+    /**
+     * Adds discount to {@link User}.
+     *
+     * @param discount user discount
+     */
     public void addDiscount(int discount) {
         this.discount = discount;
     }
 
+    /**
+     * Adds balance to {@link User}.
+     *
+     * @param balance user balance
+     */
     public void addBalance(int balance) {
         this.balance = balance;
     }
 
+    /**
+     * Adds number of requests to {@link User}.
+     *
+     * @param requests number of user requests
+     */
     public void addRequests(int requests) {
         this.requests = requests;
     }
 
+    /**
+     * Builds {@link User}.
+     *
+     * @return new user
+     */
     public User buildUser(){
         User user = new User();
         user.setId(id);

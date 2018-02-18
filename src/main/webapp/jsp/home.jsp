@@ -4,50 +4,52 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/input_form.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png">
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.title.home" var="home"/>
-    <fmt:message bundle="${loc}" key="locale.button.logout" var="logout"/>
     <title> ${home} | ${sessionScope.user.personalInfo.username} | Hostel System</title>
 </head>
 <body>
-<c:choose>
-    <c:when test = "${empty sessionScope.user}">
-        <jsp:forward page="${pageContext.request.contextPath}/register" />
-    </c:when>
-</c:choose>
-<div class="container">
 
-</div>
-<div style="padding:20px;"></div>
-<div id="sidebar">
-    <section class="container">
-        <div class="input-data-form">
-            <c:choose>
-                <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
-                    <jsp:include page="/WEB-INF/jsp/panel/homeAdmin.jsp"/>
-                </c:when>
-                <c:when test = "${sessionScope.user.status eq 'USER'}">
-                    <jsp:include page="/WEB-INF/jsp/panel/homeUser.jsp"/>
-                </c:when>
-                <c:otherwise>
-                    <jsp:include page="/WEB-INF/jsp/panel/homeBan.jsp"/>
-                </c:otherwise>
-            </c:choose>
-
-            <form action="${pageContext.request.contextPath}/hostel_system" method="get">
-                <input type="hidden" name="command" value="LOGOUT"/>
-                <input type="submit" value="${logout}"/>
-            </form>
-        </div>
-    </section>
-</div>
-
+<c:if test = "${empty sessionScope.user}">
+    <jsp:forward page="${pageContext.request.contextPath}/register" />
+</c:if>
 <jsp:include page="/WEB-INF/jsp/header/homeHeader.jsp"/>
+<c:choose>
+    <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
+        <jsp:include page="/WEB-INF/jsp/sidebar/homeAdmin.jsp"/>
+    </c:when>
+    <c:when test = "${sessionScope.user.status eq 'USER'}">
+        <jsp:include page="/WEB-INF/jsp/sidebar/homeUser.jsp"/>
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="/WEB-INF/jsp/sidebar/homeBan.jsp"/>
+    </c:otherwise>
+</c:choose>
+<c:choose>
+    <c:when test = "${not empty requestScope.page && sessionScope.user.status eq 'ADMIN'}">
+        <jsp:include page="/WEB-INF/jsp/table/allRequests.jsp">
+            <jsp:param name="command" value="SHOW_NEW_REQUESTS"/>
+        </jsp:include>
+    </c:when>
+    <c:when test = "${not empty requestScope.page}">
+        <jsp:include page="/WEB-INF/jsp/table/userRequests.jsp">
+            <jsp:param name="command" value="SHOW_NEW_REQUESTS"/>
+        </jsp:include>
+    </c:when>
+    <c:when test = "${sessionScope.user.status eq 'ADMIN'}">
+        <jsp:include page="/WEB-INF/jsp/table/homeAdminRequests.jsp">
+            <jsp:param name="command" value="SHOW_REQUESTS"/>
+        </jsp:include>
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="/WEB-INF/jsp/table/homeUserRequests.jsp">
+            <jsp:param name="command" value="SHOW_USER_REQUESTS"/>
+        </jsp:include>
+    </c:otherwise>
+</c:choose>
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
-
+<jsp:include page="/WEB-INF/jsp/topButton.jsp"/>
 </body>
 </html>

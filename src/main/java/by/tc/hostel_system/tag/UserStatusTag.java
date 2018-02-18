@@ -16,6 +16,9 @@ import static by.tc.hostel_system.controller.constant.ControlConst.LANG;
 public class UserStatusTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(UserStatusTag.class);
 	private static final long serialVersionUID = 2697396836332703037L;
+	/**
+	 * User status ("admin", "user" or "banned").
+	 */
 	private User.Status userStatus;
 
 	public void setUserStatus(User.Status userStatus) {

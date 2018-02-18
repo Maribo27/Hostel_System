@@ -6,7 +6,9 @@ public final class SQLQuery {
 	public static final String HOSTEL_CITIES = "hostel.cities";
 
 	public static final String REQUEST_SEARCH_ALL_REQUESTS = "request.search.all.requests";
+	public static final String REQUEST_SEARCH_NEW_REQUESTS = "request.search.new.requests";
 	public static final String REQUEST_SEARCH_USER_REQUESTS = "request.search.user.requests";
+	public static final String REQUEST_SEARCH_USER_FUTURE_REQUESTS = "request.search.user.future.requests";
 	public static final String REQUEST_SEARCH_ROOMS = "request.search.rooms";
 	public static final String REQUEST_SEARCH_COST = "request.search.cost";
 	public static final String REQUEST_ADD_REQUEST = "request.add.request";

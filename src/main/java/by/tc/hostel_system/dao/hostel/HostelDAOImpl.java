@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import static by.tc.hostel_system.dao.EntityMessageLocale.Entity.HOSTELS;
+import static by.tc.hostel_system.dao.EntityMessageLocale.HOSTELS;
 import static by.tc.hostel_system.dao.SQLQuery.*;
 
 public class HostelDAOImpl implements HostelDAO {
@@ -19,6 +19,10 @@ public class HostelDAOImpl implements HostelDAO {
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("query.hostel");
     private static final String SQL_ERROR_WHILE_SEARCHING_HOSTELS = "SQL error while searching hostels";
 
+    /**
+     * @see HostelDAO#getHostels(String)
+     * @throws DAOException if nothing found in database or catch {@link SQLException}
+     */
     @Override
     public List<Hostel> getHostels(String lang) throws DAOException {
         Connection connection = null;
@@ -42,6 +46,10 @@ public class HostelDAOImpl implements HostelDAO {
         }
     }
 
+    /**
+     * @see HostelDAO#getHostels(String, Hostel.Booking, int, int, Date, Date)
+     * @throws DAOException if nothing found in database or catch {@link SQLException}
+     */
     @Override
     public List<Hostel> getHostels(String lang, Hostel.Booking type, int city, int room, Date start, Date end) throws DAOException {
         Connection connection = null;
@@ -77,6 +85,10 @@ public class HostelDAOImpl implements HostelDAO {
         }
     }
 
+    /**
+     * @see HostelDAO#getCities(String)
+     * @throws DAOException if nothing found in database or catch {@link SQLException}
+     */
     @Override
     public Map<Integer, String> getCities(String lang) throws DAOException {
         Connection connection = null;

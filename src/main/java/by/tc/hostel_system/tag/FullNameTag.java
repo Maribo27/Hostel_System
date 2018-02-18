@@ -10,9 +10,18 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class FullNameTag extends TagSupport {
 	private final static Logger logger = Logger.getLogger(FullNameTag.class);
 	private static final long serialVersionUID = 4639722300961774680L;
+	/**
+	 * User name.
+	 */
 	private String name;
+	/**
+	 * User surname.
+	 */
 	private String surname;
-	private String lastname;
+	/**
+	 * User last name.
+	 */
+	private String lastName;
 
 	public void setName(String name) {
 		this.name = name;
@@ -22,8 +31,8 @@ public class FullNameTag extends TagSupport {
 		this.surname = surname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	@Override
@@ -34,8 +43,8 @@ public class FullNameTag extends TagSupport {
 		StringBuilder tag = new StringBuilder();
 		tag.append(name);
 		tag.append(" ");
-		if (!lastname.isEmpty()) {
-			tag.append(lastname);
+		if (!lastName.isEmpty()) {
+			tag.append(lastName);
 			tag.append(" ");
 		}
 		tag.append(surname);
