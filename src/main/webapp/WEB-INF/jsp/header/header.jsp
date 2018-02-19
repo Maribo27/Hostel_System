@@ -5,7 +5,7 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/dropdowns.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/dropdowns-skin-discrete.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/support/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/dropdowns.js"></script>
 
     <fmt:setLocale value="${sessionScope.lang}"/>
