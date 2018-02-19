@@ -4,6 +4,7 @@ import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.entity.User;
 import by.tc.hostel_system.service.ServiceException;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface RequestService {
@@ -69,12 +70,16 @@ public interface RequestService {
 	 * @param status    new status
 	 * @param user      current user
 	 * @param page      page number
+	 * @param start     date of booking start
+	 * @param days      number of days
+	 * @param rooms     number of rooms
+	 * @param hostelId  hostel id
 	 *
 	 * @return new {@link User#balance}
 	 *
 	 * @throws ServiceException if error in DAO layer occurred
 	 */
-	int cancelRequest(String requestId, String userId, String status, Object user, String page) throws ServiceException;
+	int cancelRequest(String requestId, String userId, String status, Object user, String page, String start, String days, String rooms, String hostelId) throws ServiceException;
 
 	/**
 	 * Send new request status ("approved") to DAO layer to change current status in database.

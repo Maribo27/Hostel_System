@@ -18,6 +18,10 @@
 <form action="${pageContext.request.contextPath}/hostel_system" method="get">
     <input type="hidden" name="next-command" value="${param.nextCommand}"/>
     <input type="hidden" name="number" value="${param.page}"/>
+    <input type="hidden" name="date" value="${param.date}"/>
+    <input type="hidden" name="days" value="${param.days}"/>
+    <input type="hidden" name="rooms" value="${param.rooms}"/>
+    <input type="hidden" name="hostel" value="${param.hostel}"/>
     <input type="hidden" name="command" value="CANCEL_REQUEST"/>
     <input type="hidden" name="request" value="${param.requestId}"/>
     <input type="hidden" name="id" value="${param.userId}"/>

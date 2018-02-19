@@ -118,16 +118,17 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     /**
-     * @see RequestDAO#cancelRequest(int, int, String, int)
+     * @see RequestDAO#cancelRequest(int, int, String, int, Date, Date, int, int)
      * @throws DAOException if catch {@link SQLException}
      */
     @Override
-    public int cancelRequest(int requestId, int userId, String status, int balance) throws DAOException {
+    public int cancelRequest(int requestId, int userId, String status, int balance, Date start, Date end, int rooms, int hostelId) throws DAOException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
             connection.setAutoCommit(false);
             updateRequestStatus(requestId, status, connection);
+            updateRoomsStatus(hostelId, start, end, connection, rooms);
             balance = getNewBalance(requestId, userId, balance, connection);
             connection.commit();
             connection.setAutoCommit(true);
@@ -200,12 +201,10 @@ public class RequestDAOImpl implements RequestDAO {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, hostelId);
         statement.setDate(2, requestDate);
-        statement.setDate(3, endDate);
+        statement.setDate(3, requestDate);
         statement.setDate(4, requestDate);
-        statement.setDate(5, requestDate);
-        statement.setDate(6, endDate);
-        statement.setDate(7, endDate);
-        statement.setInt(8, numberOfRooms);
+        statement.setDate(5, endDate);
+        statement.setInt(6, numberOfRooms);
         ResultSet resultSet = statement.executeQuery();
 
         if (!resultSet.isBeforeFirst()) {
@@ -316,5 +315,25 @@ public class RequestDAOImpl implements RequestDAO {
         statement.setString(1, status);
         statement.setInt(2, requestId);
         statement.executeUpdate();
+    }
+
+    /**
+     * Updates room status in database.
+     *
+     * @param hostelId request id
+     * @param start     date of booking start
+     * @param end       date of booking end
+     *
+     * @throws SQLException if error in database occurred
+     */
+    private void updateRoomsStatus(int hostelId, Date start, Date end, Connection connection, int rooms) throws SQLException {
+        for (int count = 0; count < rooms; count++) {
+            String query = resourceBundle.getString(REQUEST_UPDATE_ROOMS);
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, hostelId);
+            statement.setDate(2, start);
+            statement.setDate(3, end);
+            statement.executeUpdate();
+        }
     }
 }

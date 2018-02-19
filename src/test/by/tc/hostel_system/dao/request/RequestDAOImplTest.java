@@ -53,10 +53,14 @@ public class RequestDAOImplTest {
 	public void cancelRequest() throws DAOException {
 		int expected = 98;
 		int requestId = 6;
+		int rooms = 1;
 		int userId = 3;
+		int hostelId = 3;
+		Date start = Date.valueOf("2018-02-25");
+		Date end = Date.valueOf("2018-02-26");
 		String status = "deleted";
 		int balance = 98;
-		int actual = requestDAO.cancelRequest(requestId, userId, status, balance);
+		int actual = requestDAO.cancelRequest(requestId, userId, status, balance, start, end, rooms, hostelId);
 		assertEquals(expected, actual);
 	}
 }

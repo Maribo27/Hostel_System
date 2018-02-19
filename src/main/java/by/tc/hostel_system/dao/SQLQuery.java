@@ -15,6 +15,7 @@ public final class SQLQuery {
 	public static final String REQUEST_ADD_ROOM_REQUEST = "request.add.room.request";
 	public static final String REQUEST_UPDATE_BALANCE = "request.update.balance";
 	public static final String REQUEST_UPDATE_STATUS = "request.update.status";
+	public static final String REQUEST_UPDATE_ROOMS = "request.cancel.room.request";
 
 	public static final String USER_ACCOUNT_INFORMATION = "user.account.information";
 	public static final String USER_BAN_INFORMATION = "user.ban.information";

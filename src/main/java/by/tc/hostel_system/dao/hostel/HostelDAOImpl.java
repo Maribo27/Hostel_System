@@ -57,16 +57,15 @@ public class HostelDAOImpl implements HostelDAO {
             connection = connectionPool.getConnection();
 
             String query = resourceBundle.getString(HOSTEL_CONCRETE_HOSTELS);
+
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setDate(1, start);
-            statement.setDate(2, end);
+            statement.setDate(2, start);
             statement.setDate(3, start);
-            statement.setDate(4, start);
-            statement.setDate(5, end);
-            statement.setDate(6, end);
-            statement.setString(7, lang);
-            statement.setString(8, lang);
-            statement.setInt(9, city);
+            statement.setDate(4, end);
+            statement.setString(5, lang);
+            statement.setString(6, lang);
+            statement.setInt(7, city);
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {

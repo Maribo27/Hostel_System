@@ -8,6 +8,7 @@ import by.tc.hostel_system.entity.Request;
 import by.tc.hostel_system.entity.User;
 import by.tc.hostel_system.service.ServiceException;
 import by.tc.hostel_system.service.validation.*;
+import by.tc.hostel_system.util.ControllerUtil;
 import by.tc.hostel_system.util.ServiceUtil;
 
 import java.sql.Date;
@@ -126,22 +127,27 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
-    /**
-     * @see RequestService#cancelRequest(String, String, String, Object, String)
+	/**
+     * @see RequestService#cancelRequest(String, String, String, Object, String, String, String, String, String)
      *
      * @throws ServiceException if input data is incorrect (catch {@link InputException}),
      * nothing found ({@link EntityNotFoundException}) or catch {@link DAOException}
      */
     @Override
-    public int cancelRequest(String requestId, String userId, String status, Object user, String page) throws ServiceException {
+    public int cancelRequest(String requestId, String userId, String status, Object user, String page, String start, String days, String rooms, String hostel) throws ServiceException {
         RequestDAO requestDAO = DAOFactory.getInstance().getRequestDAO();
 
         try {
-            RequestValidator.isCancelDataValid(requestId, userId, status, user, page);
+            RequestValidator.isCancelDataValid(requestId, userId, status, user, page, start, days, rooms, hostel);
             User newUser = (User) user;
+            Date startDate = Date.valueOf(start);
+            int numberOfDays = Integer.parseInt(days);
+            int hostelId = Integer.parseInt(hostel);
+            Date end = ControllerUtil.getEndDate(numberOfDays, startDate);
             int requestIdNumber = Integer.parseInt(requestId);
             int userIdNumber = Integer.parseInt(userId);
-            return requestDAO.cancelRequest(requestIdNumber, userIdNumber, status, newUser.getBalance());
+            int roomsNumber = Integer.parseInt(rooms);
+            return requestDAO.cancelRequest(requestIdNumber, userIdNumber, status, newUser.getBalance(), startDate, end, roomsNumber, hostelId);
         } catch (EntityNotFoundException e){
             throw new RequestNotFoundException(e.getMessage());
         } catch (InputException e) {

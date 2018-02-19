@@ -51,6 +51,10 @@
                         <c:set var = "currentPage" scope="page" value = "/WEB-INF/jsp/button/requestsAdmin.jsp"/>
                         <c:if test = "${request.status eq 'PROCESSING'}">
                             <jsp:include page="${currentPage}">
+                                <jsp:param name="hostel" value="${request.hostelId}" />
+                                <jsp:param name="rooms" value="${request.room}" />
+                                <jsp:param name="date" value="${request.date}" />
+                                <jsp:param name="days" value="${request.days}" />
                                 <jsp:param name="nextCommand" value="${param.command}" />
                                 <jsp:param name="page" value="${requestScope.page.current}" />
                                 <jsp:param name="userId" value="${request.userId}" />

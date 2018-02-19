@@ -40,15 +40,21 @@ public class RequestValidator {
 	 * @param status    new request status
 	 * @param user      current user
 	 * @param page      page number
+	 * @param date      booking date
+	 * @param days      number of days
 	 *
 	 * @throws InputException if input data is incorrect
 	 */
-	public static void isCancelDataValid(String requestId, String userId, String status, Object user, String page) throws InputException {
+	public static void isCancelDataValid(String requestId, String userId, String status, Object user, String page, String date, String days, String rooms, String hostelId) throws InputException {
 		Validator.isUser(user);
 		User currentUser = (User) user;
 		if (currentUser.getBalance() < 0) {
 			throw new InputException("User balance is invalid");
 		}
+		Validator.isDate(date);
+		Validator.isNumber(rooms);
+		Validator.isNumber(hostelId);
+		Validator.isNumber(days);
 		Validator.isNumber(userId);
 		Validator.isNumber(requestId);
 		Validator.isNumber(page);

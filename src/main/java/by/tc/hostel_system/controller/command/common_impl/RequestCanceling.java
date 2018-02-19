@@ -18,12 +18,13 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.tc.hostel_system.controller.constant.ControlConst.*;
-import static by.tc.hostel_system.controller.constant.EntityAttributes.ID;
+import static by.tc.hostel_system.controller.constant.EntityAttributes.*;
 import static by.tc.hostel_system.controller.constant.PageUrl.HOME_PAGE;
 
 public class RequestCanceling implements Command {
 	private static final Logger logger = Logger.getLogger(RequestCanceling.class);
 	private static final String STATUS = "status";
+	private static final String HOSTEL = "hostel";
 
 	/**
 	 * The method changes the status of the request of the selected user to "deleted" or "denied".
@@ -38,14 +39,18 @@ public class RequestCanceling implements Command {
 
 		String lang = (String) session.getAttribute(LANG);
 		String requestId = request.getParameter(REQUEST);
-	    String userId = request.getParameter(ID);
+		String hostelId = request.getParameter(HOSTEL);
+		String userId = request.getParameter(ID);
 	    String page = request.getParameter(NUMBER);
-	    String nextCommand = request.getParameter(NEXT_COMMAND);
+		String start = request.getParameter(DATE);
+		String rooms = request.getParameter(ROOMS);
+		String days = request.getParameter(DAYS);
+		String nextCommand = request.getParameter(NEXT_COMMAND);
 	    String status = request.getParameter(STATUS);
 
 	    RequestService service = ServiceFactory.getInstance().getRequestService();
 	    try {
-		    int balance = service.cancelRequest(requestId, userId, status, user, page);
+		    int balance = service.cancelRequest(requestId, userId, status, user, page, start, days, rooms, hostelId);
 		    User newUser = (User) user;
 		    if (newUser.getStatus() != User.Status.ADMIN) {
 			    newUser.setBalance(balance);
